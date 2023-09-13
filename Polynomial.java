@@ -36,6 +36,9 @@ class Polynomial {
     public Monomial[] getMonomials() {
         return monomials;
     }
+	public int getDegree() {
+		return monomials[monomials.length - 1].getExponent();
+	}
 
     // ---- helper methods ----
     private void parseContent() {

@@ -36,9 +36,6 @@ class Monomial {
     public int getExponent() {
         return exponent;
     }
-    public int getDegree() {
-        return exponent;
-    }
     public boolean isZero() {
         return isZero;
     }
