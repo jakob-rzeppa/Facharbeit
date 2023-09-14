@@ -30,7 +30,9 @@ class Polynomial {
     public Polynomial derive() {
         List<Monomial> derivativeMonomials = new ArrayList<Monomial>();
         for (int i = 0; i < monomials.size(); i++) {
-            derivativeMonomials.add(monomials.get(i).derive());
+			if (monomials.get(i).getExponent() != 0) {
+            	derivativeMonomials.add(monomials.get(i).derive());
+			}
         }
         return new Polynomial(derivativeMonomials);
     }
@@ -40,7 +42,7 @@ class Polynomial {
         return monomials;
     }
 	public int getDegree() {
-		return monomials.get(monomials.size() - 1).getExponent();
+		return monomials.get(0).getExponent();
 	}
 	//TODO error handeling
 	public double getZeroMonomialCoefficient() {

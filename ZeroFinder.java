@@ -2,9 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ZeroFinder {
-	private static List<Double> findZeros(Polynomial function, Polynomial firstDerivative, Polynomial secDerivative) {
+	public static List<Double> findZeros(Polynomial function) {
+		Polynomial firstDerivative = function.derive();
+		Polynomial secDerivative = firstDerivative.derive();
 
 		//recursive end
+		System.out.println(function.toString());
+		System.out.println("Degree: " + function.getDegree());
 		if (function.getDegree() == 1) {
 			List<Double> zeros = new ArrayList<Double>();
 			zeros.add(-(function.getZeroMonomialCoefficient() / function.getFirstMonomialCoefficient()));
@@ -12,7 +16,7 @@ class ZeroFinder {
 		}
 		
 		//recursive
-		List<Double> zerosDerivative = findZeros(firstDerivative, secDerivative, secDerivative.derive());
+		List<Double> zerosDerivative = findZeros(firstDerivative);
 		
 		//edge cases
 		for (int i = 0; i < zerosDerivative.size(); i++) {
