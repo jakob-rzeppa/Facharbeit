@@ -20,7 +20,7 @@ class Polynomial {
     }
 
     public double solve(double i) {
-        int result = 0;
+        double result = 0;
         for (Monomial m : monomials) {
             result += m.solve(i);
         }
@@ -30,7 +30,7 @@ class Polynomial {
     public Polynomial derive() {
         List<Monomial> derivativeMonomials = new ArrayList<Monomial>();
         for (int i = 0; i < monomials.size(); i++) {
-			if (monomials.get(i).getExponent() != 0) {
+			if (monomials.get(i).getExponent() < 0) {
             	derivativeMonomials.add(monomials.get(i).derive());
 			}
         }
@@ -44,12 +44,19 @@ class Polynomial {
 	public int getDegree() {
 		return monomials.get(0).getExponent();
 	}
-	//TODO error handeling
 	public double getZeroMonomialCoefficient() {
-		return monomials.get(monomials.size() - 1).getCoefficient();
+        try {
+            return monomials.get(monomials.size() - 1).getCoefficient();
+        } catch (IndexOutOfBoundsException e) {
+            return 0;
+        }
 	}
 	public double getFirstMonomialCoefficient() {
-		return monomials.get(monomials.size() - 2).getCoefficient();
+		try {
+            return monomials.get(monomials.size() - 2).getCoefficient();
+        } catch (IndexOutOfBoundsException e) {
+            return 0;
+        }
 	}
 
     // ---- helper methods ----
@@ -84,8 +91,10 @@ class Polynomial {
 
    // ---- debug ----
     public static void main(String[] args) {
-        Polynomial p = new Polynomial("5x^(5)+6x^(3)+12x^(1)+5x^(0)");
+        Polynomial p = new Polynomial("2x^(3)+3x^(1)-7x^(0)");
         System.out.println(p.toString());
-        System.out.println(p.solve(-10));
+        System.out.println(p.derive().toString());
+        System.out.println(p.derive().derive().toString());
+        System.out.println(p.derive().derive().derive().toString());
     }
 }

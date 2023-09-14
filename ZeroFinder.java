@@ -7,11 +7,15 @@ class ZeroFinder {
 		Polynomial secDerivative = firstDerivative.derive();
 
 		//recursive end
-		System.out.println(function.toString());
-		System.out.println("Degree: " + function.getDegree());
 		if (function.getDegree() == 1) {
 			List<Double> zeros = new ArrayList<Double>();
 			zeros.add(-(function.getZeroMonomialCoefficient() / function.getFirstMonomialCoefficient()));
+
+			//print
+			System.out.println("Degree: " + function.getDegree());
+			System.out.println("Function: " + function.toString());
+			System.out.println("Zero: " + zeros.get(0));
+			System.out.println();
 			return zeros;
 		}
 		
@@ -39,10 +43,21 @@ class ZeroFinder {
 		}
 		if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getMonomials().get(0).getCoefficient() < 0) ||
 			(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getMonomials().get(0).getCoefficient() > 0)) {
-			zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
+			zeros.add(newtonmethod(function, firstDerivative, (double) zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 		}
 		
-		//TODO sort
+		//sort
+		zeros.sort(null);
+
+		
+		//print
+		System.out.println("Degree: " + function.getDegree());
+		System.out.println("Function: " + function.toString());
+		for (int i = 0; i < zeros.size(); i++) {
+			System.out.println("Zero " + i + ": " + zeros.get(i));
+		}
+		System.out.println();
+
 		return zeros;
 	}
 	
@@ -57,6 +72,7 @@ class ZeroFinder {
 			if (secDerivative.solve(zerosDerivative.get(i)) == 0 || secDerivative.solve(zerosDerivative.get(i + 1)) == 0) {
 				continue;
 			}
+			System.out.print("Area: " + zerosDerivative.get(i) + ", " + zerosDerivative.get(i + 1) + "\n");
 			areas.add(new ArrayList<Double>());
 			areas.get(areas.size() - 1).add(zerosDerivative.get(i));
 			areas.get(areas.size() - 1).add(zerosDerivative.get(i + 1));
@@ -100,16 +116,19 @@ class ZeroFinder {
 	}
 	
 	private static double newtonmethod(Polynomial function, Polynomial firstDerivative, Double value) {
-		double zero = value;
-		
-		//round
-		if (function.solve(zero) < 0.000001 && function.solve(zero) > -0.000001) {
-			return zero;
+		//recursive end
+		if (function.solve(value) < 0.0001d && function.solve(value) > -0.0001d) {
+			return value;
 		}
 		
-		zero -= function.solve(zero) / firstDerivative.solve(zero);
-		
+		value = value - function.solve(value) / firstDerivative.solve(value);
+
 		//recursive
-		return newtonmethod(function, firstDerivative, zero);
+		return newtonmethod(function, firstDerivative, value);
+	}
+
+	public static void main(String[] args) {
+		Polynomial p = new Polynomial("2x^(3)+3x^(1)-7x^(0)");
+		findZeros(p);
 	}
 }
