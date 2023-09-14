@@ -22,7 +22,11 @@ class ZeroFinder {
 		}
 		
 		List<List<Double>> areas = findAreas(function, secDerivative, zerosDerivative);
-		List<Double> zeros = bisectormethod(function, areas);
+		
+		List<Double> zeros = new ArrayList<Double>();
+		for (int i = 0; i < areas.size(); i++) {
+			zeros.add(bisectormethod(function, areas.get(i)));
+		}
 		
 		//edge cases
 		if ((function.solve(zerosDerivative.get(0)) > 0 && function.getMonomials().get(0).getCoefficient() < 0) ||
@@ -57,20 +61,51 @@ class ZeroFinder {
 		return areas;
 	}
 	
-	private static List<Double> bisectormethod(Polynomial function, List<List<Double>> areas) {
-		List<Double> zeros = new ArrayList<Double>();
+	private static double bisectormethod(Polynomial function, List<Double> area) {
+		double a = area.get(0);
+		double b = area.get(1);
 		
-		//edge cases
+		if (function.solve(area.get(0)) > -0.000001 && function.solve(area.get(1)) < 0.000001) {
+			return a;
+		}
 		
-		
-		//recursive
-		return zeros;
+		return bisectormethodRuntime(function, a, b).get(0);
 	}
 	
-	private static Double newtonmethod(Polynomial function, Polynomial firstDerivative, Double start) {
-		double zero = 0;
+	private static List<Double> bisectormethodRuntime(Polynomial function, double a, double b) {
+		double c = (a + b) / 2;
+		
+		double aV = function.solve(a);
+		double bV = function.solve(b);
+		double cV = function.solve(c);
+		
+		List<Double> newArea = new ArrayList<Double>();
+		
+		if (aV > -0.000001 && bV < 0.000001) {
+			newArea.add(a); newArea.add(a);
+			return newArea;
+		}
+		
+		if ((aV > 0 && cV < 0) || (aV < 0 && cV > 0)) {
+			return bisectormethodRuntime(function, a, c);
+		}
+		if ((cV > 0 && bV < 0) || (cV < 0 && bV > 0)) {
+			return bisectormethodRuntime(function, c, b);
+		}
+		throw new RuntimeException("??? bisectormethod");
+	}
+	
+	private static double newtonmethod(Polynomial function, Polynomial firstDerivative, Double value) {
+		double zero = value;
+		
+		//round
+		if (function.solve(zero) < 0.000001 && function.solve(zero) > -0.000001) {
+			return zero;
+		}
+		
+		zero -= function.solve(zero) / firstDerivative.solve(zero);
 		
 		//recursive
-		return zero;
+		return newtonmethod(function, firstDerivative, zero);
 	}
 }
