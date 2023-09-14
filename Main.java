@@ -15,6 +15,7 @@ class Main {
 		
 	}
 	
+	private static double[][] findAreas(Polynom p, Polynom p_a, Polynom p_aa, double[] zeros_a) {
 		//TODO change fixed values
 		double[][] areas = new double[100][2];
 		int ctrAreas = 0;
