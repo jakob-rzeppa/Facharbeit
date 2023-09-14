@@ -1,6 +1,9 @@
+import java.util.List;
+import java.util.ArrayList;
+
 class Polynomial {
     private String content;
-    private Monomial[] monomials;
+    private List<Monomial> monomials;
 
     // the content has to be in this form: 5x^(34)+65x^(33)+343x^(2)+23x^(1)+2x^(0)
     // every term has to be in this form: ax^(n) where a is a real number and n a natural number
@@ -11,7 +14,7 @@ class Polynomial {
         checkContent();
     }
 
-    public Polynomial(Monomial[] monomials) {
+    public Polynomial(List<Monomial> monomials) {
         this.monomials = monomials;
         checkContent();
     }
@@ -25,19 +28,26 @@ class Polynomial {
     }
 
     public Polynomial derive() {
-        Monomial[] derivativeMonomials = new Monomial[monomials.length];
-        for (int i = 0; i < monomials.length; i++) {
-            derivativeMonomials[i] = monomials[i].derive();
+        List<Monomial> derivativeMonomials = new ArrayList<Monomial>();
+        for (int i = 0; i < monomials.size(); i++) {
+            derivativeMonomials.add(monomials.get(i).derive());
         }
         return new Polynomial(derivativeMonomials);
     }
 
     // ---- get methods ----
-    public Monomial[] getMonomials() {
+    public List<Monomial> getMonomials() {
         return monomials;
     }
 	public int getDegree() {
-		return monomials[monomials.length - 1].getExponent();
+		return monomials.get(monomials.size() - 1).getExponent();
+	}
+	//TODO error handeling
+	public double getZeroMonomialCoefficient() {
+		return monomials.get(monomials.size() - 1).getCoefficient();
+	}
+	public double getFirstMonomialCoefficient() {
+		return monomials.get(monomials.size() - 2).getCoefficient();
 	}
 
     // ---- helper methods ----
@@ -45,9 +55,9 @@ class Polynomial {
         String tempContent = content.replace("+", "#+");
         tempContent = tempContent.replace("-", "#-");
         String[] contentSplit = tempContent.split("#");
-        monomials = new Monomial[contentSplit.length];
+        monomials = new ArrayList<Monomial>();
         for (int i = 0; i < contentSplit.length; i++) {
-            monomials[i] = new Monomial(contentSplit[i]);
+            monomials.add(new Monomial(contentSplit[i]));
         }
     }
 
