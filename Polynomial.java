@@ -27,6 +27,9 @@ class Polynomial {
     }
 
     // ---- get methods ----
+	public List<Double> getCoefficients() {
+		return coefficients;
+	}
 	public int getDegree() {
 		return degree;
 	}

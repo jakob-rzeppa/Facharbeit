@@ -9,7 +9,7 @@ class ZeroFinder {
 		//recursive end
 		if (function.getDegree() == 1) {
 			List<Double> zeros = new ArrayList<Double>();
-			zeros.add(-(function.getZeroMonomialCoefficient() / function.getFirstMonomialCoefficient()));
+			zeros.add(-(function.getCoefficients().get(0) / function.getCoefficients().get(1)));
 
 			//print
 			System.out.println("Degree: " + function.getDegree());
@@ -23,6 +23,19 @@ class ZeroFinder {
 		List<Double> zerosDerivative = findZeros(firstDerivative);
 		
 		//edge cases
+		if (zerosDerivative.size() == 0) {
+			List<Double> zeros = new ArrayList<Double>();
+			zeros.add(newtonmethod(function, firstDerivative, 0d));
+
+			//print
+			System.out.println("Degree: " + function.getDegree());
+			System.out.println("Function: " + function.toString());
+			System.out.println("Zero: " + zeros.get(0));
+			System.out.println();
+			return zeros;
+		}
+		
+		
 		for (int i = 0; i < zerosDerivative.size(); i++) {
 			if (function.solve(zerosDerivative.get(i)) == 0) {
 				zerosDerivative.remove(i);
@@ -37,22 +50,25 @@ class ZeroFinder {
 		}
 		
 		//edge cases
-		if ((function.solve(zerosDerivative.get(0)) > 0 && function.getMonomials().get(0).getCoefficient() < 0) ||
-			(function.solve(zerosDerivative.get(0)) < 0 && function.getMonomials().get(0).getCoefficient() > 0)) {
+		//TODO probleme
+		if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() < 0) ||
+			(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() > 0)) {
 			zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
 		}
-		if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getMonomials().get(0).getCoefficient() < 0) ||
-			(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getMonomials().get(0).getCoefficient() > 0)) {
+		if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
+			(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
 			zeros.add(newtonmethod(function, firstDerivative, (double) zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 		}
 		
 		//sort
 		zeros.sort(null);
-
 		
 		//print
 		System.out.println("Degree: " + function.getDegree());
 		System.out.println("Function: " + function.toString());
+		if (zeros.size() == 0) {
+			System.out.println("No Zeros");
+		}
 		for (int i = 0; i < zeros.size(); i++) {
 			System.out.println("Zero " + i + ": " + zeros.get(i));
 		}
@@ -128,7 +144,13 @@ class ZeroFinder {
 	}
 
 	public static void main(String[] args) {
-		Polynomial p = new Polynomial("2x^(3)+3x^(1)-7x^(0)");
+		List<Double> c = new ArrayList<Double>();
+		c.add(-5d);
+		c.add(0d);
+		c.add(2d);
+		c.add(4d);
+		c.add(-1d);
+		Polynomial p = new Polynomial(c);
 		findZeros(p);
 	}
 }
