@@ -2,99 +2,69 @@ import java.util.List;
 import java.util.ArrayList;
 
 class Polynomial {
-    private String content;
-    private List<Monomial> monomials;
-
-    // the content has to be in this form: 5x^(34)+65x^(33)+343x^(2)+23x^(1)+2x^(0)
-    // every term has to be in this form: ax^(n) where a is a real number and n a natural number
-    // always put the terms in descending order (by the exponent) and there may be no spaces
-    public Polynomial(String content) {
-        this.content = content;
-        parseContent();
-        checkContent();
-    }
-
-    public Polynomial(List<Monomial> monomials) {
-        this.monomials = monomials;
-        checkContent();
-    }
-
-    public double solve(double i) {
+	private List<Double> coefficients;
+	private int degree;
+	
+	public Polynomial(List<Double> coefficients) {
+		this.coefficients = coefficients;
+		this.degree = coefficients.size() - 1;
+	}
+	
+	public double solve(double val) {
         double result = 0;
-        for (Monomial m : monomials) {
-            result += m.solve(i);
+        for (int i = 0; i < coefficients.size(); i++) {
+            result += coefficients.get(i) * Math.pow(val, i);
         }
         return result;
-    }
+	}
 
     public Polynomial derive() {
-        List<Monomial> derivativeMonomials = new ArrayList<Monomial>();
-        for (int i = 0; i < monomials.size(); i++) {
-			if (monomials.get(i).getExponent() < 0) {
-            	derivativeMonomials.add(monomials.get(i).derive());
-			}
+		List<Double> newCoefficients = new ArrayList<Double>();
+        for (int i = 1; i < coefficients.size(); i++) {
+			newCoefficients.add(coefficients.get(i) * i);
         }
-        return new Polynomial(derivativeMonomials);
+        return new Polynomial(newCoefficients);
     }
 
     // ---- get methods ----
-    public List<Monomial> getMonomials() {
-        return monomials;
-    }
 	public int getDegree() {
-		return monomials.get(0).getExponent();
+		return degree;
 	}
-	public double getZeroMonomialCoefficient() {
-        try {
-            return monomials.get(monomials.size() - 1).getCoefficient();
-        } catch (IndexOutOfBoundsException e) {
-            return 0;
-        }
-	}
-	public double getFirstMonomialCoefficient() {
-		try {
-            return monomials.get(monomials.size() - 2).getCoefficient();
-        } catch (IndexOutOfBoundsException e) {
-            return 0;
-        }
-	}
-
-    // ---- helper methods ----
-    private void parseContent() {
-        String tempContent = content.replace("+", "#+");
-        tempContent = tempContent.replace("-", "#-");
-        String[] contentSplit = tempContent.split("#");
-        monomials = new ArrayList<Monomial>();
-        for (int i = 0; i < contentSplit.length; i++) {
-            monomials.add(new Monomial(contentSplit[i]));
-        }
-    }
-
-    // maybe cause lag but now irrelevant: a monomial that is zero is still in storage and used
-    private void checkContent() {
-        content = "";
-        for (Monomial m : monomials) {
-            if (!m.isZero()) {
-                if (m.getCoefficient() >= 0) {
-                    content += "+";
-                }
-                content += m.toString();
-            }
-        }
-    }
-
 
     // ---- override methods ----
     public String toString() {
-        return content;
+		//edge cases
+		if (coefficients.size() == 0) {
+			return "";
+		} if (coefficients.size() == 1) {
+			return coefficients.get(0) + "";
+		} if (coefficients.size() == 2) {
+			return coefficients.get(1) + "x^(1)+(" + coefficients.get(0) + ")";
+		}
+		
+        String out = "";
+		for (int i = coefficients.size() - 1; i > 1; i--) {
+			if (coefficients.get(i) == 0) {
+				continue;
+			}
+			out += "+(" + coefficients.get(i) + "x^(" + i + "))";
+		}
+		out += "+(" + coefficients.get(1) + "x)" + "+(" + coefficients.get(0) + ")";
+		return out;
     }
 
    // ---- debug ----
     public static void main(String[] args) {
-        Polynomial p = new Polynomial("2x^(3)+3x^(1)-7x^(0)");
-        System.out.println(p.toString());
-        System.out.println(p.derive().toString());
-        System.out.println(p.derive().derive().toString());
-        System.out.println(p.derive().derive().derive().toString());
-    }
+		List<Double> c = new ArrayList<Double>();
+		c.add(-23.5d);
+		c.add(12d);
+		c.add(-45.2d);
+		c.add(-124d);
+		c.add(23.1d);
+		Polynomial p = new Polynomial(c);
+		System.out.println(p.derive().toString());
+		System.out.println(p.derive().getDegree());
+		System.out.println(p.derive().solve(43.5d));
+    
+	}
 }
