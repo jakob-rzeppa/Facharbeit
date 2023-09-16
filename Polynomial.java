@@ -15,13 +15,13 @@ class Polynomial {
         for (int i = 0; i < coefficients.size(); i++) {
             result += coefficients.get(i) * Math.pow(val, i);
         }
-        return result;
+        return Main.round(result, 4);
 	}
 
     public Polynomial derive() {
 		List<Double> newCoefficients = new ArrayList<Double>();
         for (int i = 1; i < coefficients.size(); i++) {
-			newCoefficients.add(coefficients.get(i) * i);
+			newCoefficients.add(Main.round(coefficients.get(i) * i, 4));
         }
         return new Polynomial(newCoefficients);
     }
