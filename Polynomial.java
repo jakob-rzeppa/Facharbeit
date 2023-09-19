@@ -15,7 +15,7 @@ class Polynomial {
         for (int i = 0; i < coefficients.size(); i++) {
             result += coefficients.get(i) * Math.pow(val, i);
         }
-        return Main.round(result, 4);
+        return result;
 	}
 
     public Polynomial derive() {

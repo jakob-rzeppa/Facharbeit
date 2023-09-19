@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ZeroFinder {
+	private final int accuracy = 2;
+	
 	public static List<Double> findZeros(Polynomial function) {
 		Polynomial firstDerivative = function.derive();
 		Polynomial secDerivative = firstDerivative.derive();
@@ -9,7 +11,7 @@ class ZeroFinder {
 		//recursive end
 		if (function.getDegree() == 1) {
 			List<Double> zeros = new ArrayList<Double>();
-			zeros.add(Main.round(-(function.getCoefficients().get(0) / function.getCoefficients().get(1)), 4));
+			zeros.add(-(function.getCoefficients().get(0) / function.getCoefficients().get(1)));
 
 			//print
 			System.out.println("Degree: " + function.getDegree());
@@ -49,35 +51,35 @@ class ZeroFinder {
 			zeros.add(bisectormethod(function, areas.get(i)).get(0));
 		}
 		
-		System.out.println("!");
+		//System.out.println("!");
 		//edge cases
 		//TODO Ich hab keinen plan was hier abgeht
 		if (function.getDegree() % 2 == 0) {
 			System.out.println("Grade");
 			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() < 0) ||
 				(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() > 0)) {
-					System.out.println("2");
+					//System.out.println("2");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
 			}
 			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
 				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
-				System.out.println("2");
+				//System.out.println("2");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 			}
 		} else {
 			System.out.println("Ungrade");
 			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() > 0) ||
 				(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() < 0)) {
-					System.out.println("1");
+					//System.out.println("1");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
 			}
 			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
 				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
-					System.out.println("1");
+					//System.out.println("1");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 			}
 		}
-		System.out.println("?");
+		//System.out.println("?");
 		
 		//sort
 		zeros.sort(null);
@@ -131,25 +133,27 @@ class ZeroFinder {
 		List<Double> newArea = new ArrayList<>();
 
 		/*
-		System.out.println(area.get(0) + ": " + aV);
-		System.out.println(c + ": " + cV);
-		System.out.println(area.get(1) + ": " + bV);
+		System.out.println("P1: " + area.get(0) + ": " + aV);
+		System.out.println("P2: " + c + ": " + cV);
+		System.out.println("P3: " + area.get(1) + ": " + bV);
 		System.out.println();
 		*/
 
 		//recursive end
-		if (aV == 0) {
+		if (Main.round(aV, 2) == 0) {
 			return area;
 		}
 
 		if ((aV <= 0 && cV >= 0) ||
 			(aV >= 0 && cV <= 0)) {
-			newArea.add(Main.round(area.get(0), 2));
-			newArea.add(Main.round(c, 2));
+			newArea.add(area.get(0));
+			newArea.add(c);
 		} else if ((cV <= 0 && bV >= 0) ||
 					(cV >= 0 && bV <= 0)) {
-			newArea.add(Main.round(c, 2));
-			newArea.add(Main.round(area.get(1), 2));
+			newArea.add(c);
+			newArea.add(area.get(1));
+		} else {
+			throw new RuntimeException("WTF ich versteh nix!");
 		}
 
 		//recursive
@@ -165,22 +169,25 @@ class ZeroFinder {
 		value = value - function.solve(value) / firstDerivative.solve(value);
 
 		//recursive
-		return Main.round(newtonmethod(function, firstDerivative, value), 4);
+		return newtonmethod(function, firstDerivative, value);
 	}
 
 	public static void main(String[] args) {
 		List<Double> c = new ArrayList<Double>();
 		c.add(-5d);
-		c.add(0d);
-		c.add(2d);
-		c.add(4d);
-		c.add(-1d);
+		c.add(1d);
+		c.add(-10d);
+		c.add(10d);
 		Polynomial p = new Polynomial(c);
 		List<Double> area = new ArrayList<>();
-		area.add(-0.30d);
-		area.add(0d);
-		area.add(3.30d);
-		//System.out.println(findAreas(p, p.derive(), area));
-		System.out.println(findZeros(p));
+		area.add(0.05d);
+		area.add(0.61d);
+		//System.out.println(newtonmethod(p, p.derive(), 0.05d - 1d));
+		//System.out.println(bisectormethod(p, area));
+		//System.out.println(newtonmethod(p, p.derive(), 0.61d + 1d));
+		List<Double> zerosDer = new ArrayList<Double>();
+		zerosDer.add(0.05d);
+		zerosDer.add(0.61d);
+		System.out.println(findAreas(p, p.derive(), zerosDer));
 	}
 }
