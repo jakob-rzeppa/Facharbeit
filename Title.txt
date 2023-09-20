@@ -1,0 +1,3 @@
+Vergleich von numerischen Methoden zur Berechnung von Nullstellen von Polynomfunktionen vom Grad > 3
+
+Numerische Berechnung von Nullstellen - Vergleich von verschiedenen Methoden
