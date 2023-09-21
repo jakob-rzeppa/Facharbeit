@@ -22,16 +22,18 @@ class ZeroFinder {
 		//recursive
 		List<Double> zerosDerivative = findZeros(firstDerivative);
 		
-		//edge cases
+		//edge cases (Derivative has no Zeros)
 		if (zerosDerivative.size() == 0) {
 			List<Double> zeros = new ArrayList<Double>();
-			zeros.add(newtonmethod(function, firstDerivative, 0d));
-
-			//print
-			System.out.println("Degree: " + function.getDegree());
-			System.out.println("Function: " + function.toString());
-			System.out.println("Zero: " + zeros.get(0));
-			System.out.println();
+			try {
+				zeros.add(newtonmethod(function, firstDerivative, 0d));
+				print(function, zeros);
+			} catch (StackOverflowError e) {
+				System.out.println("Degree: " + function.getDegree());
+				System.out.println("Function: " + function.toString());
+				System.out.println("No Zeros");
+				System.out.println();
+			}
 			return zeros;
 		}
 		
@@ -159,6 +161,13 @@ class ZeroFinder {
 
 		//recursive
 		return newtonmethod(function, firstDerivative, value);
+	}
+
+	private static void print(Polynomial function, List<Double> zeros) {
+		System.out.println("Degree: " + function.getDegree());
+		System.out.println("Function: " + function.toString());
+		System.out.println("Zero: " + zeros.get(0));
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
