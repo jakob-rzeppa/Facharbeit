@@ -9,7 +9,7 @@ class Main {
             
             Random rand = new Random();
             for (int j = 0; j < 10; j++) {
-                c.add(round(rand.nextDouble(10d)-5d, 2));
+                c.add(round(rand.nextDouble()*10-5d, 2));
             }
 
             Polynomial p = new Polynomial(c);

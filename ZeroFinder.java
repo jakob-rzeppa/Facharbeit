@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ZeroFinder {
-	private final int accuracy = 2;
-	
 	public static List<Double> findZeros(Polynomial function) {
 		Polynomial firstDerivative = function.derive();
 		Polynomial secDerivative = firstDerivative.derive();
@@ -51,35 +49,26 @@ class ZeroFinder {
 			zeros.add(bisectormethod(function, areas.get(i)).get(0));
 		}
 		
-		//System.out.println("!");
 		//edge cases
-		//TODO Ich hab keinen plan was hier abgeht
 		if (function.getDegree() % 2 == 0) {
-			System.out.println("Grade");
 			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() < 0) ||
 				(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() > 0)) {
-					//System.out.println("2");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
 			}
 			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
 				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
-				//System.out.println("2");
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 			}
 		} else {
-			System.out.println("Ungrade");
 			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() > 0) ||
-				(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() < 0)) {
-					//System.out.println("1");
+			(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() < 0)) {
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
 			}
 			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
-				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
-					//System.out.println("1");
+				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {;
 				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
 			}
 		}
-		//System.out.println("?");
 		
 		//sort
 		zeros.sort(null);
@@ -108,12 +97,12 @@ class ZeroFinder {
 		}
 		
 		for (int i = 0; i < zerosDerivative.size() - 1; i++) {
-			System.out.println(zerosDerivative.get(i));
+			/*System.out.println(zerosDerivative.get(i));
 			System.out.println(zerosDerivative.get(i+1));
-			System.out.println();
+			System.out.println();*/
 			if (function.solve(zerosDerivative.get(i)) > 0 && function.solve(zerosDerivative.get(i + 1)) < 0 || 
 				function.solve(zerosDerivative.get(i)) < 0 && function.solve(zerosDerivative.get(i + 1)) > 0) {
-				System.out.print("Area: " + zerosDerivative.get(i) + ", " + zerosDerivative.get(i + 1) + "\n");
+				//System.out.print("Area: " + zerosDerivative.get(i) + ", " + zerosDerivative.get(i + 1) + "\n");
 				areas.add(new ArrayList<Double>());
 				areas.get(areas.size() - 1).add(zerosDerivative.get(i));
 				areas.get(areas.size() - 1).add(zerosDerivative.get(i + 1));
@@ -188,6 +177,6 @@ class ZeroFinder {
 		List<Double> zerosDer = new ArrayList<Double>();
 		zerosDer.add(0.05d);
 		zerosDer.add(0.61d);
-		System.out.println(findAreas(p, p.derive(), zerosDer));
+		//System.out.println(findAreas(p, p.derive(), zerosDer));
 	}
 }

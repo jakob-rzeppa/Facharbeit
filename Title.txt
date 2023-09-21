@@ -1,3 +1,4 @@
-Vergleich von numerischen Methoden zur Berechnung von Nullstellen von Polynomfunktionen vom Grad > 3
+Vergleich numerischener Methoden zur Berechnung den Nullstellen einer Polynomfunktionen
 
-Numerische Berechnung von Nullstellen - Vergleich von verschiedenen Methoden
+Numerisches finden von Nullstellen - Implementierung in Java
+
