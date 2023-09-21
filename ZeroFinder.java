@@ -27,12 +27,8 @@ class ZeroFinder {
 			List<Double> zeros = new ArrayList<Double>();
 			try {
 				zeros.add(newtonmethod(function, firstDerivative, 0d));
+			} finally {
 				print(function, zeros);
-			} catch (StackOverflowError e) {
-				System.out.println("Degree: " + function.getDegree());
-				System.out.println("Function: " + function.toString());
-				System.out.println("No Zeros");
-				System.out.println();
 			}
 			return zeros;
 		}
