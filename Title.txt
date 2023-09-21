@@ -1,4 +1,0 @@
-Vergleich numerischener Methoden zur Berechnung den Nullstellen einer Polynomfunktionen
-
-Numerisches finden von Nullstellen - Implementierung in Java
-
