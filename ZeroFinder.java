@@ -27,7 +27,7 @@ class ZeroFinder {
 					zeros.add(zero);
 				}
 			} catch (RuntimeException e) {
-				System.out.println("problems with finding zeros when there are no extreme points");
+				System.err.println("problems with finding zeros when there are no extreme points");
 				System.out.println(e.getMessage());
 			} finally {
 				print(function, zeros);
@@ -49,7 +49,7 @@ class ZeroFinder {
 				zeros.add(bisectormethod(function, areas.get(i)).get(0));
 			}
 		} catch (RuntimeException e) {
-			System.out.println("problems with finding zeros between hightest/lowest extreme points");
+			System.err.println("problems with finding zeros between hightest/lowest extreme points");
 			System.out.println(e.getMessage());
 		}
 		
@@ -59,7 +59,7 @@ class ZeroFinder {
 				zeros.add(zero);
 			}
 		} catch (RuntimeException e) {
-			System.out.println("problems with finding zeros outside hightest/lowest extreme points");
+			System.err.println("problems with finding zeros outside hightest/lowest extreme points");
 			System.out.println(e.getMessage());
 		}
 		
