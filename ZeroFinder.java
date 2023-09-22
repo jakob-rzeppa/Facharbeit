@@ -53,12 +53,6 @@ class ZeroFinder {
 			System.out.println(e.getMessage());
 		}
 		
-<<<<<<< HEAD
-		//edge case (Zero in Infinity)
-		for (double zero : zerosInInfinity(function, firstDerivative, zerosDerivative.get(0), zerosDerivative.get(zerosDerivative.size() - 1))) {
-			zeros.add(zero);
-=======
-		
 		//outside hightest/lowest extreme points
 		try {
 			for (double zero : zerosOutsideExtremePoints(function, derivative, extremePoints.get(0), extremePoints.get(extremePoints.size() - 1))) {
@@ -67,21 +61,15 @@ class ZeroFinder {
 		} catch (RuntimeException e) {
 			System.out.println("problems with finding zeros outside hightest/lowest extreme points");
 			System.out.println(e.getMessage());
->>>>>>> 4c4adb56e5bde476f05fdb55eaafd864a989f8ae
 		}
 		
 		//sort (lowest to hightest)
 		zeros.sort(null);
-<<<<<<< HEAD
-
-		print(function, zeros);
-=======
 		
 		print(function, zeros);
 		
 		return zeros;
 	}
->>>>>>> 4c4adb56e5bde476f05fdb55eaafd864a989f8ae
 
 	private static List<Double> zerosOutsideExtremePoints(Polynomial function, Polynomial derivative, double derivativeFirstZero, double derivativeLastZero) {
 		List<Double> zeros = new ArrayList<>();
@@ -135,28 +123,6 @@ class ZeroFinder {
 		}
 		
 		return areas;
-	}
-	
-	private static List<Double> zerosInInfinity(Polynomial function, Polynomial derivative, double firstZeroDerivative, double lastZeroDerviative) {
-		List<Double> zeros = new ArrayList<Double>();
-		if (function.getDegree() % 2 == 0) {
-			if ((function.solve(firstZeroDerivative) > 0 && function.getDegree() < 0) ||
-				(function.solve(firstZeroDerivative) < 0 && function.getDegree() > 0)) {
-				zeros.add(newtonmethod(function, function, firstZeroDerivative - 1));
-			}
-			if ((function.solve(lastZeroDerviative) > 0 && function.getDegree() < 0) ||
-				(function.solve(lastZeroDerviative) < 0 && function.getDegree() > 0)) {
-				zeros.add(newtonmethod(function, derivative, lastZeroDerviative + 1));
-			}
-		} else {
-			if ((function.solve(firstZeroDerivative) > 0 && function.getDegree() > 0) || (function.solve(firstZeroDerivative) < 0 && function.getDegree() < 0)) {
-				zeros.add(newtonmethod(function, derivative, firstZeroDerivative - 1));
-			}
-			if ((function.solve(lastZeroDerviative) > 0 && function.getDegree() < 0) || (function.solve(lastZeroDerviative) < 0 && function.getDegree() > 0)) {;
-				zeros.add(newtonmethod(function, derivative, lastZeroDerviative + 1));
-			}
-		}
-		return zeros;
 	}
 
 	private static List<Double> bisectormethod(Polynomial function, List<Double> area) {
