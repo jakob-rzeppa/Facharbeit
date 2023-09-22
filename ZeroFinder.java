@@ -47,40 +47,15 @@ class ZeroFinder {
 			zeros.add(bisectormethod(function, areas.get(i)).get(0));
 		}
 		
-		//edge cases
-		if (function.getDegree() % 2 == 0) {
-			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() < 0) ||
-				(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() > 0)) {
-				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
-			}
-			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
-				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {
-				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
-			}
-		} else {
-			if ((function.solve(zerosDerivative.get(0)) > 0 && function.getDegree() > 0) ||
-			(function.solve(zerosDerivative.get(0)) < 0 && function.getDegree() < 0)) {
-				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(0) - 1));
-			}
-			if ((function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) > 0 && function.getDegree() < 0) ||
-				(function.solve(zerosDerivative.get(zerosDerivative.size() - 1)) < 0 && function.getDegree() > 0)) {;
-				zeros.add(newtonmethod(function, firstDerivative, zerosDerivative.get(zerosDerivative.size() - 1) + 1));
-			}
+		//edge case (Zero in Infinity)
+		for (double zero : zerosInInfinity(function, firstDerivative, zerosDerivative.get(0), zerosDerivative.get(zerosDerivative.size() - 1))) {
+			zeros.add(zero);
 		}
 		
 		//sort
 		zeros.sort(null);
-		
-		//print
-		System.out.println("Degree: " + function.getDegree());
-		System.out.println("Function: " + function.toString());
-		if (zeros.size() == 0) {
-			System.out.println("No Zeros");
-		}
-		for (int i = 0; i < zeros.size(); i++) {
-			System.out.println("Zero " + i + ": " + zeros.get(i));
-		}
-		System.out.println();
+
+		print(function, zeros);
 
 		return zeros;
 	}
@@ -110,6 +85,28 @@ class ZeroFinder {
 		return areas;
 	}
 	
+	private static List<Double> zerosInInfinity(Polynomial function, Polynomial derivative, double firstZeroDerivative, double lastZeroDerviative) {
+		List<Double> zeros = new ArrayList<Double>();
+		if (function.getDegree() % 2 == 0) {
+			if ((function.solve(firstZeroDerivative) > 0 && function.getDegree() < 0) ||
+				(function.solve(firstZeroDerivative) < 0 && function.getDegree() > 0)) {
+				zeros.add(newtonmethod(function, function, firstZeroDerivative - 1));
+			}
+			if ((function.solve(lastZeroDerviative) > 0 && function.getDegree() < 0) ||
+				(function.solve(lastZeroDerviative) < 0 && function.getDegree() > 0)) {
+				zeros.add(newtonmethod(function, derivative, lastZeroDerviative + 1));
+			}
+		} else {
+			if ((function.solve(firstZeroDerivative) > 0 && function.getDegree() > 0) || (function.solve(firstZeroDerivative) < 0 && function.getDegree() < 0)) {
+				zeros.add(newtonmethod(function, derivative, firstZeroDerivative - 1));
+			}
+			if ((function.solve(lastZeroDerviative) > 0 && function.getDegree() < 0) || (function.solve(lastZeroDerviative) < 0 && function.getDegree() > 0)) {;
+				zeros.add(newtonmethod(function, derivative, lastZeroDerviative + 1));
+			}
+		}
+		return zeros;
+	}
+
 	private static List<Double> bisectormethod(Polynomial function, List<Double> area) {
 		double aV = function.solve(area.get(0));
 		double bV = function.solve(area.get(1));
@@ -162,7 +159,12 @@ class ZeroFinder {
 	private static void print(Polynomial function, List<Double> zeros) {
 		System.out.println("Degree: " + function.getDegree());
 		System.out.println("Function: " + function.toString());
-		System.out.println("Zero: " + zeros.get(0));
+		if (zeros.size() == 0) {
+			System.out.println("No Zeros");
+		}
+		for (int i = 0; i < zeros.size(); i++) {
+			System.out.println("Zero " + i + ": " + zeros.get(i));
+		}
 		System.out.println();
 	}
 

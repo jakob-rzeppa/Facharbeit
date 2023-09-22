@@ -1,4 +1,4 @@
-##### Numerisches finden von Nullstellen - Implementierung in Java
+#### Numerisches finden von Nullstellen ganzrationaler Funktionen - Implementierung in Java
 
 ### Gliederung
 
