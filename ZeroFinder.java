@@ -10,6 +10,7 @@ class ZeroFinder {
 
 		// ---- recursive end ----
 		if (function.getDegree() == 1) {
+			//TODO coefficient = 0 -> parralel zur X-Achse
 			zeros.add(-(function.getCoefficients().get(0) / function.getCoefficients().get(1)));
 
 			print(function, zeros);
@@ -17,6 +18,7 @@ class ZeroFinder {
 		}
 		
 		// ---- recursive start ----
+		//TODO nicht extrempunkte sonder auch wendestellen
 		List<Double> extremePoints = findZeros(derivative);
 		
 		//edge case (derivative has no zeros)
@@ -171,9 +173,9 @@ class ZeroFinder {
 		value = value - function.solve(value) / derivative.solve(value);
 
 		//if the difference between the val before the last and the last is smaller than the difference between the last and current there is a infinite loop
-		try {
+		try { //TODO null wird zu 0
 			if (lastValues[1] - lastValues[0] > value - lastValues[1]) {
-				return null;
+				return null; 
 			}
 		} catch (RuntimeException e) {throw e;}
 
@@ -194,7 +196,7 @@ class ZeroFinder {
 	}
 
 	public static void main(String[] args) {
-		List<Double> c = new ArrayList<Double>();
+		/*List<Double> c = new ArrayList<Double>();
 		c.add(-5d);
 		c.add(1d);
 		c.add(-10d);
@@ -209,6 +211,6 @@ class ZeroFinder {
 		List<Double> zerosDer = new ArrayList<Double>();
 		zerosDer.add(0.05d);
 		zerosDer.add(0.61d);
-		//System.out.println(findAreas(p, p.derive(), zerosDer));
+		//System.out.println(findAreas(p, p.derive(), zerosDer));*/
 	}
 }
