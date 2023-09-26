@@ -4,24 +4,17 @@ import java.util.ArrayList;
 
 class Main {
     public static void main(String[] args) {
-        for (int i = 0; i < 1; i++) {
-            List<Double> c = new ArrayList<>();
-            
-            Random rand = new Random();
-            for (int j = 0; j < 10; j++) {
-                c.add(round(rand.nextDouble()*10-5d, 2));
-            }
-
-            Polynomial p = new Polynomial(c);
-
-            System.out.println("----- " + p.toString() + " -----");
-
-            ZeroFinder.findZeros(p);
-
-            System.out.println();
-            System.out.println("---------------------------------------------");
-            System.out.println();
+        List<Double> c = new ArrayList<>();
+        Random rand = new Random();
+        for (int j = 0; j < 10; j++) {
+            c.add(round(rand.nextDouble()*10-5d, 2));
         }
+
+        Polynomial p = new Polynomial(c);
+
+        System.out.println("----- " + p.toString() + " -----");
+
+        
     }
 
 	public static double round(double value, int places) {
