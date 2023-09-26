@@ -10,7 +10,7 @@ class ZeroFinder {
 
 		// ---- recursive end ----
 		if (function.getDegree() == 1) {
-			//TODO coefficient = 0 -> parralel zur X-Achse
+			//if the degree of the function is equal to 1 the coefficient of the highest monomial is never 0
 			zeros.add(-(function.getCoefficients().get(0) / function.getCoefficients().get(1)));
 
 			print(function, zeros);
@@ -18,13 +18,12 @@ class ZeroFinder {
 		}
 		
 		// ---- recursive start ----
-		//TODO nicht extrempunkte sonder auch wendestellen
-		List<Double> extremePoints = findZeros(derivative);
+		List<Double> extremePoints = getExtremePoints(secDerivative, findZeros(derivative));
 		
 		//edge case (derivative has no zeros)
 		if (extremePoints.size() == 0) {
 			try {
-				Double zero = newtonmethod(function, derivative, 0d, new double[2]);
+				Double zero = newtonmethod(function, derivative, 0d, new Double[2]);
 				if (zero != null) {
 					zeros.add(zero);
 				}
@@ -79,23 +78,23 @@ class ZeroFinder {
 		if (function.getDegree() % 2 == 0) { //straight
 			//left
 			if ((function.solve(derivativeFirstZero) > 0 && function.getDegree() < 0) || (function.solve(derivativeFirstZero) < 0 && function.getDegree() > 0)) {
-				Double zero = newtonmethod(function, derivative, derivativeFirstZero - 1, new double[2]);
+				Double zero = newtonmethod(function, derivative, derivativeFirstZero - 1, new Double[2]);
 				if (zero != null) { zeros.add(zero); }
 			}
 			//right
 			if ((function.solve(derivativeLastZero) > 0 && function.getDegree() < 0) || (function.solve(derivativeLastZero) < 0 && function.getDegree() > 0)) {
-				Double zero = newtonmethod(function, derivative, derivativeLastZero + 1, new double[2]);
+				Double zero = newtonmethod(function, derivative, derivativeLastZero + 1, new Double[2]);
 				if (zero != null) { zeros.add(zero); }
 			}
 		} else if (function.getDegree() % 2 != 0) { //odd
 			//left
 			if ((function.solve(derivativeFirstZero) > 0 && function.getDegree() > 0) || (function.solve(derivativeFirstZero) < 0 && function.getDegree() < 0)) {
-				Double zero = newtonmethod(function, derivative, derivativeFirstZero - 1, new double[2]);
+				Double zero = newtonmethod(function, derivative, derivativeFirstZero - 1, new Double[2]);
 				if (zero != null) { zeros.add(zero); }
 			}
 			//right
 			if ((function.solve(derivativeLastZero) > 0 && function.getDegree() < 0) || (function.solve(derivativeLastZero) < 0 && function.getDegree() > 0)) {
-				Double zero = newtonmethod(function, derivative, derivativeLastZero + 1, new double[2]);
+				Double zero = newtonmethod(function, derivative, derivativeLastZero + 1, new Double[2]);
 				if (zero != null) { zeros.add(zero); }
 			}
 		}
@@ -164,7 +163,7 @@ class ZeroFinder {
 		return bisectormethod(function, newArea);
 	}
 	
-	private static Double newtonmethod(Polynomial function, Polynomial derivative, double value, double[] lastValues) {
+	private static Double newtonmethod(Polynomial function, Polynomial derivative, double value, Double[] lastValues) {
 		//recursive end
 		if (function.solve(value) < 0.00001d && function.solve(value) > -0.00001d) {
 			return value;
@@ -173,14 +172,26 @@ class ZeroFinder {
 		value = value - function.solve(value) / derivative.solve(value);
 
 		//if the difference between the val before the last and the last is smaller than the difference between the last and current there is a infinite loop
-		try { //TODO null wird zu 0
-			if (lastValues[1] - lastValues[0] > value - lastValues[1]) {
-				return null; 
-			}
-		} catch (RuntimeException e) {throw e;}
+		if (lastValues[0] != null && lastValues[1] != null && lastValues[1] - lastValues[0] > value - lastValues[1]) {
+			return null; 
+		}
+
+		lastValues[0] = lastValues[1];
+		lastValues[1] = value;
 
 		//recursive
 		return newtonmethod(function, derivative, value, lastValues);
+	}
+
+	private static List<Double> getExtremePoints(Polynomial derivative, List<Double> zerosDerivative) {
+		Polynomial secDerivative = derivative.derive();
+
+		for (int i = 0; i < zerosDerivative.size(); i++) {
+			if (secDerivative.solve(zerosDerivative.get(i)) == 0) {
+				zerosDerivative.remove(i);
+			}
+		}
+		return zerosDerivative;
 	}
 
 	private static void print(Polynomial function, List<Double> zeros) {
