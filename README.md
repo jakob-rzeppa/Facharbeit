@@ -21,11 +21,17 @@ Ich arbeite mit Java, da ich, durch mein Frühstudium an der TU Braunschweig, er
 Mein Ziel ist es ein allgemeines Verfahren zur approximierung aller Nullstellen von Polynomfunktionen zu erarbeiten und mit Java zu implementieren.
 
 ## Hauptteil
+# Wieso/Wozu?
+
 # Stand des Problems
+
+# Verfahren
 
 # Erklärung der Lösung
 
 # Offen gebliebene Fragen & Wiedersprüche
+
+# Testing
 
 ## Schluss
 # Zusammenfassung und abschließende Überlegungen
