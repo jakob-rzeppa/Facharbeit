@@ -1,16 +1,11 @@
 import java.util.List;
 import java.util.ArrayList;
 
-class Polynomial {
+class Polynomial extends Function {
 	private List<Double> coefficients;
-	private double brokenDividend = 0;
-	private double brokenDivisorSubtrahend;
 	private int degree;
 	
-	public Polynomial(double brokenDividend, double brokenDivisorSubtrahend, boolean writingOrder, double... coefficients) {
-		this.brokenDividend = brokenDividend;
-		this.brokenDivisorSubtrahend = brokenDivisorSubtrahend;
-
+	public Polynomial(boolean writingOrder, double... coefficients) {
 		this.coefficients = new ArrayList<>();
 		if (writingOrder) {
 			for (int i = coefficients.length - 1; i >= 0; i--) {
@@ -25,13 +20,11 @@ class Polynomial {
 		this.degree = this.coefficients.size() - 1;
 	}
 
-	public Polynomial(double brokenDividend, double brokenDivisorSubtrahend, List<Double> coefficients) {
-		this.brokenDividend = brokenDividend;
-		this.brokenDivisorSubtrahend = brokenDivisorSubtrahend;
+	public Polynomial(List<Double> coefficients) {
 		this.coefficients = coefficients;
 		this.degree = this.coefficients.size() - 1;
 	}
-	
+
 	public double solve(double val) {
         double result = 0;
         for (int i = 0; i < coefficients.size(); i++) {
@@ -40,35 +33,31 @@ class Polynomial {
         return result;
 	}
 
-    public Polynomial derive() {
+    /*public Polynomial derive() {
 		double[] newCoefficients = new double[coefficients.size() - 1];
         for (int i = 1; i < coefficients.size(); i++) {
 			newCoefficients[i - 1] = Main.round(coefficients.get(i) * i, 4);
         }
-        return new Polynomial(0, 0, false, newCoefficients);
-    }
+        return new Polynomial(false, newCoefficients);
+    }*/
 
-	public Polynomial devide(double subtrahend) {
-		double[] coefficientsQuotient = new double[coefficients.size() - 1];
+	/*public Function devide(Function denomiantor) {
+		return new RationalFunction(this, denomiantor);
+	}*/
 
-		// aC * x^(aE) + bC * x^(bE)
-		double a = 0;
-		double b = 0;
+	//Form: (x - d)
+	public void multiply(double d) {
+		d = -d;
 
-		for (int i = coefficients.size() - 1; i > 0; i--) {
-			System.out.println("I: " + i);
-			a = coefficients.get(i) - b;
-			b = a * (-subtrahend);
-			System.out.println("a: " + a + " b: " + b);
+		coefficients.add(0, 0d);
 
-			coefficientsQuotient[i - 1] = a;
+		for (int i = 1; i < coefficients.size(); i++) {
+			coefficients.set(i - 1, coefficients.get(i) * d + coefficients.get(i - 1));
 		}
+	}
 
-		if (b != 0) {
-			return new Polynomial(b, subtrahend, false, coefficientsQuotient);
-		}
-
-		return new Polynomial(0, 0, false, coefficientsQuotient);
+	public void multiply(Polynomial p) {
+		
 	}
 
     // ---- get methods ----
@@ -119,23 +108,23 @@ class Polynomial {
 			}
 		}
 
-		if (brokenDividend != 0) {
-			if (brokenDivisorSubtrahend >= 0) {
-				out += " +(" + brokenDividend + ")/(x+" + brokenDivisorSubtrahend + ")";
-			} else {
-				out += " +(" + brokenDividend + ")/(x" + brokenDivisorSubtrahend + ")";
-			}
-			
-		}
-
 		return out;
     }
 
+	// ---- helper functions ----
+	/*public static Polynomial fromZeroPointForm(double... values) {
+		for (int i = 0; i < values.length - 1; i++) {
+			
+		}
+	}*/
+
+
    // ---- debug ----
     public static void main(String[] args) {
-		Polynomial p = new Polynomial(0, 0, true, 5d,3d,-12d);
+		Polynomial p = new Polynomial(true, 5d,2d,3d);
 		System.out.println(p.toString());
-		System.out.println(p.devide(4).toString());
-    
+		System.out.println();
+		p.multiply(2);
+		System.out.println(p.toString());
 	}
 }
