@@ -19,6 +19,11 @@ class Polynomial{
         this.degree = this.coefficients.size() - 1;
     }
 
+    public Polynomial(Polynomial polynomial) {
+        this.coefficients = polynomial.getCoefficients();
+        this.degree = this.coefficients.size() - 1;
+    }
+
     public Polynomial() {
         this.coefficients = new ArrayList<Double>();
         this.coefficients.add(0d);
@@ -38,7 +43,7 @@ class Polynomial{
     }
     public Polynomial derive() {
         if (this.degree == 0) {
-            throw new RuntimeException("cant derive polinomial of zeroth degree");
+            return new Polynomial();
         }
 
         List<Double> newCoefficients = new ArrayList<Double>();

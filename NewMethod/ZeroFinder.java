@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class ZeroFinder {
     
-    private static boolean running = true;
+    private static boolean running;
 
 
 
@@ -13,18 +13,23 @@ public class ZeroFinder {
 
     private static List<Double> findZeros(RationalFunction function) {
         List<Double> zeros = new ArrayList<>();
+		
+		zeros.add(newtonmethod(function, function.derive(), 0, null));
 
+		/*running = true;
         do {
 
 
 
 
-        } while (running);
+
+
+        } while (running);*/
 
         return zeros;
     }
 
-    private static Double newtonmethod(Polynomial function, Polynomial derivative, double value, Double[] lastValues) {
+    private static Double newtonmethod(RationalFunction function, RationalFunction derivative, double value, Double[] lastValues) {
 		//recursive end
 		if (function.solve(value) < 0.00001d && function.solve(value) > -0.00001d) {
 			return value;
@@ -46,6 +51,7 @@ public class ZeroFinder {
 	}
 
     public static void main(String[] args) {
-        
+        RationalFunction f = new RationalFunction(new Polynomial(1d,0d,-1d), new Polynomial());
+		System.out.println(findZeros(f));
     }
 }

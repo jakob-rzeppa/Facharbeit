@@ -12,6 +12,23 @@ public class RationalFunction {
     public double solve(double x) {
         return numerator.solve(x) / denominator.solve(x);
     }
+    public RationalFunction derive() {
+        Polynomial derivativeNumeratorFactor1 = new Polynomial(denominator);
+        derivativeNumeratorFactor1.multiply(numerator.derive());
+
+        Polynomial derivativeNumeratorFactor2 = new Polynomial(numerator);
+        derivativeNumeratorFactor2.multiply(denominator.derive());
+
+        Polynomial derivativeNumerator = new Polynomial(derivativeNumeratorFactor1);
+        derivativeNumerator.subtract(derivativeNumeratorFactor2);
+
+        Polynomial derivativeDenominator = new Polynomial(denominator);
+        derivativeDenominator.multiply(denominator);
+
+        RationalFunction derivative = new RationalFunction(derivativeNumerator, derivativeDenominator);
+
+        return derivative;
+    }
 
     public void setNumerator(Polynomial numerator) {
         this.numerator = numerator;
@@ -36,15 +53,11 @@ public class RationalFunction {
 
 
     public static void main(String[] args) {
-        Polynomial p = new Polynomial(3d,5d,0d,-2d);
-        Polynomial q = new Polynomial(1d, 5d);
+        Polynomial p = new Polynomial(5d,8d,-2d);
+        Polynomial q = new Polynomial(1d, -2d);
         RationalFunction f = new RationalFunction(p, q);
 
-        System.out.println(f.getNumerator().toString());
-        System.out.println(f.getDenominator().toString());
-
-        System.out.println(f.getNumerator().solve(0));
-        System.out.println(f.solve(0));
         System.out.println(f.toString());
+        System.out.println(f.derive().toString());
     }
 }
