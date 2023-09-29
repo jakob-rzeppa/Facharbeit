@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-class Polynomial {
+class Polynomial2 {
 	private List<Double> coefficients;
 	private int degree;
 	

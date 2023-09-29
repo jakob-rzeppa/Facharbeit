@@ -1,5 +1,8 @@
 import java.util.List;
 import java.util.Random;
+
+import NewMethod.Polynomial;
+
 import java.util.ArrayList;
 
 class Main {

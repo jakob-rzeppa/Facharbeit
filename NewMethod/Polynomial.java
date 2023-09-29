@@ -1,3 +1,5 @@
+package NewMethod;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,7 +19,17 @@ class Polynomial{
         this.degree = this.coefficients.size() - 1;
     }
 
+    public Polynomial() {
+        this.coefficients = new ArrayList<Double>();
+        this.coefficients.add(0d);
+        this.degree = 0;
+    }
+
     public double solve(double x) {
+        if (this.degree == 0) {
+            return this.coefficients.get(0);
+        }
+
         double result = 0;
         for (int i = 0; i < coefficients.size(); i++) {
             result += coefficients.get(i) * Math.pow(x, i);
@@ -25,6 +37,10 @@ class Polynomial{
         return result;
     }
     public Polynomial derive() {
+        if (this.degree == 0) {
+            throw new RuntimeException("cant derive polinomial of zeroth degree");
+        }
+
         List<Double> newCoefficients = new ArrayList<Double>();
         for (int i = 1; i < coefficients.size(); i++) {
 			newCoefficients.add(coefficients.get(i) * i);
@@ -72,10 +88,6 @@ class Polynomial{
         }
         
         this.coefficients = productCoefficients;
-    }
-    
-    public RationalFunction getQuotient(Polynomial divisor) {
-        return null; //TODO
     }
 
     public List<Double> getCoefficients() { return coefficients; }
