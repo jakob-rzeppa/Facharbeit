@@ -14,7 +14,7 @@ public class ZeroFinder {
     private static List<Double> findZeros(RationalFunction function) {
         List<Double> zeros = new ArrayList<>();
 		
-		zeros.add(newtonmethod(function, function.derive(), 0, null));
+		zeros.add(newtonmethod(function, function.derive(), 0, new Double[2]));
 
 		/*running = true;
         do {
@@ -51,7 +51,7 @@ public class ZeroFinder {
 	}
 
     public static void main(String[] args) {
-        RationalFunction f = new RationalFunction(new Polynomial(1d,0d,-1d), new Polynomial());
+        RationalFunction f = new RationalFunction(new Polynomial(1d,0d,-1d), new Polynomial(1d));
 		System.out.println(findZeros(f));
     }
 }
