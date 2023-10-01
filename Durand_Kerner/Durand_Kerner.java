@@ -18,7 +18,7 @@ public class Durand_Kerner {
 
 
         // create the fraction
-        Complex fr = Complex.devide(nV, dV);
+        Complex fr = Complex.divide(nV, dV);
 
         // return the new value
         return Complex.minus(lastVal, fr);
@@ -26,7 +26,7 @@ public class Durand_Kerner {
 
     private static Complex[] startingVals(Polynomial f) {
 
-        return new Complex[f.degree];
+        return new Complex[f.getDegree()];
     }
 
     private static Complex[] recursion(Complex[] roots, Polynomial f) {
@@ -46,13 +46,5 @@ public class Durand_Kerner {
 
 
     public static void main(String[] args) {
-        Complex c = new Complex(3, 2);
-        Complex d = c;
-        System.out.println(c.toString());
-        System.out.println(d.toString());
-        d.minus(new Complex(1, 1));
-        System.out.println(c.toString());
-        System.out.println(d.toString());
     }
-
 }

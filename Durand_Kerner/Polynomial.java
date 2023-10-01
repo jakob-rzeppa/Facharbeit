@@ -1,140 +1,73 @@
 package Durand_Kerner;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 class Polynomial{
-    private List<Double> coefficients;
+    private double[] coefficients;
     private int degree;
 
-    public Polynomial(List<Double> coefficients) {
-        this.coefficients = coefficients;
-        this.degree = this.coefficients.size() - 1;
-    }
     public Polynomial(double... coefficients) {
-        this.coefficients = new ArrayList<>();
-        for (double coefficient : coefficients) {
-            this.coefficients.add(0, coefficient);
+        this.coefficients = new double[coefficients.length];
+        int i = this.coefficients.length;
+        for (double d : coefficients) {
+            this.coefficients[i--] = d;
         }
-        this.degree = this.coefficients.size() - 1;
+        this.degree = this.coefficients.length - 1;
     }
 
-    public Polynomial(Polynomial polynomial) {
-        this.coefficients = polynomial.getCoefficients();
-        this.degree = this.coefficients.size() - 1;
-    }
-
-    public Polynomial() {
-        this.coefficients = new ArrayList<Double>();
-        this.coefficients.add(0d);
-        this.degree = 0;
-    }
-
-    public double solve(double x) {
+    public Complex solve(Complex x) {
         if (this.degree == 0) {
-            return this.coefficients.get(0);
+            return new Complex(this.coefficients[0]);
         }
 
-        double result = 0;
-        for (int i = 0; i < coefficients.size(); i++) {
-            result += coefficients.get(i) * Math.pow(x, i);
+        Complex result = new Complex(0);
+        for (int i = 0; i < coefficients.length; i++) {
+            Complex termProduct = Complex.multiply(new Complex(coefficients[i]), Complex.power(x, i));
+            result = Complex.plus(result, termProduct);
         }
         return result;
     }
-    public Polynomial derive() {
-        if (this.degree == 0) {
-            return new Polynomial();
-        }
 
-        List<Double> newCoefficients = new ArrayList<Double>();
-        for (int i = 1; i < coefficients.size(); i++) {
-			newCoefficients.add(coefficients.get(i) * i);
-        }
-        return new Polynomial(newCoefficients);
-    }
-
-    public void add(Polynomial addend) {
-        List<Double> addendCoefficients = addend.getCoefficients();
-        for (int i = 0; i < addendCoefficients.size(); i++) {
-            try {
-                coefficients.set(i, coefficients.get(i) + addendCoefficients.get(i));
-            } catch (IndexOutOfBoundsException e) {
-                coefficients.add(addendCoefficients.get(i));
-            }
-        }
-    }
-    public void subtract(Polynomial subtrahend) {
-        List<Double> subtrahendCoefficients = subtrahend.getCoefficients();
-        for (int i = 0; i < subtrahendCoefficients.size(); i++) {
-            try {
-                coefficients.set(i, coefficients.get(i) - subtrahendCoefficients.get(i));
-            } catch (IndexOutOfBoundsException e) {
-                coefficients.add(-subtrahendCoefficients.get(i));
-            }
-        }
-    }
-    public void multiply(Polynomial factor) {
-        List<Double> factorCoefficients = factor.getCoefficients();
-        List<Double> productCoefficients = new ArrayList<Double>();
-  
-        // init productCoefficients
-        for (int i = 0; i < coefficients.size() + factorCoefficients.size() - 1; i++) 
-        {
-            productCoefficients.add(0d);
-        }
-
-        // multiply polynomials term by term
-        for (int i = 0; i < coefficients.size(); i++) 
-        {
-            for (int j = 0; j < factorCoefficients.size(); j++) 
-            {
-                productCoefficients.set(i + j, productCoefficients.get(i + j) + (coefficients.get(i) * factorCoefficients.get(j)));
-            }
-        }
-        
-        this.coefficients = productCoefficients;
-    }
-
-    public List<Double> getCoefficients() { return coefficients; }
+    public double[] getCoefficients() { return coefficients; }
     public int getDegree() { return degree; }
 
     @Override
     public String toString() {
         //edge cases
-		if (coefficients.size() == 0) {
+		if (coefficients.length == 0) {
 			return "";
-		} if (coefficients.size() == 1) {
-			return coefficients.get(0) + "";
-		} if (coefficients.size() == 2) {
-			if (coefficients.get(0) >= 0) {
-				return coefficients.get(1) + "x +" + coefficients.get(0);
+		} if (coefficients.length == 1) {
+			return coefficients[0] + "";
+		} if (coefficients.length == 2) {
+			if (coefficients[0] >= 0) {
+				return coefficients[1] + "x +" + coefficients[0];
 			} else {
-				return coefficients.get(1) + "x " + coefficients.get(0);
+				return coefficients[1] + "x " + coefficients[0];
 			}
 		}
 		
         String out = "";
-		for (int i = coefficients.size() - 1; i > 1; i--) {
-			if (coefficients.get(i) == 0) {
+		for (int i = coefficients.length - 1; i > 1; i--) {
+			if (coefficients[i] == 0) {
 				continue;
 			}
-			if (coefficients.get(i) >= 0) {
-				out += "+" + coefficients.get(i) + "x^(" + i + ") ";
+			if (coefficients[i] >= 0) {
+				out += "+" + coefficients[i] + "x^(" + i + ") ";
 			} else {
-				out += coefficients.get(i) + "x^(" + i + ") ";
+				out += coefficients[i] + "x^(" + i + ") ";
 			}
 		}
-		if (coefficients.get(1) >= 0) {
-			if (coefficients.get(0) >= 0) {
-				out += "+" + coefficients.get(1) + "x" + " +" + coefficients.get(0);
+		if (coefficients[1] >= 0) {
+			if (coefficients[0] >= 0) {
+				out += "+" + coefficients[1] + "x" + " +" + coefficients[0];
 			} else {
-				out += "+" + coefficients.get(1) + "x" + " " + coefficients.get(0);
+				out += "+" + coefficients[1] + "x" + " " + coefficients[0];
 			}
 		} else {
-			if (coefficients.get(0) >= 0) {
-				out += coefficients.get(1) + "x" + " +" + coefficients.get(0);
+			if (coefficients[0] >= 0) {
+				out += coefficients[1] + "x" + " +" + coefficients[0];
 			} else {
-				out += coefficients.get(1) + "x" + " " + coefficients.get(0);
+				out += coefficients[1] + "x" + " " + coefficients[0];
 			}
 		}
 
@@ -142,12 +75,6 @@ class Polynomial{
     }
 
     public static void main(String[] args) {
-        Polynomial p = new Polynomial(3d,2d);
-        Polynomial q = new Polynomial(-1d);
-
-        System.out.println(p.toString());
-        System.out.println(q.toString());
-        p.multiply(q);
-        System.out.println(p.toString());
+        
     }
 }
