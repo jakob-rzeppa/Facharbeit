@@ -77,6 +77,19 @@ public class Complex {
         return false;
     }
 
+    public Complex round(double placesAfterDecimalPoint) {
+        // shove the numbers after the decimal point in front of the decimal point and cut of the rest
+        double factor = Math.pow(10, placesAfterDecimalPoint);
+		double r1 = Math.round(this.real * factor);
+        double i1 = Math.round(this.imag * factor);
+
+        // shove the numbers after the decimal point back to where they belong
+        double r2 = (double) r1 / factor;
+        double i2 = (double) i1 / factor;
+        
+		return new Complex(r2, i2);
+    }
+
     @Override
     public String toString() {
         if (imag == 0) return real + "";
@@ -86,6 +99,7 @@ public class Complex {
     }
 
     public static void main(String[] args) {
-        
+        Complex c = new Complex(2.5434234243556d, 2.43534242346d);
+        System.out.println(c.round(4));
     }
 }

@@ -1,5 +1,6 @@
 public class DurandKernerMethod {
     private static final double ACCURACY = 0.001;
+    private static final double ACCURACY_NUMBERS_AFTER_DECIMALPOINT = 2;
 
     // nC -> numerator coefficients; dP -> denominator points
     private static Complex calc(Complex lastVal, Polynomial f, Complex[] roots, int valIndex) {
@@ -29,7 +30,8 @@ public class DurandKernerMethod {
         Complex[] staringPoints = new Complex[f.getDegree()];
 
         // radius
-        double r = Math.abs(n * a[0] / 2 * a[1]) + Math.abs(a[n - 1] / 2 * n * a[n]);
+        //double r = Math.abs(n * a[0] / 2 * a[1]) + Math.abs(a[n - 1] / 2 * n * a[n]);
+        double r = Math.pow(Math.abs(a[0]/a[n]), 1 / n);
         // theta
         double theta = 2 * Math.PI / n;
         // offset
@@ -54,11 +56,12 @@ public class DurandKernerMethod {
         }
 
         // check if the |change| is smaller then the ACCURACY
-        if (f.solve(newRoots[0]).abs().real < ACCURACY && f.solve(newRoots[0]).abs().imag < ACCURACY) {
+        double realChange = Math.abs(newRoots[0].real - roots[0].real);
+        double imagChange = Math.abs(newRoots[0].imag - roots[0].imag);
+        if (realChange < ACCURACY && imagChange < ACCURACY) {
             return newRoots;
         }
 
-        // else recursion
         return recursion(newRoots, f);
     }
 
@@ -68,7 +71,7 @@ public class DurandKernerMethod {
     }
 
     public static void main(String[] args) {
-        Polynomial p = new Polynomial(5d,2d,-4d);
+        Polynomial p = new Polynomial(2d,5d,-4d);
         /*Complex[] roots = new Complex[2];
         roots[0] = new Complex(-1);
         roots[1] = new Complex(1); //2.5
@@ -78,7 +81,7 @@ public class DurandKernerMethod {
         }*/
         Complex[] cs = durandKerner(p);
         for (Complex c : cs) {
-            System.out.println(c);
+            System.out.println(c.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
         }
     }
 }
