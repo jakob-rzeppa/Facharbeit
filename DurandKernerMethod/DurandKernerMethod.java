@@ -1,27 +1,33 @@
 public class DurandKernerMethod {
     private static final double ACCURACY = 0.001;
-    private static final double ACCURACY_NUMBERS_AFTER_DECIMALPOINT = 2;
+    private static final double ACCURACY_NUMBERS_AFTER_DECIMALPOINT = 4;
 
     // nC -> numerator coefficients; dP -> denominator points
-    private static Complex calc(Complex lastVal, Polynomial f, Complex[] roots, int valIndex) {
+    private static Complex calc(Complex start, Polynomial f, Complex[] roots, int valIndex) {
+        System.out.println("start: " + start.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
         // get the value of the numerator
-        Complex nV = f.solve(lastVal);
-        
+        Complex nV = f.solve(start);
+        System.out.println("numerator: " + nV.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
 
         // get the value of the denominator
         Complex[] dFs = new Complex[roots.length];
         for (int i = 0; i < dFs.length; i++) {
             if (i == valIndex) { continue; }
-            dFs[i] = Complex.minus(lastVal, roots[i]);
+            dFs[i] = Complex.minus(start, roots[i]);
         }
         Complex dV = Complex.multiply(dFs);
+        System.out.println("denominator: " + dV.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
 
 
         // create the fraction
         Complex fr = Complex.divide(nV, dV);
+        System.out.println("fraction: " + fr.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
 
         // return the new value
-        return Complex.minus(lastVal, fr);
+        Complex result = Complex.minus(start, fr);
+        System.out.println("result: " + result.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
+        System.out.println();
+        return result;
     }
 
     private static Complex[] startingPoints(Polynomial f) {
@@ -50,6 +56,15 @@ public class DurandKernerMethod {
     private static Complex[] recursion(Complex[] roots, Polynomial f) {
         Complex[] newRoots = new Complex[roots.length];
 
+        System.out.println();
+        System.out.println();
+        System.out.println("-----");
+        for (Complex complex : roots) {
+            System.out.println(complex.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
+        }
+        System.out.println("-----");
+        System.out.println();
+
         // perform the calculation for every point
         for (int i = 0; i < roots.length; i++) {
             newRoots[i] = calc(roots[i], f, roots, i);
@@ -71,17 +86,12 @@ public class DurandKernerMethod {
     }
 
     public static void main(String[] args) {
-        Polynomial p = new Polynomial(2d,5d,-4d);
-        /*Complex[] roots = new Complex[2];
-        roots[0] = new Complex(-1);
-        roots[1] = new Complex(1); //2.5
+        Polynomial p = new Polynomial(12,-2,-4);
+        Complex[] roots = startingPoints(p);
+        //System.out.println(calc(roots[1], p, roots, 1));
         roots = recursion(roots, p);
-        for (Complex r : roots) {
-            System.out.println(r);
-        }*/
-        Complex[] cs = durandKerner(p);
-        for (Complex c : cs) {
-            System.out.println(c.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
+        for (Complex complex : roots) {
+            System.out.println(complex.round(ACCURACY_NUMBERS_AFTER_DECIMALPOINT));
         }
     }
 }

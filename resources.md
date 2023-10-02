@@ -17,3 +17,5 @@ https://www.youtube.com/watch?v=5JcpOj2KtWc
 
 
 Complex.java: https://introcs.cs.princeton.edu/java/32class/Complex.java.html
+
+https://github.com/osveliz/numerical-veliz/tree/master
