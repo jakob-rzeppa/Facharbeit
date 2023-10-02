@@ -1,14 +1,10 @@
-package Durand_Kerner;
-
-import java.util.concurrent.CompletableFuture;
-
 class Polynomial{
     private double[] coefficients;
     private int degree;
 
     public Polynomial(double... coefficients) {
         this.coefficients = new double[coefficients.length];
-        int i = this.coefficients.length;
+        int i = this.coefficients.length - 1;
         for (double d : coefficients) {
             this.coefficients[i--] = d;
         }
