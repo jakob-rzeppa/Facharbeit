@@ -44,6 +44,15 @@ public class Complex {
         return new Complex(real, imag);
     }
 
+    public static Complex multiply(Complex[] factors) {
+        if (factors.length == 1) { return factors[0]; }
+        Complex product = Complex.multiply(factors[0], factors[1]);
+        for (int i = 2; i < factors.length; i++) {
+            product = Complex.multiply(product, factors[i]);
+        }
+        return product;
+    }
+
     public static Complex power(Complex c, int exponent) {
         if (exponent == 0) {
             return new Complex(1);
@@ -81,19 +90,6 @@ public class Complex {
 		return new Complex(r2, i2);
     }
 
-    public Complex round() {
-        // shove the numbers after the decimal point in front of the decimal point and cut of the rest
-        double factor = Math.pow(10, 4);
-		double r1 = Math.round(this.real * factor);
-        double i1 = Math.round(this.imag * factor);
-
-        // shove the numbers after the decimal point back to where they belong
-        double r2 = (double) r1 / factor;
-        double i2 = (double) i1 / factor;
-        
-		return new Complex(r2, i2);
-    }
-
     @Override
     public String toString() {
         if (imag == 0) return real + "";
@@ -103,8 +99,6 @@ public class Complex {
     }
 
     public static void main(String[] args) {
-        Complex c = new Complex(4, 8);
-        Complex d = new Complex(2, -3);
-        System.out.println(Complex.multiply(c, d));
+        
     }
 }
