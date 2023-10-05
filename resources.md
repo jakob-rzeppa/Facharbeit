@@ -19,3 +19,7 @@ https://www.youtube.com/watch?v=5JcpOj2KtWc
 Complex.java: https://introcs.cs.princeton.edu/java/32class/Complex.java.html
 
 https://github.com/osveliz/numerical-veliz/tree/master
+
+https://stackoverflow.com/questions/4057684/durand-kerner-implementation-doesnt-work
+
+https://www.emathhelp.net/en/calculators/algebra-2/zeros-calculator/?f=1%2Bx%5E4%3D0%23&var=&sa=1&a=-inf&b=inf&sb=1
