@@ -5,20 +5,28 @@ class Poly {
     Poly(double... coefficients) {
         this.coefficients = coefficients;
         this.degree = coefficients.length - 1;
+        makeNthCoefficientOne();
     }
 
-    double solve(double val) {
-        double result = 0;
-        double x = 1;
+    private void makeNthCoefficientOne() {
+        if (coefficients[degree] == 1) { return; }
+        for (int i = 0; i < coefficients.length; i++) {
+            coefficients[i] = coefficients[i] / coefficients[degree];
+            //System.out.println(coefficients[degree]);
+        }
+    }
+
+    public Complex solve(Complex val) {
+        Complex result = new Complex(0, 0);
+        Complex x = new Complex(1, 0);
         for (double c : coefficients) {
-            result += x * c;
-            x *= val;
+            result = Complex.plus(result, Complex.multiply(x, new Complex(c, 0)));
+            x = Complex.multiply(x, val);
         }
         return result;
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(3,4);
-        System.out.println(p.solve(1));
+        Poly p = new Poly(3,2,4);
     }
 }
