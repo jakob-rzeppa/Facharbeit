@@ -1,5 +1,5 @@
 public class DurandKernerNew {
-    public static final int MAX = 10;
+    public static final int MAX = 100;
 
     private static boolean changeSmallerThen(double maxChange, Complex[] arr, Complex[] oldArr) {
         for (int i = 0; i < arr.length; i++) {
@@ -88,7 +88,7 @@ public class DurandKernerNew {
             for (int j = 0; j < oldRoots.length; j++) {
                 roots[j] = durandkerner(f, oldRoots, j);
             }
-        } while (!changeSmallerThen(0.001, roots, oldRoots) && ++i < MAX);
+        } while (!changeSmallerThen(0.00001, roots, oldRoots) && ++i < MAX);
         // print
         System.out.print(i + ": [");
         for (int j = 0; j < roots.length - 1; j++) {
@@ -105,7 +105,7 @@ public class DurandKernerNew {
     }
 
     public static void main(String[] args) {
-        Polynomial f = new Polynomial(-5,1,-1,+5);
+        Polynomial f = new Polynomial(5, -7, 0, 0, 0);
         Complex[] c = new Complex[3];
         c[0] = new Complex(-0.1,0.9);
         c[1] = new Complex(-0.8,-0.6);
