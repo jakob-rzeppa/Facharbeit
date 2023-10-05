@@ -30,4 +30,5 @@ def durand_kerner(poly, start=complex(.4, .9), epsilon=10**-16):#float('-inf')):
             return new
         roots = new
 
-print(durand_kerner(Poly(-5,3,-3,1)))
+#print(durand_kerner(Poly(-5,3,-3,1)))
+print(Poly(3,2,4)(4))

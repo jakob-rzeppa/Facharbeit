@@ -89,5 +89,6 @@ class Complex {
         c[0] = new Complex(1, 0);
         c[1] = new Complex(-2.34, 0.67);
         c[2] = new Complex(4.8, -2);
+        System.out.println(Complex.power(new Complex(2,4), 4));
     }
 }

@@ -15,7 +15,7 @@ public class DurandKerner {
     }
 
     public static Complex[] durandKerner(Poly p) {
-        Complex accuracy = new Complex(Math.pow(10, -16), Math.pow(10, -16));
+        Complex accuracy = new Complex(Math.pow(10, -8), Math.pow(10, -8));
         Complex start = new Complex(.4, .9);
 
         // init roots -> starting points
@@ -25,8 +25,11 @@ public class DurandKerner {
         }
 
         boolean running = true;
+        int ctr = 0;
         while (running) {
             Complex[] newRoots = new Complex[roots.length];
+
+            System.out.println("iteration: " + ctr++);
 
             // calc for every root
             for (int i = 0; i < roots.length; i++) {
@@ -59,7 +62,7 @@ public class DurandKerner {
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(3,2,1);
+        Poly p = new Poly(3,2,1,-23,24,7,34,-342,345);
         durandKerner(p);
     }
 }
