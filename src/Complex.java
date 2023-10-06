@@ -9,6 +9,13 @@ class Complex {
         this.im = im;
     }
 
+    public Complex abs() {
+        double re = (this.re >= 0) ? this.re : -this.re;
+        double im = (this.im >= 0) ? this.im : -this.im;
+        return new Complex(re, im);
+    }
+
+    // static methods
     public static Complex plus(Complex a, Complex b) {
         if (a == null) { return b; }
         if (b == null) { return a; }
@@ -60,12 +67,6 @@ class Complex {
         return result;
     }
 
-    public Complex abs() {
-        double re = (this.re >= 0) ? this.re : -this.re;
-        double im = (this.im >= 0) ? this.im : -this.im;
-        return new Complex(re, im);
-    }
-
     public static boolean isLessThan(Complex a, Complex b) {
         if (a.re > b.re) {
             return false;
@@ -82,13 +83,5 @@ class Complex {
         if (re == 0) return im + "i";
         if (im <  0) return re + " - " + (-im) + "i";
         return re + " + " + im + "i";
-    }
-
-    public static void main(String[] args) {
-        Complex[] c = new Complex[3];
-        c[0] = new Complex(1, 0);
-        c[1] = new Complex(-2.34, 0.67);
-        c[2] = new Complex(4.8, -2);
-        System.out.println(Complex.power(new Complex(2,4), 4));
     }
 }
