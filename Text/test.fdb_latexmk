@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1696539521 "/home/jakob/Dev/Facharbeit/Text/test.tex" "test.pdf" "test" 1696539521
+["pdflatex"] 1696577609 "/home/jakob/Dev/Facharbeit/Text/test.tex" "test.pdf" "test" 1696577610
   "/etc/texmf/web2c/texmf.cnf" 1696536445 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/jakob/Dev/Facharbeit/Text/test.tex" 1696539520 1350 41968feed95db6dade0d95298ce5868a ""
+  "/home/jakob/Dev/Facharbeit/Text/test.tex" 1696577608 1366 febaef1fe93abc5544f8ee12223058d5 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -32,9 +32,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1644012257 39432 7155514e09a3d69036fac785183a21c2 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1696536485 4379155 98693266ff65f58d9f98aff394de12d2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1696536536 2798282 5f66866e702bcdda42f1d9f4b8871986 ""
-  "test.aux" 1696539521 2176 f88d6b5f7ab40da56d39ed871b7a6a9f "pdflatex"
-  "test.tex" 1696539520 1350 41968feed95db6dade0d95298ce5868a ""
-  "test.toc" 1696539521 1324 8b6ac460d891281e237b1ccb850c2ef9 "pdflatex"
+  "test.aux" 1696577610 2268 7c52b92babcf228bd9d0c278013f1343 "pdflatex"
+  "test.tex" 1696577608 1366 febaef1fe93abc5544f8ee12223058d5 ""
+  "test.toc" 1696577610 1375 2b0dc0bb785e172c6786480bcf4657b8 "pdflatex"
   (generated)
   "test.aux"
   "test.log"

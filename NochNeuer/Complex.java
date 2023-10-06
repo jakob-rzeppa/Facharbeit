@@ -76,6 +76,32 @@ class Complex {
         return true;
     }
 
+    public Complex round(double placesAfterDecimalPoint) {
+        // shove the numbers after the decimal point in front of the decimal point and cut of the rest
+        double factor = Math.pow(10, placesAfterDecimalPoint);
+		double r1 = Math.round(this.re * factor);
+        double i1 = Math.round(this.im * factor);
+
+        // shove the numbers after the decimal point back to where they belong
+        double r2 = (double) r1 / factor;
+        double i2 = (double) i1 / factor;
+        
+		return new Complex(r2, i2);
+    }
+
+    public Complex round() {
+        // shove the numbers after the decimal point in front of the decimal point and cut of the rest
+        double factor = Math.pow(10, 4);
+		double r1 = Math.round(this.re * factor);
+        double i1 = Math.round(this.im * factor);
+
+        // shove the numbers after the decimal point back to where they belong
+        double r2 = (double) r1 / factor;
+        double i2 = (double) i1 / factor;
+        
+		return new Complex(r2, i2);
+    }
+
     @Override
     public String toString() {
         if (im == 0) return re + "";
