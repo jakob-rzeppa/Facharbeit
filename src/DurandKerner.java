@@ -37,7 +37,7 @@ public class DurandKerner {
                 Complex denominator = denominator(roots, i);
                 Complex fraction = Complex.divide(numerator, denominator);
                 Complex root = Complex.minus(roots[i], fraction);
-                System.out.println("i = " + i + ": " + root);
+                System.out.println("i = " + i + ": " + root.round());
                 newRoots[i] = root;
             }
             System.out.println();
@@ -56,7 +56,7 @@ public class DurandKerner {
 
         // Probe
         for (Complex r : roots) {
-            System.out.println("Probe: f(" + r + ") = " + p.solve(r));
+            System.out.println("Probe: f(" + r + ") = " + p.solve(r).round());
         }
         return roots;
     }

@@ -70,14 +70,29 @@
         \end{displaymath}
         \vspace{0.2cm}
         Nun setzen wir für $r_0$ %TODO
+
+        
         \begin{center}
+        Die Genauigkeit liegt bei vier Nachkommastellen \\ und es kann deswegen zu kleinen Abweichungen kommen.
         \begin{tabular}{c|c c c c}
             Iteration & r & s & t & u \\
             \hline
-            1 & 0.82-0.5i & -2.12+0.29i & -2.58-2.38i & -0.12+2.59i \\
-            2 &
+            1 & 0,8272 - 0,503i & -2,1218 + 0,2944i & -2,5816 - 2,3835i & -0,1237 + 2,5921i \\
+            2 & 0,7756 - 0,3774i & -3,0186 - 0,9195i & -1,923 + 0,1716i & -0,1237 + 2,5921i \\
+            3 & 0,65 - 0,2003i & -4,1241 + 2,1928i & -0,5909 - 2,8371i & 0,0649 + 0,8445i \\
+            4 & 0,7207 - 0,0975i & -3,8755 + 0,3979i & -0,7855 - 1,1372i & -0,0597 + 0,8368i \\
+            5 & 0,802 + 0,0141i & -4,6561 - 0,2162i & 0,0545 - 0,7654i & -0,2004 + 0,9675i \\
+            6 & 0,8501 - 0,0067i & -4,603 - 0,0028i & -0,1507 - 0,9906i & -0,0964 + 1,0001i \\
+            7 & 0,8419 - 0,0002i & -4,615 & -0,1131 - 1,0076i & -0,1138 + 1,0079i \\
+            8 & 0,8421 & -4,6149 & -0,1136 - 1,0081i & -0,1136 + 1,0081i \\
+            9 & 0,8421 & -4,6149 & -0,1136 - 1,0081i & -0,1136 + 1,0081i \\
         \end{tabular}
         \end{center}
+        Da sich zwischen Iteration acht und neun die Werte (Genauigkeit = 4 Nachkommastellen) gleich blieben ist die Durand-Kerner-Methode abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. Um das zu überpfüfen kann jeder der Werte in $f(x)$ eingesetzt werden. Wenn die Ergebnisse Null oder Zahlen sehr nah an Null sind dann sind die Nullstellen gefunden.
+        \begin{displaymath}
+            f(0,8421) \approx 0; f(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; f(-0,1136 + 1,0081i) \approx 0
+        \end{displaymath}
+        Daraus kann geschlossen werden, dass alle vier Werte Nullstellen der Polynomfunktion $f(x)$ sind. Außerdem, da vier Complexe Nullstellen gefunden wurden und eine Polynomfunktion nach dem Fundamentalsatz der Algebra immer genau so viele Nullstellen wie ihr Grad hat, wurden alle Nullstellen der Polynomfunktion $f(x)$ gefunden.
         
     \subsubsection{Endbedingungen}
     \subsubsection{Startpunkte}
