@@ -3,6 +3,8 @@
 \usepackage{german}
 \usepackage{geometry}
 \usepackage[onehalfspacing]{setspace}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{Literatur.bib}
 
 \geometry{
     left=3cm,
@@ -30,7 +32,7 @@
 
 \tableofcontents
 
-\section{Einleitung}
+\part{Einleitung}
     \subsection{Problemstellung}
 
 \section{Newton-Horner-Methode}
@@ -46,9 +48,37 @@
     Die Weierstraß-(Durand-Kerner)-Methode ist ein iteratives Verfahren, zur numerischen Bestimmung aller Nullstellen einer Polynomfunktion. Sie wurde zwischen 1859 und 1891 von Karl Weierstrass, als Teil seines Beweises zum Fundamentalsatz der Algebra, entwickelt. E. Durand und Immo Kerner überführten dieses Verfahren in einen Computeralgorythums.
 
     \subsection{Herleitung und Funktionsweise}
-    \subsubsection{Verfahren}
-        Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein univariates Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$.
-        Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_1;...;\xi_n \in \mathbb{C}$ und kann in Linearfaktoren zerlegt werden.
+        Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
+    \subsubsection{Difinition}
+        Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein univariates Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in \mathbb{C}$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt, dass $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$ 
+
+    \subsection{Beispiel}
+        In dem nächsten Abschnitt wird die Durand-Kerner-Methode auf eine Polynomfunktion vierten Grades angewand. \par
+        Sei $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-r)(x-s)(x-t)(x-u)$ und die Nullstellen $r;s;t;u \in \mathbb{C}$ sind gesucht. \\
+        Jetzt kann in die zuvor gezeigte Formel, für die Durand-Kerner-Methode, eingesetzt werden:
+        \begin{displaymath}
+            r_{n+1} = r_n-\frac{f(r_n)}{(r_n-s_n)(r_n-t_n)(r_n-u_n)}
+        \end{displaymath}
+        \begin{displaymath}
+            s_{n+1} = r_n-\frac{f(s_n)}{(s_n-r_n)(s_n-t_n)(s_n-u_n)}
+        \end{displaymath}
+        \begin{displaymath}
+            t_{n+1} = r_n-\frac{f(t_n)}{(t_n-r_n)(t_n-s_n)(t_n-u_n)}
+        \end{displaymath}
+        \begin{displaymath}
+            u_{n+1} = r_n-\frac{f(u_n)}{(u_n-r_n)(u_n-s_n)(u_n-t_n)}
+        \end{displaymath}
+        \vspace{0.2cm}
+        Nun setzen wir für $r_0$ %TODO
+        \begin{center}
+        \begin{tabular}{c|c c c c}
+            Iteration & r & s & t & u \\
+            \hline
+            1 & 0.82-0.5i & -2.12+0.29i & -2.58-2.38i & -0.12+2.59i \\
+            2 &
+        \end{tabular}
+        \end{center}
+        
     \subsubsection{Endbedingungen}
     \subsubsection{Startpunkte}
     \subsection{Beweis}

@@ -62,7 +62,7 @@ public class DurandKerner {
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(3,2,1,-23,24,7,34,-342,345);
+        Poly p = new Poly(-4,3,-2,4,1);
         durandKerner(p);
     }
 }
