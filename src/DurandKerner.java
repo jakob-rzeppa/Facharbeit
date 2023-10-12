@@ -15,14 +15,27 @@ public class DurandKerner {
     }
 
     public static Complex[] durandKerner(Poly p) {
-        Complex accuracy = new Complex(Math.pow(10, -8), Math.pow(10, -8));
-        Complex start = new Complex(.4, .9);
+        Complex accuracy = new Complex(Math.pow(10, -4), Math.pow(10, -4));
+
+        System.out.println("function: " + p.toString());
 
         // init roots -> starting points
+        // helpvariables to not divide by zero
+        double t1 = (p.coefficients[1] == 0) ? 1 : p.coefficients[1];
+        double t2 = (p.coefficients[p.degree] == 0) ? 1: p.coefficients[p.degree];
+        double radius = Math.abs((p.degree * p.coefficients[0]) / (2 * t1)) + Math.abs(p.coefficients[p.degree - 1] / (2 * p.degree * t2));
+        double theta = 2 * Math.PI / p.degree;
+        double offset = Math.PI / (2 * p.degree);
         Complex[] roots = new Complex[p.degree];
+
+        System.out.println("start:");
+
         for (int i = 0; i < p.degree; i++) {
-            roots[i] = Complex.power(start, i);
+            roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
+            System.out.println(roots[i].round());
         }
+
+        System.out.println();
 
         boolean running = true;
         int ctr = 0;
@@ -56,7 +69,7 @@ public class DurandKerner {
 
         // Probe
         for (Complex r : roots) {
-            System.out.println("Probe: f(" + r + ") = " + p.solve(r).round());
+            System.out.println("Probe: f(" + r.round() + ") = " + p.solve(r).round());
         }
         return roots;
     }

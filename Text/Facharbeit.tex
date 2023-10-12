@@ -30,7 +30,7 @@
 
 \tableofcontents
 
-\part{Einleitung}
+\section{Einleitung}
     \subsection{Problemstellung}
 
 \section{Newton-Horner-Methode}
@@ -48,7 +48,7 @@
     \subsection{Herleitung und Funktionsweise}
         Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
     \subsubsection{Difinition}
-        Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein univariates Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in \mathbb{C}$ und kann in Linearfaktoren zerlegt werden. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Jetzt kann diese Formel für $\xi_n$ umgestellt werden.
+        Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein univariates Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
         \begin{displaymath}
             (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
         \end{displaymath}
@@ -59,7 +59,7 @@
             x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
         \end{displaymath}
         \begin{displaymath}
-            -\xi_n = -x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+            - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
         \end{displaymath}
         \begin{displaymath}
             \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
@@ -83,7 +83,8 @@
         \begin{displaymath}
             u_{n+1} = r_n-\frac{f(u_n)}{(u_n-r_n)(u_n-s_n)(u_n-t_n)}
         \end{displaymath}
-        Nun müssen wir Startpunkte $r_0;s_0;t_0;u_0$ bestimmen. %TODO
+        \vspace{0.2cm}
+        Nun müssen wir Startpunkte $r_0;s_0;t_0;u_0$ bestimmen. Dabei ist der Radius des Kreises $r$ auf der complexen Ebene $|\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = |\frac{4 * (-4)}{2 * 3}| + |\frac{4}{2 * 4 * 1}|$
 
         
         \begin{center}
@@ -91,23 +92,22 @@
         \begin{tabular}{c|c c c c}
             Iteration & r & s & t & u \\
             \hline
-            0 \\
-            1 & 0,8272 - 0,503i & -2,1218 + 0,2944i & -2,5816 - 2,3835i & -0,1237 + 2,5921i \\
-            2 & 0,7756 - 0,3774i & -3,0186 - 0,9195i & -1,923 + 0,1716i & -0,1237 + 2,5921i \\
-            3 & 0,65 - 0,2003i & -4,1241 + 2,1928i & -0,5909 - 2,8371i & 0,0649 + 0,8445i \\
-            4 & 0,7207 - 0,0975i & -3,8755 + 0,3979i & -0,7855 - 1,1372i & -0,0597 + 0,8368i \\
-            5 & 0,802 + 0,0141i & -4,6561 - 0,2162i & 0,0545 - 0,7654i & -0,2004 + 0,9675i \\
-            6 & 0,8501 - 0,0067i & -4,603 - 0,0028i & -0,1507 - 0,9906i & -0,0964 + 1,0001i \\
-            7 & 0,8419 - 0,0002i & -4,615 & -0,1131 - 1,0076i & -0,1138 + 1,0079i \\
-            8 & 0,8421 & -4,6149 & -0,1136 - 1,0081i & -0,1136 + 1,0081i \\
-            9 & 0,8421 & -4,6149 & -0,1136 - 1,0081i & -0,1136 + 1,0081i \\
+            0 & 2,9256 + 1,2118i & -1,2118 + 2,9256i & -2,9256 - 1,2118i & 1,2118 - 2,9256i \\
+            1 & 1,2993 + 0,8722i & -1,8873 + 2,0075i & -3,405 - 0,7665i & -0,0069 - 2,1133i \\
+            2 & 1,0806 + 0,5889i & -1,1784 + 0,4767i & -4,1287 + 0,3433i & 0,2265 - 1,4089 \\
+            3 & 0,7884 + 0,3817i & -0,2138 + 0,7292i & -4,6806 - 0,0989 & 0,1061 - 1,012i \\
+            4 & 0,6759 - 0,234i & 0,0243 + 0,9804i & -4,613 - 0,0021i & -0,0872 - 0,9549i \\
+            5 & 0,8621 + 0,0197i & -0,1294 + 0,9945i & -4,6149 & -0,1177 - 1,0141i \\
+            6 & 0,842 + 0,0004i & -0,1134 + 1,0078i & -4,6149 & -0,1136 - 1,0082i \\
+            7 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
+            8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
         \end{tabular}
         \end{center}
         Da sich zwischen Iteration acht und neun die Werte (Genauigkeit = 4 Nachkommastellen) gleich blieben ist die Durand-Kerner-Methode abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. Um das zu überpfüfen kann jeder der Werte in $f(x)$ eingesetzt werden. Wenn die Ergebnisse Null oder Zahlen sehr nah an Null sind dann sind die Nullstellen gefunden.
         \begin{displaymath}
             f(0,8421) \approx 0; f(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; f(-0,1136 + 1,0081i) \approx 0
         \end{displaymath}
-        Daraus kann geschlossen werden, dass alle vier Werte Nullstellen der Polynomfunktion $f(x)$ sind. Außerdem, da vier Complexe Nullstellen gefunden wurden und eine Polynomfunktion nach dem Fundamentalsatz der Algebra immer genau so viele Nullstellen wie ihr Grad hat, wurden alle Nullstellen der Polynomfunktion $f(x)$ gefunden.
+        Daraus kann geschlossen werden, dass alle vier Werte Approximationen der Nullstellen der Polynomfunktion $f(x)$ sind. Außerdem, kann aus dem Fundermentalsatz der Algebra, welcher besagt, dass eine univariate Polynomfunktion genau $n$ (Grad der Funktion) Nullstellen hat, geschlossen werden, dass alle Nullstellen von $f(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist.
         
     \subsubsection{Endbedingungen}
     \subsubsection{Startpunkte}
