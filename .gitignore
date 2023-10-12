@@ -1,6 +1,16 @@
 # Compiled class file
 *.class
 
+# TeX
+*.pdf
+*.xml
+*.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.aux
+*.toc
+
 # Log file
 *.log
 
