@@ -1,8 +1,8 @@
 import java.util.List;
 
 class Complex {
-    double re;
-    double im;
+    private double re; // real part
+    private double im; // imaginary part
 
     Complex(double re, double im) {
         this.re = re;

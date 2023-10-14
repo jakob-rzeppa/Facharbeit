@@ -85,7 +85,7 @@
 
     \subsection{Beispiel}
         Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann. \\
-        Für die Funktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $r;s;t;u \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Formel angewendet:
+        Für die Funktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
         \begin{displaymath}
             s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
         \end{displaymath}
@@ -98,7 +98,7 @@
         \begin{displaymath}
             v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}
         \end{displaymath}
-        Nun müssen die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
+        Zuvor müssen allerdings die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
         $s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
         $t_0 = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
         $u_0 = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
@@ -119,7 +119,7 @@
             8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
         \end{tabular}
         \end{center}
-        Zwischen Iteration acht und neun bleiben die Werte gleich. Damit ist das Endkriterium erreicht und damit ist die Durand-Kerner-Meethod abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. \\
+        Zwischen Iteration acht und neun bleiben die Werte gleich. Damit ist das Endkriterium erreicht und die Durand-Kerner-Meethod abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. \\
         Zur Überpfüfung kann jeder der Werte in $f(x)$ eingesetzt werden.
         \begin{displaymath}
             f(0,8421) \approx 0; f(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; f(-0,1136 + 1,0081i) \approx 0
@@ -145,6 +145,43 @@ private static Complex denominator(Complex[] roots, int index) {
     \end{lstlisting}
     \subsubsection{Einleitung}
     \subsubsection{Komplexe Zahlen}
+    Wieso?
+
+    \paragraph{Aufbau der Klasse}
+    Eine komplexe Zahl besteht aus einem reelen Teil und einem imaginären Teil. Deswegen hat die Klasse Complex die Attribute re (reeler Teil) und im (imaginärer Teil). 
+    (vgl. Complex.java, Z. 4-5)
+
+    Zuerst werden die Standartoperationen Addition, Subtraktion, Multiplikation und Division behandelt. Dabei sind alle der Methoden statisch, nehmen zwei komplexe Zahlen entgegen und geben das Ergebnis als neue komplexe Zahl zurück. Darauffolgend wird auf die Operationen Potenzierung, Multiplikation mehr als zwei Zahlen und Finden des Betrags bzw. absoluten Wertes. 
+    \paragraph{Standartoperationen}
+    Bei allen Standartoperationen wird zuerst geguckt, ob einer der beiden übergebenen Objekte NULL ist. Wenn das der Fall ist wird das andere Objekt
+    \begin{lstlisting}[language=Java,title={Complex.java: Z. 20-21, 28-29, 36-37, 44-45}]
+if (a == null) { return b; }
+if (b == null) { return a; }
+    \end{lstlisting}
+
+    \subparagraph{Addition und Subtraktion}
+    Die Addition und Subtraktion mit complexen Zahlen ist 
+    \begin{lstlisting}[language=Java, title={Complex.java: Z. 22-24}]
+double re = a.re + b.re;
+double im = a.im + b.im;
+return new Complex(re, im);
+    \end{lstlisting}
+    \subparagraph{Multiplikation}
+    \begin{displaymath}
+        (a+bi)(c+di) = ac+adi+cbi-bdi^2 = ac-bd+(ad+cb)i
+    \end{displaymath}
+    \subparagraph{Division}
+    \subparagraph{Exponentiation?}
+    \subparagraph{Kleiner Als}
+
+
+    \subparagraph{abs}
+
+    \paragraph{Ausgabe}
+    \subparagraph{toString-Methode}
+    \subparagraph{runden}
+
+    
     \subsubsection{Polynomfunktionen}
     \subsubsection{Durand-Kerner für eine Nullstellen}
     \subsubsection{Startpunkte}
