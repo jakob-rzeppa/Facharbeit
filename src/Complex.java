@@ -17,32 +17,24 @@ class Complex {
 
     // static methods
     public static Complex plus(Complex a, Complex b) {
-        if (a == null) { return b; }
-        if (b == null) { return a; }
         double re = a.re + b.re;
         double im = a.im + b.im;
         return new Complex(re, im);
     }
 
     public static Complex minus(Complex a, Complex b) {
-        if (a == null) { return b; }
-        if (b == null) { return a; }
         double re = a.re - b.re;
         double im = a.im - b.im;
         return new Complex(re, im);
     }
 
     public static Complex multiply(Complex a, Complex b) {
-        if (a == null) { return b; }
-        if (b == null) { return a; }
         double re = a.re * b.re - a.im * b.im;
         double im = a.re * b.im + a.im * b.re;
         return new Complex(re, im);
     }
 
     public static Complex divide(Complex a, Complex b) {
-        if (a == null) { return b; }
-        if (b == null) { return a; }
         double re = (a.re * b.re + a.im * b.im) / (b.re * b.re + b.im * b.im);
         double im = (a.im * b.re - a.re * b.im) / (b.re * b.re + b.im * b.im);
         return new Complex(re, im);

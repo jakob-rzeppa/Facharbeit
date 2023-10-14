@@ -152,20 +152,25 @@ private static Complex denominator(Complex[] roots, int index) {
     (vgl. Complex.java, Z. 4-5)
 
     Zuerst werden die Standartoperationen Addition, Subtraktion, Multiplikation und Division behandelt. Dabei sind alle der Methoden statisch, nehmen zwei komplexe Zahlen entgegen und geben das Ergebnis als neue komplexe Zahl zurück. Darauffolgend wird auf die Operationen Potenzierung, Multiplikation mehr als zwei Zahlen und Finden des Betrags bzw. absoluten Wertes. 
-    \paragraph{Standartoperationen}
-    Bei allen Standartoperationen wird zuerst geguckt, ob einer der beiden übergebenen Objekte NULL ist. Wenn das der Fall ist wird das andere Objekt
-    \begin{lstlisting}[language=Java,title={Complex.java: Z. 20-21, 28-29, 36-37, 44-45}]
-if (a == null) { return b; }
-if (b == null) { return a; }
-    \end{lstlisting}
 
     \subparagraph{Addition und Subtraktion}
-    Die Addition und Subtraktion mit complexen Zahlen ist 
-    \begin{lstlisting}[language=Java, title={Complex.java: Z. 22-24}]
-double re = a.re + b.re;
-double im = a.im + b.im;
-return new Complex(re, im);
+    \begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
+public static Complex plus(Complex a, Complex b) {
+        double re = a.re + b.re;
+        double im = a.im + b.im;
+    return new Complex(re, im);
+}
+
+public static Complex minus(Complex a, Complex b) {
+    double re = a.re - b.re;
+    double im = a.im - b.im;
+    return new Complex(re, im);
+}
     \end{lstlisting}
+    Bei der Addition und Subtraktion werden die 
+
+
+
     \subparagraph{Multiplikation}
     \begin{displaymath}
         (a+bi)(c+di) = ac+adi+cbi-bdi^2 = ac-bd+(ad+cb)i
