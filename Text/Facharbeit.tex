@@ -48,113 +48,105 @@
 
 \section{Einleitung}
     \subsection{Problemstellung}
+    \subsection{Verwendungszwecke}
 
-\section{Newton-Horner-Methode}
-    \subsection{Herleitung und Funktionsweise}
-    \subsubsection{Verfahren}
-    \subsubsection{Endbedingungen}
-    \subsubsection{Startpunkte}
-    \subsection{Beweis}
-    \subsection{Probleme}
-    \subsection{Implementierung}
+\section{Durand-Kerner-Methode}
+Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion. Im gegensatz zu anderen Verfahren, wie der Newton-Horner-Methode (!!!Fußnote!!!), welche die Nullstellen nacheinander findet, nährt sich die Durand-Kerner-Methode allen Nullstellen parallel bzw. gleichzeitig an. Sie wurde zwischen 1859 und 1891 von Karl Weierstrass, als Teil seines Beweises zum Fundamentalsatz der Algebra, entwickelt. 
+E. Durand und Immo Kerner entwickelten 1960 bzw. 1966 das gleiche Verfahren unabhängig voneinander erneut und überführten dieses Verfahren dann erstmals in einen Computeralgorythums.
 
-\section{Durand-Kerner-Methode} 
-    Die Weierstraß-(Durand-Kerner)-Methode ist ein iteratives Verfahren, zur numerischen Bestimmung aller Nullstellen einer Polynomfunktion. Sie wurde zwischen 1859 und 1891 von Karl Weierstrass, als Teil seines Beweises zum Fundamentalsatz der Algebra, entwickelt. E. Durand und Immo Kerner überführten dieses Verfahren in einen Computeralgorythums.
+Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
+Sie wurde von Karl Weierstrass zwischen 1859 und 1891, als Teil seines Beweises des Fundermentalsatz der Algebra, entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
+Die Durand-Kerner-Methode findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren(FUßNOTE!), nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht nur einzelne Nullstellen.
 
-    \subsection{Herleitung und Funktionsweise}
-        Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
-    \subsubsection{Definition}
-        Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein univariates Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
-        \begin{displaymath}
-            (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
-        \end{displaymath}
-        \begin{displaymath}
-            \frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-        \end{displaymath}
-        \begin{displaymath}
-            x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-        \end{displaymath}
-        \begin{displaymath}
-            - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-        \end{displaymath}
-        \begin{displaymath}
-            \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-        \end{displaymath}
-        Um $\xi_n$ zu bestimmen müssen zunächst aber Startpunkte für alle $\xi$ definiert werden. Dabei können beliebige Komplexe Zahlen gewählt werden, die 
+\section{Funktionsweise und Definition}
+Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
 
+Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
+\begin{displaymath}
+    (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
+\end{displaymath}
+\begin{displaymath}
+    \frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+Um $\xi_n$ zu bestimmen müssen zunächst aber Startpunkte für alle $\xi$ definiert werden. Dabei können beliebige Komplexe Zahlen gewählt werden, die 
 
-    \subsection{Beispiel}
-        Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann. \\
-        Für die Funktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
-        \begin{displaymath}
-            s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
-        \end{displaymath}
-        \begin{displaymath}
-            t_{n+1} = t_n-\frac{f(t_n)}{(t_n-s_n)(t_n-u_n)(t_n-v_n)}
-        \end{displaymath}
-        \begin{displaymath}
-            u_{n+1} = u_n-\frac{f(u_n)}{(u_n-s_n)(u_n-t_n)(u_n-v_n)}
-        \end{displaymath}
-        \begin{displaymath}
-            v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}
-        \end{displaymath}
-        Zuvor müssen allerdings die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
-        $s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
-        $t_0 = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
-        $u_0 = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
-        $v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$ \\\\
-        Daraus ergibt sich:
-        \begin{center}
-        \begin{tabular}{c|c c c c}
-            Iteration & r & s & t & u \\
-            \hline
-            0 & 2,9256 + 1,2118i & -1,2118 + 2,9256i & -2,9256 - 1,2118i & 1,2118 - 2,9256i \\
-            1 & 1,2993 + 0,8722i & -1,8873 + 2,0075i & -3,405 - 0,7665i & -0,0069 - 2,1133i \\
-            2 & 1,0806 + 0,5889i & -1,1784 + 0,4767i & -4,1287 + 0,3433i & 0,2265 - 1,4089 \\
-            3 & 0,7884 + 0,3817i & -0,2138 + 0,7292i & -4,6806 - 0,0989 & 0,1061 - 1,012i \\
-            4 & 0,6759 - 0,234i & 0,0243 + 0,9804i & -4,613 - 0,0021i & -0,0872 - 0,9549i \\
-            5 & 0,8621 + 0,0197i & -0,1294 + 0,9945i & -4,6149 & -0,1177 - 1,0141i \\
-            6 & 0,842 + 0,0004i & -0,1134 + 1,0078i & -4,6149 & -0,1136 - 1,0082i \\
-            7 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
-            8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
-        \end{tabular}
-        \end{center}
-        Zwischen Iteration acht und neun bleiben die Werte gleich. Damit ist das Endkriterium erreicht und die Durand-Kerner-Meethod abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. \\
-        Zur Überpfüfung kann jeder der Werte in $f(x)$ eingesetzt werden.
-        \begin{displaymath}
-            f(0,8421) \approx 0; f(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; f(-0,1136 + 1,0081i) \approx 0
-        \end{displaymath}
-        Daraus kann geschlossen werden, dass alle vier Werte Annährungen der Nullstellen der Polynomfunktion $f(x)$ sind. \\
-        Aus dem Fundermentalsatz der Algebra kann geschlossen werden, dass alle Nullstellen von $f(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist.
-    \subsubsection{Endbedingungen}
-    \subsubsection{Startpunkte}
-    \subsection{Beweis}
-    \subsection{Probleme}
-    \subsection{Implementierung}
-    \begin{lstlisting}[language=Java]
-private static Complex denominator(Complex[] roots, int index) {
-    List<Complex> factors = new ArrayList<Complex>();
-    for (int i = 0; i < roots.length; i++) {
-        if (i == index) {
-            continue;
-        }
-        factors.add(Complex.minus(roots[index], roots[i]));
-    }
-    return Complex.multiply(factors);
-}
-    \end{lstlisting}
-    \subsubsection{Einleitung}
-    \subsubsection{Komplexe Zahlen}
-    Wieso?
+\section{Beispiel}
+Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
+\paragraph{Methode}
+Für die Funktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
+\begin{displaymath}
+    s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
+\end{displaymath}
+\begin{displaymath}
+    t_{n+1} = t_n-\frac{f(t_n)}{(t_n-s_n)(t_n-u_n)(t_n-v_n)}
+\end{displaymath}
+\begin{displaymath}
+    u_{n+1} = u_n-\frac{f(u_n)}{(u_n-s_n)(u_n-t_n)(u_n-v_n)}
+\end{displaymath}
+\begin{displaymath}
+    v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}
+\end{displaymath}
+\paragraph{Startpunkte}
+Zuvor müssen allerdings die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
+$s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
+$t_0 = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
+$u_0 = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
+$v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
+\paragraph{Ausführung}
+\begin{center}
+\begin{tabular}{c|c c c c}
+    Iteration & r & s & t & u \\
+    \hline
+    0 & 2,9256 + 1,2118i & -1,2118 + 2,9256i & -2,9256 - 1,2118i & 1,2118 - 2,9256i \\
+    1 & 1,2993 + 0,8722i & -1,8873 + 2,0075i & -3,405 - 0,7665i & -0,0069 - 2,1133i \\
+    2 & 1,0806 + 0,5889i & -1,1784 + 0,4767i & -4,1287 + 0,3433i & 0,2265 - 1,4089 \\
+    3 & 0,7884 + 0,3817i & -0,2138 + 0,7292i & -4,6806 - 0,0989 & 0,1061 - 1,012i \\
+    4 & 0,6759 - 0,234i & 0,0243 + 0,9804i & -4,613 - 0,0021i & -0,0872 - 0,9549i \\
+    5 & 0,8621 + 0,0197i & -0,1294 + 0,9945i & -4,6149 & -0,1177 - 1,0141i \\
+    6 & 0,842 + 0,0004i & -0,1134 + 1,0078i & -4,6149 & -0,1136 - 1,0082i \\
+    7 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
+    8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
+\end{tabular}
+\end{center}
+\paragraph{Schluss}
+Zwischen Iteration acht und neun bleiben die Werte gleich. Damit ist das Endkriterium erreicht und die Durand-Kerner-Meethod abgeschlossen. Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. 
+\paragraph{Probe}
+Zur Überpfüfung kann jeder der Werte in $f(x)$ eingesetzt werden.
+\begin{displaymath}
+    f(0,8421) \approx 0; f(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; f(-0,1136 + 1,0081i) \approx 0
+\end{displaymath}
+Daraus kann geschlossen werden, dass alle vier Werte Annährungen der Nullstellen der Polynomfunktion $f(x)$ sind. \\
+Weiterhin, kann aus dem Fundermentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $f(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist. \\
+Die Durand-Kerner-Methode war für $f(x)$ erfolgreich.
 
-    \paragraph{Aufbau der Klasse}
-    Eine komplexe Zahl besteht aus einem reelen Teil und einem imaginären Teil. Deswegen hat die Klasse Complex die Attribute re (reeler Teil) und im (imaginärer Teil). 
-    (vgl. Complex.java, Z. 4-5)
+\section{Herleitung}
 
-    Zuerst werden die Standartoperationen Addition, Subtraktion, Multiplikation und Division behandelt. Dabei sind alle der Methoden statisch, nehmen zwei komplexe Zahlen entgegen und geben das Ergebnis als neue komplexe Zahl zurück. Darauffolgend wird auf die Operationen Potenzierung, Multiplikation mehr als zwei Zahlen und Finden des Betrags bzw. absoluten Wertes. 
+\section{Beweis}
 
-    \subparagraph{Addition und Subtraktion}
-    \begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
+\section{Probleme und Einschränkungen}
+
+\section{Implementierung}
+\subsection{Einleitung}
+\subsection{Komplexe Zahlen}
+Wieso?
+
+\subsubsection{Aufbau der Klasse}
+Eine komplexe Zahl besteht aus einem reelen Teil und einem imaginären Teil. Deswegen hat die Klasse Complex die Attribute re (reeler Teil) und im (imaginärer Teil). 
+(vgl. Complex.java, Z. 4-5)
+
+Zuerst werden die Standartoperationen Addition, Subtraktion, Multiplikation und Division behandelt. Dabei sind alle der Methoden statisch, nehmen zwei komplexe Zahlen entgegen und geben das Ergebnis als neue komplexe Zahl zurück. Darauffolgend wird auf die Operationen Potenzierung, Multiplikation mehr als zwei Zahlen und Finden des Betrags bzw. absoluten Wertes. 
+
+\paragraph{Addition und Subtraktion}
+\begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
 public static Complex plus(Complex a, Complex b) {
         double re = a.re + b.re;
         double im = a.im + b.im;
@@ -166,18 +158,16 @@ public static Complex minus(Complex a, Complex b) {
     double im = a.im - b.im;
     return new Complex(re, im);
 }
-    \end{lstlisting}
-    Bei der Addition und Subtraktion werden die 
+\end{lstlisting}
 
 
-
-    \subparagraph{Multiplikation}
-    \begin{displaymath}
-        (a+bi)(c+di) = ac+adi+cbi-bdi^2 = ac-bd+(ad+cb)i
-    \end{displaymath}
-    \subparagraph{Division}
-    \subparagraph{Exponentiation?}
-    \subparagraph{Kleiner Als}
+\paragraph{Multiplikation}
+\begin{displaymath}
+    (a+bi)(c+di) = ac+adi+cbi-bdi^2 = ac-bd+(ad+cb)i
+\end{displaymath}
+\paragraph{Division}
+\paragraph{Exponentiation?}
+\paragraph{Kleiner Als}
 
 
     \subparagraph{abs}

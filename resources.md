@@ -15,6 +15,7 @@ https://en.wikipedia.org/wiki/Polynomial_root-finding_algorithms
 https://en-academic.com/dic.nsf/enwiki/11670787
 https://www.youtube.com/watch?v=5JcpOj2KtWc
 
+https://www.johndcook.com/blog/2022/11/14/simultaneous-root-finding/
 
 Complex.java: https://introcs.cs.princeton.edu/java/32class/Complex.java.html
 
