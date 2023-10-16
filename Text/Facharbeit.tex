@@ -51,12 +51,14 @@
     \subsection{Verwendungszwecke}
 
 \section{Durand-Kerner-Methode}
-Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion. Im gegensatz zu anderen Verfahren, wie der Newton-Horner-Methode (!!!Fußnote!!!), welche die Nullstellen nacheinander findet, nährt sich die Durand-Kerner-Methode allen Nullstellen parallel bzw. gleichzeitig an. Sie wurde zwischen 1859 und 1891 von Karl Weierstrass, als Teil seines Beweises zum Fundamentalsatz der Algebra, entwickelt. 
-E. Durand und Immo Kerner entwickelten 1960 bzw. 1966 das gleiche Verfahren unabhängig voneinander erneut und überführten dieses Verfahren dann erstmals in einen Computeralgorythums.
-
 Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
 Sie wurde von Karl Weierstrass zwischen 1859 und 1891, als Teil seines Beweises des Fundermentalsatz der Algebra, entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
-Die Durand-Kerner-Methode findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren(FUßNOTE!), nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht nur einzelne Nullstellen.
+Die Durand-Kerner-Methode findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren\footnote{
+    Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
+}
+, nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht nur einzelne Nullstellen.\footnote{
+
+}
 
 \section{Funktionsweise und Definition}
 Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
@@ -129,10 +131,16 @@ Weiterhin, kann aus dem Fundermentalsatz der Algebra hergeleitet werden, dass al
 Die Durand-Kerner-Methode war für $f(x)$ erfolgreich.
 
 \section{Herleitung}
+Ähnlichkeiten mit der Newton-Methode
+ableitung =? funktion
+
+Man tut so als wüsste man die anderen Nullstellen und sucht mit diesen infos eine andere
 
 \section{Beweis}
 
 \section{Probleme und Einschränkungen}
+\subsection{$a_n$ muss gleich 1 sein}
+\subsection{Keine generelle Konvergenz}
 
 \section{Implementierung}
 \subsection{Einleitung}
