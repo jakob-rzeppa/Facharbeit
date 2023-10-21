@@ -1,7 +1,0 @@
-
-
-Wann ist die Durand-Kerner-Methode nicht konvergent?
-bzw. was hat das mit 
-
-https://arxiv.org/abs/2004.04777
-https://arxiv.org/pdf/2004.04777.pdf

@@ -24,3 +24,12 @@ https://github.com/osveliz/numerical-veliz/tree/master
 https://stackoverflow.com/questions/4057684/durand-kerner-implementation-doesnt-work
 
 https://www.emathhelp.net/en/calculators/algebra-2/zeros-calculator/?f=1%2Bx%5E4%3D0%23&var=&sa=1&a=-inf&b=inf&sb=1
+
+https://arxiv.org/abs/2004.04777
+https://arxiv.org/pdf/2004.04777.pdf
+
+https://mathepedia.de/Weierstrasz-Iteration.html
+
+Das Polynom muss normiert sein, da es sonst nicht mit (x-...)...(x-...) dargestellt werden kann.
+
+Frage:

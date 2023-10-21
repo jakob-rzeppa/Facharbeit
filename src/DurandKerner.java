@@ -20,9 +20,10 @@ public class DurandKerner {
         System.out.println("function: " + p.toString());
 
         // init roots -> starting points
-        // helpvariables to not divide by zero
+        // helpvars to not divide by zero
         double t1 = (p.coefficients[1] == 0) ? 1 : p.coefficients[1];
         double t2 = (p.coefficients[p.degree] == 0) ? 1: p.coefficients[p.degree];
+
         double radius = Math.abs((p.degree * p.coefficients[0]) / (2 * t1)) + Math.abs(p.coefficients[p.degree - 1] / (2 * p.degree * t2));
         double theta = 2 * Math.PI / p.degree;
         double offset = Math.PI / (2 * p.degree);
@@ -75,7 +76,7 @@ public class DurandKerner {
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(-4,3,-2,4,1);
+        Poly p = new Poly(-4,-4,2,5);
         durandKerner(p);
     }
 }

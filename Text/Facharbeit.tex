@@ -14,6 +14,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 
+\usepackage{amsmath}
+
 \lstset{
     tabsize = 4, %% set tab space width
     showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
@@ -47,8 +49,11 @@
 \tableofcontents
 
 \section{Einleitung}
-    \subsection{Problemstellung}
-    \subsection{Verwendungszwecke}
+
+\subsection{Problemstellung}
+
+\subsection{Verwendungszwecke}
+
 
 \section{Durand-Kerner-Methode}
 Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
@@ -56,31 +61,33 @@ Sie wurde von Karl Weierstrass zwischen 1859 und 1891, als Teil seines Beweises 
 Die Durand-Kerner-Methode findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren\footnote{
     Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
 }
-, nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht nur einzelne Nullstellen.\footnote{
+, nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
 
 }
 
-\section{Funktionsweise und Definition}
-Die Durand-Kerner-Methode kann Nullstellen von univariaten Polynomfunktionen der Form $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ mit Grad $n > 2$ und Koeffizient $a_n = 1$ numerisch approximieren. Dabei werden sich die Eigenschaften einer Polynomfunktion zugunste gemacht.
+%----------------------------------------------------------------------------------------------------
+\section{Funktionsweise}
+\subsection{Bedingungen}
+Für die Durand-Kerner-Methode muss ein normiertes univariates Polynom der Form $f(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.
 
-Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein Polynom mit komplexen Koeffizienten und führenden Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
-\begin{displaymath}
-    (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
-\end{displaymath}
-\begin{displaymath}
-    \frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-Um $\xi_n$ zu bestimmen müssen zunächst aber Startpunkte für alle $\xi$ definiert werden. Dabei können beliebige Komplexe Zahlen gewählt werden, die 
+\subsection{Methode}
+Bei der Durand-Kerner-Methode wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für $n$ Nullstellen $\xi_n;\xi_{n-1};\dots;\xi_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
+\[\xi_n^{(i+1)} = x - \frac{f(\xi_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(\xi_n^{(i)}-\xi_j)}\]
+\[\xi_{n-1}^{(i+1)} = x - \frac{f(\xi_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(\xi_{n-1}^{(i)}-\xi_j)}\]
+\vspace{0.25mm}
+\[\dots\]
+\[\xi_{1}^{(i+1)} = x - \frac{f(\xi_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(\xi_{1}^{(i)}-\xi_j)}\]
+\subsection{Startpunkte}
+Zunächst müssen alle Startpunkte $\xi_n^{(0)};\xi_{n-1}^{(0)};\dots;\xi_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplex Nullstellen auch komplex sind und keine konjugierten Paare\footnote{Konjugierte Paare sind Paare von komplexen Zahlen, welche sich nur im Vorzeichen des imaginären Teils unterscheiden. !!!FUßNOTE!!!} vorkommen. Die Startpunkte können allerdings die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gänigsten Methoden ist die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genaueres $r$ genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
+Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt. Diese kann beliebig gewählt werden, solange keine reellen Zahlen unter den Startpunkten sind. In diesem Fall wird $c = \frac{\pi}{2n}$ gewählt.
+Um die Startpunkte zu bestimmen wird 
+\[\xi_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
+ angewand.
 
+\subsection{Endkriterium}
+Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es zwei oft verwendete Verfahren. Einmal das einsetzen in die Funktion und 
+
+%-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
 Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
 \paragraph{Methode}
@@ -103,6 +110,7 @@ $s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
 $t_0 = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
 $u_0 = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
 $v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
+
 \paragraph{Ausführung}
 \begin{center}
 \begin{tabular}{c|c c c c}
@@ -133,22 +141,65 @@ Die Durand-Kerner-Methode war für $f(x)$ erfolgreich.
 \section{Visualisierung}
 
 \section{Herleitung}
+\subsection{Methode}
+Die Durand-Kerner-Methode baut auf der Newton-Methode auf. Es wird für den Zähler des Bruches, statt der Ableitung der Funktion, eine beliebige Funktion genommen, indem man so tut, als wüsste man die Nullstellen der Funktion. Wenn dies für alle Nullstellen parallel durchgeführt wird kommt man den Nullstellen immer näher und auch die anfangs zufällige Funktion kommt immer näher an die eigendliche Funktion ran.
+
 Ähnlichkeiten mit der Newton-Methode
 ableitung =? funktion
 
 Man tut so als wüsste man die anderen Nullstellen und sucht mit diesen infos eine andere
 
-\section{Beweis}
+Weierstraß-Korrekturen
+
+Wenn man die Durand-Kerner-Methode für die Nullstelle $r$ anguckt kann man ein wenig umstellen:
+\begin{displaymath}
+    z := \xi_k
+\end{displaymath}
+\begin{displaymath}
+    z_{i+1} = z_i - \frac{f(z_i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
+\end{displaymath}
+\begin{displaymath}
+    z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j^i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
+\end{displaymath}
+\begin{displaymath}
+    z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
+\end{displaymath}
+
+Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein Polynom mit komplexen Koeffizienten und führendem Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
+\begin{displaymath}
+    (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
+\end{displaymath}
+\begin{displaymath}
+    \frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+\begin{displaymath}
+    \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
+\end{displaymath}
+
+\subsection{Startpunkte}
+
+\subsection{Endkriterium}
+Welches der zwei verfahren beesser ist
 
 \section{Probleme und Einschränkungen}
-\subsection{Keine generelle Konvergenz}
-Nicht generell konvergent
-Zu komplex um zu bestimmen wann (wo es oft vorkommt)
+\subsection{Normiertes Polynom}
+Für die Durand-Kerner-Methode muss die gegebene Funktion $f(x)$ in der Form $\prod_{i=1}^n (x-\xi_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-\xi_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $f(x)$ für die Durand-Kerner-Methode ein normiertes Polynom sein.
+Ist dies nicht der Fall, wird es unmöglich, $f(x)$ in der Form $\prod_{i=1}^n (x-\xi_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
+Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
+Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Durand-Kerner-Methode durchführen.
 
-\subsection{$a_n$ muss gleich 1 sein}
+\subsection{Keine generelle Konvergenz}
+Die Durand-Kerner-Methode ist nicht generell Konvergent. Das bedeutet, dass in manchen Fällen die Funktion gegen Unendlich keinen festen Wert anstrebt. Dabei kann nicht genau bestimmt werden, bei welchen Startpunkten und Polynomen die Durand-Kerner-Methode nicht konvergiert. Da dies allerdings sehr selten ist kann es meist vernachlässigt werden.
 
 \section{Implementierung}
 \subsection{Einleitung}
+Normierung
 \subsection{Komplexe Zahlen}
 Wieso?
 

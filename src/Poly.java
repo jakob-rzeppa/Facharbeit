@@ -11,7 +11,7 @@ class Poly {
         this.coefficients = coefficients;
         this.degree = coefficients.length - 1;
 
-        // for the Durand-Kerner-Method a_n has to be equal to one -> devide every a by a_n 
+        // for the Durand-Kerner-Method a_n has to be equal to one -> devide every a by a_n (the polynomial won't be the same, but the roots stay the same)
         for (int i = 0; i < this.coefficients.length; i++) {
             this.coefficients[i] = this.coefficients[i] / this.coefficients[degree];
         }
