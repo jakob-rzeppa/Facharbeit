@@ -85,7 +85,8 @@ Um die Startpunkte zu bestimmen wird
  angewand.
 
 \subsection{Endkriterium}
-Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es zwei oft verwendete Verfahren. Einmal das einsetzen in die Funktion und 
+Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ gegeben sein. 
+In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $f(\xi_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen werden, dass alle Nullstellen für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion nach oder vor der Nullstelle so langsam steigt oder fällt, dass in einem größeren Bereich die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Wenn $|\xi_k^{(i-1)}\xi_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen, dass alle Nullstellen auf die Genauigkeit $g$ genau sind. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass wenn man den Wert in die Funktion eingibt ein ganz anderes Ergebnis herauskommt. In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren benutzt, da dies einem die Nullstelle mit der gewünschten Genauigkeit gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte. Die Wahrscheinlichkeit, dass das passiert, solange man eine vernünftige Genauigkeit nimmt, ist allerdings verschwindend gering. 
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
