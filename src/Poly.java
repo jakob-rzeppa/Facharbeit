@@ -17,6 +17,17 @@ class Poly {
         }
     }
 
+    //TODO documentation
+    public Complex solve(Complex val) {
+        Complex result = new Complex(0, 0);
+        Complex x = new Complex(1, 0);
+        for (double c : coefficients) {
+            result = Complex.plus(result, Complex.multiply(x, new Complex(c, 0)));
+            x = Complex.multiply(x, val);
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         //edge cases
@@ -58,16 +69,5 @@ class Poly {
 		}
 
 		return out;
-    }
-
-    //TODO documentation
-    public Complex solve(Complex val) {
-        Complex result = new Complex(0, 0);
-        Complex x = new Complex(1, 0);
-        for (double c : coefficients) {
-            result = Complex.plus(result, Complex.multiply(x, new Complex(c, 0)));
-            x = Complex.multiply(x, val);
-        }
-        return result;
     }
 }

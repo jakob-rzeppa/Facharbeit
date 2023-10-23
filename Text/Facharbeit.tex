@@ -93,18 +93,10 @@ In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit d
 Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
 \paragraph{Methode}
 Für die Funktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
-\begin{displaymath}
-    s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
-\end{displaymath}
-\begin{displaymath}
-    t_{n+1} = t_n-\frac{f(t_n)}{(t_n-s_n)(t_n-u_n)(t_n-v_n)}
-\end{displaymath}
-\begin{displaymath}
-    u_{n+1} = u_n-\frac{f(u_n)}{(u_n-s_n)(u_n-t_n)(u_n-v_n)}
-\end{displaymath}
-\begin{displaymath}
-    v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}
-\end{displaymath}
+\[s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}\]
+\[t_{n+1} = t_n-\frac{f(t_n)}{(t_n-s_n)(t_n-u_n)(t_n-v_n)}\]
+\[u_{n+1} = u_n-\frac{f(u_n)}{(u_n-s_n)(u_n-t_n)(u_n-v_n)}\]
+\[v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}\]
 \paragraph{Startpunkte}
 Zuvor müssen allerdings die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
 $s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
@@ -153,35 +145,17 @@ Man tut so als wüsste man die anderen Nullstellen und sucht mit diesen infos ei
 Weierstraß-Korrekturen
 
 Wenn man die Durand-Kerner-Methode für die Nullstelle $r$ anguckt kann man ein wenig umstellen:
-\begin{displaymath}
-    z := \xi_k
-\end{displaymath}
-\begin{displaymath}
-    z_{i+1} = z_i - \frac{f(z_i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
-\end{displaymath}
-\begin{displaymath}
-    z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j^i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
-\end{displaymath}
-\begin{displaymath}
-    z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}
-\end{displaymath}
+\[z := \xi_k\]
+\[z_{i+1} = z_i - \frac{f(z_i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}\]
+\[z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j^i)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}\]
+\[z_{i+1} = z_i - \frac{\prod_{j=1}^n (z_i-\xi_j)}{\prod_{j=1;j\neq k}^n (z_i-\xi_j)}\]
 
 Sei $f(x) = x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0$ ein Polynom mit komplexen Koeffizienten und führendem Koeffizienten $a_n = 1$. Nach dem Fundermentalsatz der Algebra hat $f(x)$ genau $n$ Nullstellen $\xi_n;\xi_{n-1};...;\xi_1 \in C$ hat und in Linearfaktoren zerlegt werden kann. Daraus folgt $f(x) = (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)$. Nun kann für $\xi_n$ umgestellt werden:
-\begin{displaymath}
-    (x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)
-\end{displaymath}
-\begin{displaymath}
-    \frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    - \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
-\begin{displaymath}
-    \xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}
-\end{displaymath}
+\[(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1) = f(x)\]
+\[\frac{(x - \xi_n)(x - \xi_{n-1})...(x - \xi_1)}{(x - \xi_{n-1})...(x - \xi_1)} = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}\]
+\[x - \xi_n = \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}\]
+\[- \xi_n = - x + \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}\]
+\[\xi_n = x - \frac{f(x)}{(x - \xi_{n-1})...(x - \xi_1)}\]
 
 \subsection{Startpunkte}
 
@@ -202,52 +176,39 @@ Die Durand-Kerner-Methode ist nicht generell Konvergent. Das bedeutet, dass in m
 \subsection{Einleitung}
 Normierung
 \subsection{Komplexe Zahlen}
-Wieso?
+\paragraph{Wieso?????????????????}
+In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen nutzen zu können, es ist jedoch nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
 
-\subsubsection{Aufbau der Klasse}
-Eine komplexe Zahl besteht aus einem reelen Teil und einem imaginären Teil. Deswegen hat die Klasse Complex die Attribute re (reeler Teil) und im (imaginärer Teil). 
-(vgl. Complex.java, Z. 4-5)
+\paragraph{Attribute}
+Die Klasse \glqq Complex\grqq besitzt zwei private Attribute (\glqq re\grqq \space und \glqq im\grqq), die den reellen und imaginären Teil der komplexen Zahl darstellen. Beide sind vom Datentyp \glqq double\grqq, um möglichst viele Nachkommastellen repräsentieren zu können.
 
-Zuerst werden die Standartoperationen Addition, Subtraktion, Multiplikation und Division behandelt. Dabei sind alle der Methoden statisch, nehmen zwei komplexe Zahlen entgegen und geben das Ergebnis als neue komplexe Zahl zurück. Darauffolgend wird auf die Operationen Potenzierung, Multiplikation mehr als zwei Zahlen und Finden des Betrags bzw. absoluten Wertes. 
+\paragraph{Konstruktor}
+Der Konstruktor der Klasse \glqq Complex\grqq\space nimmt zwei Zahlen (\glqq re\grqq \space und \glqq im\grqq) vom Typ \glqq double\grqq\space entgegen und speichert diese in den beiden Attributen.
 
-\paragraph{Addition und Subtraktion}
-\begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
-public static Complex plus(Complex a, Complex b) {
-        double re = a.re + b.re;
-        double im = a.im + b.im;
-    return new Complex(re, im);
-}
+\paragraph{Grundrechenarten}
+Für die vier Grundrechenarten Addition, Subtraktion, Multiplikation und Division wurden zuerst vier statische Methoden erstellt. Diese nehmen zwei Instanzen der Klasse \glqq Complex\grqq\space als Parameter an und geben das Ergebnis als neue Instanz der gleichen Klasse zurück zurück. Innerhalb der Methoden wird zuerst der reelle und imaginäre Teil des Ergebnisses ausgerechnet.\footnote{ingenieurkurse.de: Höhere Mathematik 1: Analysis und Lineare Algebra: Grundrechenarten der komplexen Zahlen, URL: https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html (Stand: 23.10.2023)}
+Daraufhin wird die neue Instanz der Klasse \glqq Complex\grqq, mit den zuvor ausgerechneten Werten, erstellt und diese zurückgegeben.
 
-public static Complex minus(Complex a, Complex b) {
-    double re = a.re - b.re;
-    double im = a.im - b.im;
-    return new Complex(re, im);
-}
-\end{lstlisting}
+\paragraph{Potenzierung}
+Die Potenzierung findet auch mit einer statischen Methode, die eine Instanz der Klasse \glqq Complex\grqq\space zurückgibt, statt. Für die Rechnung wird die Basis als komplexe Zahl und der Exponent als Integer übergeben, daür die Durand-Kerner-Methode wird Potenzierung nur mit natürlichen Zahlen (null eingeschlossen) benötigt, da nur für das Ausrechenen der Polynomfunktion Potenzierung benutzt wird und alle Exponenten einer Polynomfunktion innerhalb der natürlichen Zahlen (null eingeschlossen) sind. Deswegen wird für die Potenzierung der Exponent als Integer übergeben und darauffolgend überprüft ob dieser innerhalb größer oder gleich null ist.
 
 
-\paragraph{Multiplikation}
-\begin{displaymath}
-    (a+bi)(c+di) = ac+adi+cbi-bdi^2 = ac-bd+(ad+cb)i
-\end{displaymath}
-\paragraph{Division}
-\paragraph{Exponentiation?}
 \paragraph{Kleiner Als}
 
 
-    \subparagraph{abs}
+\subparagraph{abs}
 
-    \paragraph{Ausgabe}
-    \subparagraph{toString-Methode}
-    \subparagraph{runden}
+\paragraph{Ausgabe}
+\subparagraph{toString-Methode}
+\subparagraph{runden}
 
     
-    \subsubsection{Polynomfunktionen}
-    \subsubsection{Durand-Kerner für eine Nullstellen}
-    \subsubsection{Startpunkte}
-    \subsubsection{Durnad-Kerner für alle Nullstellen}
-    \subsubsection{Endbedingungen}
-    \subsubsection{Testen}
+\subsubsection{Polynomfunktionen}
+\subsubsection{Durand-Kerner für eine Nullstellen}
+\subsubsection{Startpunkte}
+\subsubsection{Durnad-Kerner für alle Nullstellen}
+\subsubsection{Endbedingungen}
+\subsubsection{Testen}
 
 \section{Vergleich und Anwendung}
 
@@ -255,4 +216,18 @@ public static Complex minus(Complex a, Complex b) {
 
 \section{Code}
 
+\begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
+    public static Complex plus(Complex a, Complex b) {
+            double re = a.re + b.re;
+            double im = a.im + b.im;
+        return new Complex(re, im);
+    }
+    
+    public static Complex minus(Complex a, Complex b) {
+        double re = a.re - b.re;
+        double im = a.im - b.im;
+        return new Complex(re, im);
+    }
+    \end{lstlisting}
+    
 \end{document}

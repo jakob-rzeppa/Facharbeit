@@ -9,12 +9,6 @@ class Complex {
         this.im = im;
     }
 
-    public Complex abs() {
-        double re = (this.re >= 0) ? this.re : -this.re;
-        double im = (this.im >= 0) ? this.im : -this.im;
-        return new Complex(re, im);
-    }
-
     // static methods
     public static Complex plus(Complex a, Complex b) {
         double re = a.re + b.re;
@@ -41,6 +35,7 @@ class Complex {
     }
 
     public static Complex power(Complex c, int exponent) {
+        if (exponent < 0) { throw new RuntimeException("Negative exponentiation isn't implemented"); }
         if (exponent == 0) {
             return new Complex(1, 0);
         }
@@ -57,6 +52,10 @@ class Complex {
             result = Complex.multiply(result, factors.get(i));
         }
         return result;
+    }
+
+    public static double abs(Complex c) {
+        return Math.sqrt(Math.pow(c.re, 2) + Math.pow(c.im, 2));
     }
 
     public static boolean isLessThan(Complex a, Complex b) {

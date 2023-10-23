@@ -15,7 +15,7 @@ public class DurandKerner {
     }
 
     public static Complex[] durandKerner(Poly p) {
-        Complex accuracy = new Complex(Math.pow(10, -4), Math.pow(10, -4));
+        double accuracy = Math.pow(10, -4);
 
         System.out.println("function: " + p.toString());
 
@@ -58,7 +58,7 @@ public class DurandKerner {
 
             // check if change is less than eqsilon
             for (int i = 0; i < newRoots.length; i++) {
-                if (Complex.isLessThan(Complex.minus(newRoots[i], roots[i]).abs(), accuracy)) {
+                if (Complex.abs(Complex.minus(newRoots[i], roots[i])) < accuracy) {
                     running = false;
                 } else {
                     running = true;
