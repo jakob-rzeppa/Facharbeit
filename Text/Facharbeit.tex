@@ -161,11 +161,11 @@ gilt. Bei der Weierstraß-Iteration wird mit jeder Iteration sich an die Nullste
 Da $\vec{z}$ der Vektor für die Nullstellen ist und keine Korrektur mehr folgen muss ist $\vec{w} = \vec{0}$. Daraus folgt, dass Gleichung (1) und (2) gleich sind. \\\\
 Die Taylor-Entwicklung erster Ordnung\footnote{} für den Wert $\vec{z} + \vec{w}$ der Gleichung (2) ergibt:
 \begin{equation}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z} + \vec{w}}(x)+g_{\vec{z} + \vec{w}}'(x)\cdot (-\vec{w}) = p(x)
+    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z} + \vec{w}}(x)+g_{\vec{z} + \vec{w}}'(x)\cdot (x-(\vec{z}+\vec{w})) = p(x)
 \end{equation}
 Da Gleichung (1) und (2) gleich sind kann (3) zu
 \begin{equation}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (-\vec{w}) = p(x)
+    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (x-(\vec{z}+\vec{w})) = p(x)
 \end{equation}
 umgeschrieben werden. Die Ableitung von $g_{\vec{z}}(x)$ kann mithilfe der Produktregel gebildet werden.
 \begin{align*}
@@ -175,9 +175,8 @@ umgeschrieben werden. Die Ableitung von $g_{\vec{z}}(x)$ kann mithilfe der Produ
 \end{align*}
 $g_{\vec{z}}(x)$ kann jetzt in die Gleichung (4) eingesetzt werden:
 \begin{align*}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] &= g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (-\vec{w}) \\
-                                                    &= g_{\vec{z}}(x)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(x-z_j)\cdot (-\vec{w}) \\
-                                                    &= g_{\vec{z}}(x)-\sum_{k=1}^{n}\vec{w}\prod_{j=1;j\neq k}^{n}(x-z_j) \\
+    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] &= g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (x-(\vec{z}+\vec{w})) \\
+                                                    &= g_{\vec{z}}(x)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(x-z_j)\cdot (x-(\vec{z}+\vec{w})) \\
                                                     &= p(x)
 \end{align*}
 Wird jetzt die Nullstelle $x=z_k$ in die Gleichungen
@@ -185,6 +184,10 @@ Wird jetzt die Nullstelle $x=z_k$ in die Gleichungen
     g_{\vec{z}}(x)-\sum_{k=1}^{n}\vec{w}\prod_{j=1;j\neq k}^{n}(x-z_j) = p(x)
 \end{equation}
 eingesetzt, kann durch Umformungen der Korrekturwert $w_k$ bestimmt werden:
+\begin{align*}
+    g_{\vec{z}}(z_k)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(z_k-z_j)\cdot (z_k-(\vec{z}+\vec{w})) = p(z_k) \\
+    g_{\vec{z}}(z_k)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(z_k-z_j)\cdot (-\vec{w}) = p(z_k)
+\end{align*}
 \begin{equation*}
     g_{\vec{z}}(z_k)-\sum_{k=1}^{n}\vec{w}\prod_{j=1;j\neq k}^{n}(z_k-z_j) = g_{\vec{z}}(z_k)-\vec{w}_k\prod_{j=1;j\neq k}^{n}(z_k-z_j) = p(z_k)
 \end{equation*}
