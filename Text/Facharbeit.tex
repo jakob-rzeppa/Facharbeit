@@ -146,6 +146,7 @@ $\Rightarrow$ Die Durand-Kerner-Methode war für $p(x)$ erfolgreich.
 
 \section{Visualisierung}
 
+%--------------------------------------------------------------
 \section{Herleitung}
 \subsection{Interpretation der Weierstraß-Iteration als mehrdimensionales Newton-Verfahren}
 Die Weierstraß-Iteration kann als mehrdimensionales Newton-Verfahren verstanden werden. Daraus ergibt sich die (wenigstens lokale) Konvergenz der Methode: \\
@@ -196,7 +197,7 @@ Da $z_k$ eine Nullstelle ist, ist $g_{\vec{z}}(z_k) = 0$.
     &\Leftrightarrow \vec{w}_k = -\frac{p(z_k)}{\prod_{j=1;j\neq k}^{n}(z_k-z_j)} \\
     &\Leftrightarrow \vec{w}_k = -\frac{p(z_k)}{g_{\vec{z}}'(z_k)}
 \end{align*}
-Wenn man diesen Korrekturwert $-\frac{p(z_k)}{g_{\vec{z}}'(x)}$ mit der Korrektur $-\frac{f(x)}{f'(x)}$ bei der Newton-Methode vergleicht, kann man sehen, wie die Weierstraß-Iteration, ähnlich wie die Newton-Methode, Tangenten bildet und über diese die Nullstellen approximiert. Dabei kann die Weierstraß-Iteration als eine mehrdimensionale Newton-Methode verstehen, da diese das gleiche Verfahren, nur mit mehreren Nullstellen gleichzeitig ausführt.\footnote{vgl. Wikipedia: Begründung als Newton-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren#Begründung_als_Newton-Verfahren}}
+Wenn man diesen Korrekturwert $-\frac{p(z_k)}{g_{\vec{z}}'(x)}$ mit der Korrektur $-\frac{f(x)}{f'(x)}$ bei der Newton-Methode vergleicht, kann man sehen, wie die Weierstraß-Iteration, ähnlich wie die Newton-Methode, Tangenten bildet (WIESO) und über diese die Nullstellen approximiert. Dabei kann die Weierstraß-Iteration als eine mehrdimensionale Newton-Methode verstehen, da diese das gleiche Verfahren, nur mit mehreren Nullstellen gleichzeitig ausführt.\footnote{vgl. Wikipedia: Begründung als Newton-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren#Begründung_als_Newton-Verfahren}}
 
 \subsection{Startpunkte}
 Um zu verstehen, wo sich die Nullstellen am öftesten befinden macht es sinn sich die Verteilung aller Nullstellen eines Polynoms grafisch vorzustellen. 
