@@ -43,7 +43,7 @@ public class DurandKerner {
         while (running) {
             Complex[] newRoots = new Complex[roots.length];
 
-            System.out.println("iteration: " + ctr++);
+            System.out.println("iteration: " + ++ctr);
 
             // calc for every root
             for (int i = 0; i < roots.length; i++) {
@@ -76,7 +76,7 @@ public class DurandKerner {
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(-4,-4,2,5);
+        Poly p = new Poly(-1,0,1);
         durandKerner(p);
     }
 }
