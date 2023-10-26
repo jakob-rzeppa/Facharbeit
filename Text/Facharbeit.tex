@@ -224,41 +224,31 @@ Die Durand-Kerner-Methode ist nicht generell Konvergent. Das bedeutet, dass in m
 \subsection{Einleitung}
 Normierung
 \subsection{Komplexe Zahlen}
-\paragraph{Wieso?????????????????}
 In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen nutzen zu können, es ist jedoch nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
 
+\paragraph{Aufbau der Klasse}
+Die Klasse \glqq Complex\glqq\space besitzt zwei Attribute einen Konstruktor und mehrere statische und nicht statische Funktionen. Außerdem ist die \glqq toString\glqq-Methode überschrieben und die Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\glqq, da diese auch von Außerhalb aufgerufen werden.
+
 \paragraph{Attribute}
-Die Klasse \glqq Complex\grqq besitzt zwei private Attribute (\glqq re\grqq \space und \glqq im\grqq), die den reellen und imaginären Teil der komplexen Zahl darstellen. Beide sind vom Datentyp \glqq double\grqq, um möglichst viele Nachkommastellen repräsentieren zu können.
+Beide Attribute sind vom Datentyp \glqq double\grqq, um möglichst genaue und große Dezimalzahlen darstellen zu können. Sie stellen den reellen und imaginären Teil dar. Dabei steht \glqq re\grqq\space für die reellen und \glqq im\grqq\space für die imaginären Zahlen.
 
 \paragraph{Konstruktor}
-Der Konstruktor der Klasse \glqq Complex\grqq\space nimmt zwei Zahlen (\glqq re\grqq \space und \glqq im\grqq) vom Typ \glqq double\grqq\space entgegen und speichert diese in den beiden Attributen.
+Der Konstruktor nimmt den reellen und imaginären Teil entgegen und speichert diese in den Attributen.
 
-\paragraph{Grundrechenarten}
-Für die vier Grundrechenarten Addition, Subtraktion, Multiplikation und Division wurden zuerst vier statische Methoden erstellt. Diese nehmen zwei Instanzen der Klasse \glqq Complex\grqq\space als Parameter an und geben das Ergebnis als neue Instanz der gleichen Klasse zurück zurück. Innerhalb der Methoden wird zuerst der reelle und imaginäre Teil des Ergebnisses ausgerechnet.\footnote{ingenieurkurse.de: Höhere Mathematik 1: Analysis und Lineare Algebra: Grundrechenarten der komplexen Zahlen, URL: https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html (Stand: 23.10.2023)}
-Daraufhin wird die neue Instanz der Klasse \glqq Complex\grqq, mit den zuvor ausgerechneten Werten, erstellt und diese zurückgegeben.
+\paragraph{Hilfsfunktionen}
+Die vier Hilfsfunktionen für die Grundrechenarten Addition, Subtraktion, Multiplikation und Division\footnote{ingenieurkurse.de: Grundrechenarten der komplexen Zahlen, URL: \url{https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html} (Zuletzt eingesehen: 26.10.2023)\label{ftn:grundrechenarten}} nehmen zwei komplexe Zahlen (Instanzen der Klasse \glqq Complex\grqq) entgegen und geben das Ergebnis zurück. 
+Außerdem gibt es eine Hilfsfunktionen für das Potenzieren. Diese nimmt eine komplexe Zahl als Basis und ein Integer als Exponent entgegen. Zuerst wird geguckt, ob der Exponent positiv oder null ist, da negative Potenzierung nicht implementiert ist. Ist das nicht der Fall wird eine \glqq RuntimeException\grqq, mit passender Fehlermeldung, ausgelöst. Dannach wird, falls der Exponent null ist, 1 als komplexe Zahl zurückgegeben. Sonst wird, mithilfe eine \glqq for-Schleife\grqq, das Ergebnis ausgerechnet.
 
-\paragraph{Potenzierung}
-Die Potenzierung findet auch mit einer statischen Methode, die eine Instanz der Klasse \glqq Complex\grqq\space zurückgibt, statt. Für die Rechnung wird die Basis als komplexe Zahl und der Exponent als Integer übergeben, daür die Durand-Kerner-Methode wird Potenzierung nur mit natürlichen Zahlen (null eingeschlossen) benötigt, da nur für das Ausrechenen der Polynomfunktion Potenzierung benutzt wird und alle Exponenten einer Polynomfunktion innerhalb der natürlichen Zahlen (null eingeschlossen) sind. Deswegen wird für die Potenzierung der Exponent als Integer übergeben und darauffolgend überprüft ob dieser innerhalb größer oder gleich null ist.
+\paragraph{Betrag}
+Die nicht statische Funktion \glqq abs()\grqq\space (kurz für Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$ definiert.\footref{ftn:grundrechenarten}
 
+\paragraph{Runden}
+Die Methode \glqq round()\grqq\space gibt eine neue komplexe Zahl zurück, bei welcher der reelle und imaginäre Teil auf vier Nachkommastellen gerundet wurden.
 
-\paragraph{Kleiner Als}
+\paragraph{\glqq toString\grqq-Methode}
+Die \glqq toString\grqq-Methode gibt wird in der Klasse \glqq Complex\grqq\space überschrieben, um die komplexe Zahl als String zurückzugegeben.
 
-
-\subparagraph{abs}
-
-\paragraph{Ausgabe}
-\subparagraph{toString-Methode}
-\subparagraph{runden}
-
-    
-\subsubsection{Polynomfunktionen}
-\subsubsection{Durand-Kerner für eine Nullstellen}
-\subsubsection{Startpunkte}
-\subsubsection{Durnad-Kerner für alle Nullstellen}
-\subsubsection{Endbedingungen}
-\subsubsection{Testen}
-
-\section{Vergleich und Anwendung}
+\subsection{Polynomfunktion}
 
 \section{Fazit}
 

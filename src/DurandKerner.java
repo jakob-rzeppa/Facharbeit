@@ -11,7 +11,11 @@ public class DurandKerner {
             }
             factors.add(Complex.minus(roots[index], roots[i]));
         }
-        return Complex.multiply(factors);
+        Complex result = new Complex(1, 0);
+        for (int i = 0; i < factors.size(); i++) {
+            result = Complex.multiply(result, factors.get(i));
+        }
+        return result;
     }
 
     public static Complex[] durandKerner(Poly p) {
@@ -58,7 +62,7 @@ public class DurandKerner {
 
             // check if change is less than eqsilon
             for (int i = 0; i < newRoots.length; i++) {
-                if (Complex.abs(Complex.minus(newRoots[i], roots[i])) < accuracy) {
+                if (Complex.minus(newRoots[i], roots[i]).abs() < accuracy) {
                     running = false;
                 } else {
                     running = true;

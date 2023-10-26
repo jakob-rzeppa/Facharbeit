@@ -46,26 +46,8 @@ class Complex {
         return product;
     }
 
-    public static Complex multiply(List<Complex> factors) {
-        Complex result = new Complex(1, 0);
-        for (int i = 0; i < factors.size(); i++) {
-            result = Complex.multiply(result, factors.get(i));
-        }
-        return result;
-    }
-
-    public static double abs(Complex c) {
-        return Math.sqrt(Math.pow(c.re, 2) + Math.pow(c.im, 2));
-    }
-
-    public static boolean isLessThan(Complex a, Complex b) {
-        if (a.re > b.re) {
-            return false;
-        }
-        if (a.im > b.im) {
-            return false;
-        }
-        return true;
+    public double abs() {
+        return Math.sqrt(Math.pow(re, 2) + Math.pow(im, 2));
     }
 
     public Complex round() {
