@@ -154,59 +154,7 @@ $\Rightarrow$ Die Durand-Kerner-Methode war für $p(x)$ erfolgreich.
 
 %--------------------------------------------------------------
 \section{Herleitung}
-\subsection{Interpretation der Weierstraß-Iteration als mehrdimensionales Newton-Verfahren}
-Die Weierstraß-Iteration kann als mehrdimensionales Newton-Verfahren verstanden werden. Daraus ergibt sich die (wenigstens lokale) Konvergenz der Methode: \\
-Für jedes $n$-Tupel komplexer Zahlen gibt es genau ein normiertes Polynom des Grades $n$, das diese als Nullstellen $z_1;z_2;\dots;z_n$ hat. Das Polynom bekommt man durch das multiplizieren der jeweiligen linearen Faktoren. Daraus folgt, dass, für den Vektor\footnote{Dieser $n$-dimensionelle Vektor kann in diesem Fall zur Vereinfachung mehr als eine Liste der Nullstellen angesehen werden. Es geht weniger um eine Bewegung im Raum, sondern um die einzelnen Nullstellen.} $\vec{z} = (z_1;z_2;\dots;z_n)$, die Gleichung
-\begin{equation}
-    g_{\vec{z}}(x)=\prod_{j=1}^{n}(x-z_j)=p(x)
-\end{equation}
-gilt. Bei der Weierstraß-Iteration wird mit jeder Iteration sich an die Nullstelle um die Korrektur $\vec{w} = (w_1;w_2;\dots;w_n)$ angenähert.
-\begin{equation}
-    g_{\vec{z} + \vec{w}}(x)=\prod_{j=1}^{n}(x-(z_j+w_j))=\prod_{j=1}^{n}(x-z_j-w_j)=p(x)
-\end{equation}
-Da $\vec{z}$ der Vektor für die Nullstellen ist und keine Korrektur mehr folgen muss ist $\vec{w} = \vec{0}$. Daraus folgt, dass Gleichung (1) und (2) gleich sind. \\\\
-Die Taylor-Entwicklung erster Ordnung\footnote{} für den Wert $\vec{z} + \vec{w}$ der Gleichung (2) ergibt:
-\begin{equation}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z} + \vec{w}}(x)+g_{\vec{z} + \vec{w}}'(x)\cdot (x-(\vec{z}+\vec{w})) = p(x)
-\end{equation}
-Da Gleichung (1) und (2) gleich sind kann (3) zu
-\begin{equation}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] = g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (x-(\vec{z}+\vec{w})) = p(x)
-\end{equation}
-umgeschrieben werden. Die Ableitung von $g_{\vec{z}}(x)$ kann mithilfe der Produktregel gebildet werden.
-\begin{align*}
-    g_{\vec{z}}'(x) &= (\prod_{j=1}^{n}(x-z_j))' \\
-                    &= ((x-z_n)(x-z_{n-1})\dots(x-z_1))' \\
-                    &= \sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(x-z_j)
-\end{align*}
-$g_{\vec{z}}(x)$ kann jetzt in die Gleichung (4) eingesetzt werden:
-\begin{align*}
-    T_1[g_{\vec{z} + \vec{w}}(x);\vec{z} + \vec{w}] &= g_{\vec{z}}(x)+g_{\vec{z}}'(x)\cdot (x-(\vec{z}+\vec{w})) \\
-                                                    &= g_{\vec{z}}(x)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(x-z_j)\cdot (x-(\vec{z}+\vec{w})) \\
-                                                    &= p(x)
-\end{align*}
-Wird jetzt die Nullstelle $x=z_k$ in die Gleichungen
-\begin{equation}
-    g_{\vec{z}}(x)-\sum_{k=1}^{n}\vec{w}\prod_{j=1;j\neq k}^{n}(x-z_j) = p(x)
-\end{equation}
-eingesetzt, kann durch Umformungen der Korrekturwert $w_k$ bestimmt werden:
-\begin{align*}
-    g_{\vec{z}}(z_k)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(z_k-z_j)\cdot (z_k-(\vec{z}+\vec{w})) = p(z_k) \\
-    g_{\vec{z}}(z_k)+\sum_{k=1}^{n}\prod_{j=1;j\neq k}^{n}(z_k-z_j)\cdot (-\vec{w}) = p(z_k)
-\end{align*}
-\begin{equation*}
-    g_{\vec{z}}(z_k)-\sum_{k=1}^{n}\vec{w}\prod_{j=1;j\neq k}^{n}(z_k-z_j) = g_{\vec{z}}(z_k)-\vec{w}_k\prod_{j=1;j\neq k}^{n}(z_k-z_j) = p(z_k)
-\end{equation*}
-Da $z_k$ eine Nullstelle ist, ist $g_{\vec{z}}(z_k) = 0$.
-\begin{equation*}
-    -\vec{w}_k\prod_{j=1;j\neq k}^{n}(z_k-z_j) = p(z_k)
-\end{equation*}
-\begin{align*}
-    &\Leftrightarrow -\vec{w}_k = \frac{p(z_k)}{\prod_{j=1;j\neq k}^{n}(z_k-z_j)} \\
-    &\Leftrightarrow \vec{w}_k = -\frac{p(z_k)}{\prod_{j=1;j\neq k}^{n}(z_k-z_j)} \\
-    &\Leftrightarrow \vec{w}_k = -\frac{p(z_k)}{g_{\vec{z}}'(z_k)}
-\end{align*}
-Wenn man diesen Korrekturwert $-\frac{p(z_k)}{g_{\vec{z}}'(x)}$ mit der Korrektur $-\frac{f(x)}{f'(x)}$ bei der Newton-Methode vergleicht, kann man sehen, wie die Weierstraß-Iteration, ähnlich wie die Newton-Methode, Tangenten bildet (WIESO) und über diese die Nullstellen approximiert. Dabei kann die Weierstraß-Iteration als eine mehrdimensionale Newton-Methode verstehen, da diese das gleiche Verfahren, nur mit mehreren Nullstellen gleichzeitig ausführt.\footnote{vgl. Wikipedia: Begründung als Newton-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren#Begründung_als_Newton-Verfahren}}
+\section{Methode}
 
 \subsection{Wählen der Startpunkte}
 Komplexe Nullstellen treten immer in konjugierten Paaren\footnote{Hochschule-Esslingen: Konjugiert komplexe Zahlen (S. 4), URL: \url{https://www2.hs-esslingen.de/~ulmet/mathe/vorlesungen/komplex.pdf} (Zuletzt eingesehen am 29.10.2023)} auf.\footnote{arndt-bruenner.de: Nullstellen von Polynomen in der komplexen Zahlenebene, URL: \url{https://www.arndt-bruenner.de/mathe/scripts/polynullview.htm#:~:text=NullstellenvonPolynomeninderkomplexenZahlenebene&text=KomplexeNullstellentretenimmerals,imVorzeichenunterschiedlichenimaginärenAnteil.} (Zuletzt eingesehen am 23.10.2023)}
