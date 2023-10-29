@@ -50,9 +50,9 @@ class Complex {
         return Math.sqrt(Math.pow(re, 2) + Math.pow(im, 2));
     }
 
-    public Complex round() {
+    public Complex round(int accuracyDecimalPlaces) {
         // shove the numbers after the decimal point in front of the decimal point and cut of the rest
-        double factor = Math.pow(10, 4);
+        double factor = Math.pow(10, accuracyDecimalPlaces);
 		double r1 = Math.round(this.re * factor);
         double i1 = Math.round(this.im * factor);
 

@@ -82,7 +82,13 @@ Bei der Durand-Kerner-Methode wird mit jeder Iteration jede Nullstelle etwas gen
 \[\dots\]
 \[z_{1}^{(i+1)} = x - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j)}\]
 \subsection{Startpunkte}
-Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplex Nullstellen auch komplex sind und keine konjugierten Paare\footnote{Konjugierte Paare sind Paare von komplexen Zahlen, welche sich nur im Vorzeichen des imaginären Teils unterscheiden. !!!FUßNOTE!!!} vorkommen. Außerdem müssen alls Startpunkte unterschiedlich sein. Die Startpunkte können allerdings die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gänigsten Methoden ist die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genaueres $r$ genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
+Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplex Nullstellen auch komplex sind. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch null dividiert wird: 
+Wenn $z_{k}^{(i)}$ gleich einem anderen $z$ ist, wird bei der Gleichung
+\begin{equation*}
+    z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j)}
+\end{equation*}
+durch Null dividiert.
+Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gänigsten Methoden ist die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genaueres $r$ genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
 Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt. Diese kann beliebig gewählt werden, solange keine reellen Zahlen unter den Startpunkten sind. In diesem Fall wird $c = \frac{\pi}{2n}$ gewählt.
 Um die Startpunkte zu bestimmen wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
@@ -202,10 +208,8 @@ Da $z_k$ eine Nullstelle ist, ist $g_{\vec{z}}(z_k) = 0$.
 \end{align*}
 Wenn man diesen Korrekturwert $-\frac{p(z_k)}{g_{\vec{z}}'(x)}$ mit der Korrektur $-\frac{f(x)}{f'(x)}$ bei der Newton-Methode vergleicht, kann man sehen, wie die Weierstraß-Iteration, ähnlich wie die Newton-Methode, Tangenten bildet (WIESO) und über diese die Nullstellen approximiert. Dabei kann die Weierstraß-Iteration als eine mehrdimensionale Newton-Methode verstehen, da diese das gleiche Verfahren, nur mit mehreren Nullstellen gleichzeitig ausführt.\footnote{vgl. Wikipedia: Begründung als Newton-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren#Begründung_als_Newton-Verfahren}}
 
-\subsection{Startpunkte}
-Um zu verstehen, wo sich die Nullstellen am öftesten befinden macht es sinn sich die Verteilung aller Nullstellen eines Polynoms grafisch vorzustellen. 
-%Bild
-Dazu wird jedem Wert eine Farbe nach
+\subsection{Wählen der Startpunkte}
+Komplexe Nullstellen treten immer in konjugierten Paaren\footnote{Hochschule-Esslingen: Konjugiert komplexe Zahlen (S. 4), URL: \url{https://www2.hs-esslingen.de/~ulmet/mathe/vorlesungen/komplex.pdf} (Zuletzt eingesehen am 29.10.2023)} auf.\footnote{arndt-bruenner.de: Nullstellen von Polynomen in der komplexen Zahlenebene, URL: \url{https://www.arndt-bruenner.de/mathe/scripts/polynullview.htm#:~:text=NullstellenvonPolynomeninderkomplexenZahlenebene&text=KomplexeNullstellentretenimmerals,imVorzeichenunterschiedlichenimaginärenAnteil.} (Zuletzt eingesehen am 23.10.2023)}
 
 \subsection{Endkriterium}
 -Welches der zwei verfahren beesser ist
@@ -217,7 +221,7 @@ Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (
 Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Durand-Kerner-Methode durchführen.
 
-\subsection{Keine generelle Konvergenz}
+\subsection{Keine generelle Konvergenz?}
 Die Durand-Kerner-Methode ist nicht generell Konvergent. Das bedeutet, dass in manchen Fällen die Funktion gegen Unendlich keinen festen Wert anstrebt. Das kann man sich so vorstellen: Jede Nullstelle hat einen Bereich in dem sie von der Weierstraß-Iteration gefunden werden kann. Dieser kann auch ins Unendliche gehen, muss aber nicht. Wenn eine Iteration außerhalb dieses Bereiches geht findet der Wert nicht mehr zu der Nullstelle. Dadurch können auch die anderen Nullstellen nicht konvergieren, da eine der Nullstellen so falsch ist, dass die Korrektur nicht mehr funktioniert. Das führt dazu, dass die Methode nicht konvergiert. Dabei kann nicht generell bestimmt werden, bei welchen Startpunkten und Polynomen die Durand-Kerner-Methode nicht konvergiert. Da dies allerdings sehr selten ist kann es meist vernachlässigt werden.
 
 \section{Implementierung}
@@ -246,9 +250,24 @@ Die nicht statische Funktion \glqq abs()\grqq\space (kurz für Absolutbetrag) gi
 Die Methode \glqq round()\grqq\space gibt eine neue komplexe Zahl zurück, bei welcher der reelle und imaginäre Teil auf vier Nachkommastellen gerundet wurden.
 
 \paragraph{\glqq toString\grqq-Methode}
-Die \glqq toString\grqq-Methode gibt wird in der Klasse \glqq Complex\grqq\space überschrieben, um die komplexe Zahl als String zurückzugegeben.
+Die \glqq toString\grqq-Methode wird in der Klasse \glqq Complex\grqq\space überschrieben, um die komplexe Zahl als String zurückzugegeben.
 
+%-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion}
+Für die Durand-Kerner-Methode muss eine Polynomfunktion gegeben sein. Diese wird in meiner Implementierung in eine eigene Klasse ausgelagert.
+
+\paragraph{Aufbau der Klasse}
+Die Klasse \glqq Poly\grqq\space (kurz für Polynomial (englisch) bzw. Polynom (deutsch)) besitzt zwei Attribute, einen Konstruktor und die Funktion \glqq solve()\grqq. Außerdem wurde die \glqq toString\grqq -Methode überschrieben.
+
+\paragraph{Attribute}
+Bei dem ersten Attribut \glqq coefficients\grqq\space handelt es sich um die Koeffizienten. Diese werden in einem Array gespeichert, wo der Index den Exponenten des Terms beschreibt. Das zweite Attribut ist der Grad der Funktion. Beide Attribute sind \glqq public\grqq, da auf diese von Außerhalb zugegriffen wird.
+
+\paragraph{Konstruktor}
+Dem Konstruktor muss ein Array der Koeffizienten, wie bei den Attributen beschrieben, übergeben werden. Dieses wird in dem Attribut \glqq coefficients\grqq\space gespeichert. Infolge dessen wird der Grad des Polynoms bestimmt, indem die Länge des Arrays minus eins gerechnet wird.
+
+\paragraph{Lösen der Funktion}
+
+\paragraph{Normieren}
 
 \section{Fazit}
 
