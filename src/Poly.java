@@ -20,12 +20,12 @@ class Poly {
 	}
 
     public Complex solve(Complex val) {
-        Complex result = new Complex(0, 0);
-        Complex x = new Complex(1, 0);
-        for (double c : coefficients) {
-            result = Complex.plus(result, Complex.multiply(x, new Complex(c, 0)));
-            x = Complex.multiply(x, val);
-        }
+		Complex result = new Complex(0, 0);
+        for (int i = 0; i < coefficients.length; i++) {
+			Complex c = Complex.power(val, i);
+			Complex monomial = Complex.multiply(new Complex(coefficients[i], 0), c);
+			result = Complex.plus(result, monomial);
+		}
         return result;
     }
 

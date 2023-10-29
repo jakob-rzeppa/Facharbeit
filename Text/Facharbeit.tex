@@ -58,21 +58,24 @@
 
 \subsection{Verwendungszwecke}
 
-
 \section{Durand-Kerner-Methode}
-Die Durand-Kerner-Methode, auch genannt Weierstrass-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
+Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
 Sie wurde von Karl Weierstrass zwischen 1859 und 1891, als Teil seines Beweises des Fundermentalsatz der Algebra, entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
-Die Durand-Kerner-Methode findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren\footnote{
+Die Weierstraß-Iteration findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren\footnote{
     Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
 }
 , nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
-
+    vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
+    \label{ftn:Wikipedia-Durand-Kerner-Method}
 }
 
 %----------------------------------------------------------------------------------------------------
 \section{Funktionsweise}
 \subsection{Bedingungen}
-Für die Durand-Kerner-Methode muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.
+Für die Durand-Kerner-Methode muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.\footnote{
+    vgl. Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt eingesehen am 29.10.2023)
+    \label{ftn:Wikipedia-Weierstraß-Methode}
+}
 
 \subsection{Methode}
 Bei der Durand-Kerner-Methode wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
@@ -82,7 +85,7 @@ Bei der Durand-Kerner-Methode wird mit jeder Iteration jede Nullstelle etwas gen
 \[\dots\]
 \[z_{1}^{(i+1)} = x - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j)}\]
 \subsection{Startpunkte}
-Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplex Nullstellen auch komplex sind. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch null dividiert wird: 
+Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen auch komplex sein müssen. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch null dividiert wird: 
 Wenn $z_{k}^{(i)}$ gleich einem anderen $z$ ist, wird bei der Gleichung
 \begin{equation*}
     z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j)}
@@ -95,8 +98,9 @@ Um die Startpunkte zu bestimmen wird
  angewand.
 
 \subsection{Endkriterium}
-Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ gegeben sein. 
-In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen werden, dass alle Nullstellen für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion nach oder vor der Nullstelle so langsam steigt oder fällt, dass in einem größeren Bereich die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Wenn $|z_k^{(i-1)}z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen, dass alle Nullstellen auf die Genauigkeit $g$ genau sind. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass wenn man den Wert in die Funktion eingibt ein ganz anderes Ergebnis herauskommt. In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren benutzt, da dies einem die Nullstelle mit der gewünschten Genauigkeit gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte. Die Wahrscheinlichkeit, dass das passiert, solange man eine vernünftige Genauigkeit nimmt, ist allerdings verschwindend gering. 
+Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gegeben sein. 
+In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen werden, dass alle Nullstellen für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an manchen Stellen sehr nah an null ist, so dass an mehreren Stellen die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Wenn $|z_k^{(i-1)}z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen, dass alle Nullstellen auf die Genauigkeit $g$ genau sind. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass wenn der Wert in die Funktion eingegeben wird ein Wert ungleich null herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ genau an der Nullstelle.\\\\
+In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren benutzt, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
@@ -151,17 +155,20 @@ Weiterhin, kann aus dem Fundermentalsatz der Algebra hergeleitet werden, dass al
 $\Rightarrow$ Die Durand-Kerner-Methode war für $p(x)$ erfolgreich.
 
 \section{Visualisierung}
+TODO
 
 %--------------------------------------------------------------
 \section{Herleitung}
-\section{Methode}
+\subsection{Methode}
+TODO
 
 \subsection{Wählen der Startpunkte}
-Komplexe Nullstellen treten immer in konjugierten Paaren\footnote{Hochschule-Esslingen: Konjugiert komplexe Zahlen (S. 4), URL: \url{https://www2.hs-esslingen.de/~ulmet/mathe/vorlesungen/komplex.pdf} (Zuletzt eingesehen am 29.10.2023)} auf.\footnote{arndt-bruenner.de: Nullstellen von Polynomen in der komplexen Zahlenebene, URL: \url{https://www.arndt-bruenner.de/mathe/scripts/polynullview.htm#:~:text=NullstellenvonPolynomeninderkomplexenZahlenebene&text=KomplexeNullstellentretenimmerals,imVorzeichenunterschiedlichenimaginärenAnteil.} (Zuletzt eingesehen am 23.10.2023)}
+Komplexe Nullstellen treten immer in konjugierten Paaren\footnote{Hochschule-Esslingen: Konjugiert komplexe Zahlen (S. 4), URL: \url{https://www2.hs-esslingen.de/~ulmet/mathe/vorlesungen/komplex.pdf} (Zuletzt eingesehen am 29.10.2023)} auf.\footnote{arndt-bruenner.de: Nullstellen von Polynomen in der komplexen Zahlenebene, URL: \url{https://www.arndt-bruenner.de/mathe/scripts/polynullview.htm#:~:text=NullstellenvonPolynomeninderkomplexenZahlenebene&text=KomplexeNullstellentretenimmerals,imVorzeichenunterschiedlichenimaginärenAnteil.} (Zuletzt eingesehen am 23.10.2023)} \\
 
-\subsection{Endkriterium}
--Welches der zwei verfahren beesser ist
+Erster Satz von Cauchy
+https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf
 
+%------------------------------------------------------------------------------------
 \section{Probleme und Einschränkungen}
 \subsection{Normiertes Polynom}
 Für die Durand-Kerner-Methode muss die gegebene Funktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Durand-Kerner-Methode ein normiertes Polynom sein.
@@ -213,7 +220,8 @@ Bei dem ersten Attribut \glqq coefficients\grqq\space handelt es sich um die Koe
 \paragraph{Konstruktor}
 Dem Konstruktor muss ein Array der Koeffizienten, wie bei den Attributen beschrieben, übergeben werden. Dieses wird in dem Attribut \glqq coefficients\grqq\space gespeichert. Infolge dessen wird der Grad des Polynoms bestimmt, indem die Länge des Arrays minus eins gerechnet wird.
 
-\paragraph{Lösen der Funktion}
+\paragraph{Lösen der Polynomfunktion}
+Das Lösen des Polynoms wird in der Methode \glqq solve()\grqq\space implementiert. Diese ist \glqq public\grqq, weil von Außerhalb auf die Funktion zugegriffen wird. 
 
 \paragraph{Normieren}
 
