@@ -94,15 +94,22 @@ Wenn $z_{k}^{(i)}$ gleich einem anderen $z$ ist, wird bei der Gleichung
 \end{equation*}
 durch Null dividiert.
 Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gänigsten Methoden ist die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genaueres $r$ genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
-Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt. Diese kann beliebig gewählt werden, solange keine reellen Zahlen unter den Startpunkten sind. In diesem Fall wird $c = \frac{\pi}{2n}$ gewählt.
+Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt. Diese kann beliebig gewählt werden, solange keine reellen Zahlen unter den Startpunkten sind. In diesem Fall wird $c = \frac{\pi}{2n}$ gewählt. %TODO
 Um die Startpunkte zu bestimmen wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
  angewand.
 
 \subsection{Endkriterium}
 Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gegeben sein. 
-In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen werden, dass alle Nullstellen für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an manchen Stellen sehr nah an null ist, so dass an mehreren Stellen die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Wenn $|z_k^{(i-1)}z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann geschlossen, dass alle Nullstellen auf die Genauigkeit $g$ genau sind. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass wenn der Wert in die Funktion eingegeben wird ein Wert ungleich null herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ genau an der Nullstelle.\\\\
-In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren benutzt, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
+In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an manchen Stellen sehr nah an null ist, so dass an 
+
+
+
+mehreren Stellen die Bedingungen erreicht sind.
+
+
+Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
+In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren verwendet, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte, ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
@@ -186,23 +193,23 @@ Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für
 \subsection{Einleitung}
 Normierung
 \subsection{Komplexe Zahlen}
-In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen nutzen zu können, es ist jedoch nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
+In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
 
 \paragraph{Aufbau der Klasse}
-Die Klasse \glqq Complex\glqq\space besitzt zwei Attribute einen Konstruktor und mehrere statische und nicht statische Funktionen. Außerdem ist die \glqq toString\glqq-Methode überschrieben und die Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\glqq, da diese auch von Außerhalb aufgerufen werden.
+Die Klasse \glqq Complex\glqq\space besitzt zwei Attribute einen Konstruktor und mehrere Funktionen für die Operationen. Außerdem ist die \glqq toString\glqq-Methode überschrieben und eine Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\glqq, da diese auch von Außerhalb aufgerufen werden.
 
 \paragraph{Attribute}
 Beide Attribute sind vom Datentyp \glqq double\grqq, um möglichst genaue und große Dezimalzahlen darstellen zu können. Sie stellen den reellen und imaginären Teil dar. Dabei steht \glqq re\grqq\space für die reellen und \glqq im\grqq\space für die imaginären Zahlen.
 
 \paragraph{Konstruktor}
-Der Konstruktor nimmt den reellen und imaginären Teil entgegen und speichert diese in den Attributen.
+Der Konstruktor nimmt einen reellen und imaginären Teil entgegen und speichert diese in den Attributen.
 
 \paragraph{Hilfsfunktionen}
 Die vier Hilfsfunktionen für die Grundrechenarten Addition, Subtraktion, Multiplikation und Division\footnote{ingenieurkurse.de: Grundrechenarten der komplexen Zahlen, URL: \url{https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html} (Zuletzt eingesehen: 26.10.2023)\label{ftn:grundrechenarten}} nehmen zwei komplexe Zahlen (Instanzen der Klasse \glqq Complex\grqq) entgegen und geben das Ergebnis zurück. 
 Außerdem gibt es eine Hilfsfunktionen für das Potenzieren. Diese nimmt eine komplexe Zahl als Basis und ein Integer als Exponent entgegen. Zuerst wird geguckt, ob der Exponent positiv oder null ist, da negative Potenzierung nicht implementiert ist. Ist das nicht der Fall wird eine \glqq RuntimeException\grqq, mit passender Fehlermeldung, ausgelöst. Dannach wird, falls der Exponent null ist, 1 als komplexe Zahl zurückgegeben. Sonst wird, mithilfe eine \glqq for-Schleife\grqq, das Ergebnis ausgerechnet.
 
 \paragraph{Betrag}
-Die nicht statische Funktion \glqq abs()\grqq\space (kurz für Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$ definiert.\footref{ftn:grundrechenarten}
+Die nicht statische Funktion \glqq abs()\grqq\space (kurz für \glqq absolute Value\grqq bzw. den Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$ definiert.\footref{ftn:grundrechenarten}
 
 \paragraph{Runden}
 Die Methode \glqq round()\grqq\space gibt eine neue komplexe Zahl zurück, bei welcher der reelle und imaginäre Teil auf vier Nachkommastellen gerundet wurden.
