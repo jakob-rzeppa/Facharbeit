@@ -82,38 +82,44 @@ Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form 
 
 \subsection{Fixpunktiteration der Weierstraß-Iteration}
 Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
-\[z_n^{(i+1)} = x - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j)}\]
-\[z_{n-1}^{(i+1)} = x - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j)}\]
+\[z_n^{(i+1)} = x - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j^{(i)})}\]
+\[z_{n-1}^{(i+1)} = x - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j^{(i)})}\]
 \vspace{0.25mm}
 \[\dots\]
-\[z_{1}^{(i+1)} = x - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j)}\]
+\[z_{1}^{(i+1)} = x - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j^{(i)})}\]
+
 \subsection{Startpunkte}
-Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)}$ gesetzt werden. Das kann zufällig passieren. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen auch komplex sein müssen. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch null dividiert wird: 
-Wenn $z_{k}^{(i)}$ gleich einem anderen $z$ ist, wird bei der Gleichung
+Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)} \in \mathbb{C}$ gesetzt werden. Diese können beliebig gewählt werden. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen einen imaginären Teil ungleich Null haben. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch Null dividiert wird.
+Denn bei der Gleichung
 \begin{equation*}
-    z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j)}
+    z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j^{(i)})}
 \end{equation*}
-durch Null dividiert.
-Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv, mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
-Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.\footnote{
-    Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt eingesehen am 30.10.2023) \label{ftn:OscarVilez,5:40}
-}
+wird, wenn $z_{k}^{(i)}$ gleich einem anderen $z^{(i)}$ ist, durch Null dividiert.
+Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. \\
+Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv Wurzeln zu berechnen. Deshalb kann auch ein weniger genauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
+Auf dem Kreis werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Dafür wird das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$ benötigt. Zuletzt wird noch eine Verschiebung $c$ durchgeführt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.
 Um die Startpunkte zu bestimmen wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
-angewand.
+angewand.\footnote{
+    vgl. Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt eingesehen am 30.10.2023) \label{ftn:OscarVilez,5:40}
+}
 
 \subsection{Endkriterium}
-Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gegeben sein. 
-In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an mehreren Bereichen sehr nah an null ist, so dass an
+Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gewählt werden.\\ 
+In dem ersten Verfahren wird die potentielle Nullstelle $z_k^{(i)}$ in die gewählte Polynomfunktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an mehreren Bereichen sehr nah an Null ist, so dass an
 Stellen weiter von der Nullstelle entfernt die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. \\
-Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
+Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten der Weierstraß-Iteration mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von Null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
 In der folgenden Implementierung der Weierstraß-Iteration wurde das zweite Verfahren verwendet, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte, ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
-Im nächsten Abschnitt wird die Weierstraß-Iteration an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
+Im Folgenden wird die Weierstraß-Iteration an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
 \paragraph{Fixpunktiteration der Weierstraß-Iteration}
-Für die Funktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in \mathbb{C}$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
+Für die Funktion
+\begin{equation*}
+    p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)
+\end{equation*}
+sind die Nullstellen $s;t;u;v \in \mathbb{C}$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
 \begin{equation*}
     s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
 \end{equation*}
@@ -136,7 +142,7 @@ $v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
 \paragraph{Ausführung}
 \begin{center}
 \begin{tabular}{c|c c c c}
-    Iteration & r & s & t & u \\
+    Iteration & s & t & u & v \\
     \hline
     0 & 2,9256 + 1,2118i & -1,2118 + 2,9256i & -2,9256 - 1,2118i & 1,2118 - 2,9256i \\
     1 & 1,2993 + 0,8722i & -1,8873 + 2,0075i & -3,405 - 0,7665i & -0,0069 - 2,1133i \\
@@ -145,12 +151,12 @@ $v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
     4 & 0,6759 - 0,234i & 0,0243 + 0,9804i & -4,613 - 0,0021i & -0,0872 - 0,9549i \\
     5 & 0,8621 + 0,0197i & -0,1294 + 0,9945i & -4,6149 & -0,1177 - 1,0141i \\
     6 & 0,842 + 0,0004i & -0,1134 + 1,0078i & -4,6149 & -0,1136 - 1,0082i \\
-    7 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
-    8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081 \\
+    7 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081i \\
+    8 & 0,8421 & -0,1136 + 1,0081i & -4,6149 & -0,1136 - 1,0081i \\
 \end{tabular}
 \end{center}
 \paragraph{Endkriterium}
-Zwischen Iteration acht und neun bleiben die Werte gleich. Damit ist das Endkriterium erreicht und die Durand-Kerner-Meethod abgeschlossen. 
+Zwischen Iteration Sieben und Acht ist die Differenz zwischen den beiden Werten für jede Nullstelle kleiner als die Genauigkeit $0,0001$. Damit ist das Endkriterium erreicht und die Weierstraß-Iteration abgeschlossen. 
 Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. 
 \paragraph{Probe}
 Zur Überpfüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
@@ -172,7 +178,7 @@ TODO
 
 \subsection{Wählen der Startpunkte}
 Nach dem ersten Satz von Cauchy: \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\footnote{Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)} befinden sich alle Nullstellen in dieser abgeschlossen Kreisscheibe. Um jetzt möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
-Dabei gibt es keinen \glqq besten\grqq\space Standart. Jeder Radius ist für manche Funktionen besser und manche schlechter. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
+Dabei gibt es keinen \glqq besten\grqq\space Standart für das Wählen des Radius. Jeder Radius ist für manche Funktionen besser und manche schlechter. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
 Dieser Radius ist relativ ressourcensparend und einfach zu implementieren. Jedoch kann auch ein anderer Radius gewählt werden.
 
 %------------------------------------------------------------------------------------
@@ -180,7 +186,7 @@ Dieser Radius ist relativ ressourcensparend und einfach zu implementieren. Jedoc
 \subsection{Normiertes Polynom}
 Für die Weierstraß-Iteration muss die gegebene Funktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Weierstraß-Iteration ein normiertes Polynom sein.
 Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
-Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m \in \mathbb{C}$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
+Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich Null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m \in \mathbb{C}$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsection{Keine generelle Konvergenz}
@@ -190,23 +196,23 @@ Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für
 \subsection{Einleitung}
 Normierung
 \subsection{Komplexe Zahlen}
-In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
+In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq\space zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
 
 \paragraph{Aufbau der Klasse}
-Die Klasse \glqq Complex\glqq\space besitzt zwei Attribute einen Konstruktor und mehrere Funktionen für die Operationen. Außerdem ist die \glqq toString\glqq-Methode überschrieben und eine Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\glqq, da diese auch von Außerhalb aufgerufen werden.
+Die Klasse \glqq Complex\grqq\space besitzt zwei Attribute, einen Konstruktor und mehrere Funktionen für die Operationen. Außerdem ist die \glqq toString\grqq-Methode überschrieben und eine Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\grqq, da diese auch von Außerhalb aufgerufen werden.
 
 \paragraph{Attribute}
-Beide Attribute sind vom Datentyp \glqq double\grqq, um möglichst genaue und große Dezimalzahlen darstellen zu können. Sie stellen den reellen und imaginären Teil dar. Dabei steht \glqq re\grqq\space für die reellen und \glqq im\grqq\space für die imaginären Zahlen.
+Beide Attribute sind vom Datentyp \glqq double\grqq, um möglichst genaue und große Dezimalzahlen darstellen zu können. Dabei steht \glqq re\grqq\space für den reellen und \glqq im\grqq\space für den imaginären Teil.
 
 \paragraph{Konstruktor}
 Der Konstruktor nimmt einen reellen und imaginären Teil entgegen und speichert diese in den Attributen.
 
 \paragraph{Hilfsfunktionen}
 Die vier Hilfsfunktionen für die Grundrechenarten Addition, Subtraktion, Multiplikation und Division\footnote{ingenieurkurse.de: Grundrechenarten der komplexen Zahlen, URL: \url{https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html} (Zuletzt eingesehen: 26.10.2023)\label{ftn:grundrechenarten}} nehmen zwei komplexe Zahlen (Instanzen der Klasse \glqq Complex\grqq) entgegen und geben das Ergebnis zurück. 
-Außerdem gibt es eine Hilfsfunktionen für das Potenzieren. Diese nimmt eine komplexe Zahl als Basis und ein Integer als Exponent entgegen. Zuerst wird geguckt, ob der Exponent positiv oder null ist, da negative Potenzierung nicht implementiert ist. Ist das nicht der Fall wird eine \glqq RuntimeException\grqq, mit passender Fehlermeldung, ausgelöst. Dannach wird, falls der Exponent null ist, 1 als komplexe Zahl zurückgegeben. Sonst wird, mithilfe eine \glqq for-Schleife\grqq, das Ergebnis ausgerechnet.
+Außerdem gibt es eine Hilfsfunktionen für das Potenzieren. Diese nimmt eine komplexe Zahl als Basis und ein Integer als Exponent entgegen. Zuerst wird geprüft, ob der Exponent positiv oder Null ist, da negative Potenzierung nicht implementiert ist. Ist das nicht der Fall wird eine \glqq RuntimeException\grqq, mit passender Fehlermeldung, ausgelöst. Dannach wird, falls der Exponent Null ist, Eins als komplexe Zahl zurückgegeben. Sonst wird, mithilfe eine \glqq for-Schleife\grqq, das Ergebnis ausgerechnet.
 
 \paragraph{Betrag}
-Die nicht statische Funktion \glqq abs()\grqq\space (kurz für \glqq absolute Value\grqq bzw. den Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$ definiert.\footref{ftn:grundrechenarten}
+Die nicht statische Funktion \glqq abs()\grqq\space (kurz für \glqq absolute Value\grqq\space bzw. den Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$, wo $x$ gleich dem reellen und $y$ gleich dem imaginären Teil ist, definiert.\footref{ftn:grundrechenarten}
 
 \paragraph{Runden}
 Die Methode \glqq round()\grqq\space gibt eine neue komplexe Zahl zurück, bei welcher der reelle und imaginäre Teil auf vier Nachkommastellen gerundet wurden.
