@@ -15,6 +15,7 @@
 \usepackage{xcolor}
 
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 \usepackage{url}
 
@@ -60,13 +61,13 @@
 
 \subsection{Verwendungszwecke}
 
-\section{Durand-Kerner-Methode}
+\section{Weierstraß-Iteration}
 Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
-Sie wurde von Karl Weierstrass zwischen 1859 und 1891, als Teil seines Beweises des Fundermentalsatz der Algebra, entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
-Die Weierstraß-Iteration findet die Nullstellen, im Gegensatz zum Newton-Horner-Verfahren\footnote{
+Sie wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
+Die Weierstraß-Iteration findet die Nullstellen im Gegensatz zum Newton-Horner-Verfahren\footnote{
     Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
 }
-, nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
+nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
     vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }
@@ -74,13 +75,13 @@ Die Weierstraß-Iteration findet die Nullstellen, im Gegensatz zum Newton-Horner
 %----------------------------------------------------------------------------------------------------
 \section{Funktionsweise}
 \subsection{Bedingungen}
-Für die Durand-Kerner-Methode muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.\footnote{
+Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.\footnote{
     vgl. Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Weierstraß-Methode}
 }
 
-\subsection{Methode}
-Bei der Durand-Kerner-Methode wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
+\subsection{Fixpunktiteration der Weierstraß-Iteration}
+Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
 \[z_n^{(i+1)} = x - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j)}\]
 \[z_{n-1}^{(i+1)} = x - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j)}\]
 \vspace{0.25mm}
@@ -93,29 +94,26 @@ Wenn $z_{k}^{(i)}$ gleich einem anderen $z$ ist, wird bei der Gleichung
     z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j)}
 \end{equation*}
 durch Null dividiert.
-Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gänigsten Methoden ist die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genaueres $r$ genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
-Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt. Diese kann beliebig gewählt werden, solange keine reellen Zahlen unter den Startpunkten sind. In diesem Fall wird $c = \frac{\pi}{2n}$ gewählt. %TODO
+Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv, mit einem Computer Wurzeln zu berechnen. Deshalb kann auch ein weniger genauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
+Das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$. Mit diesem werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Zuletzt wird noch eine Verschiebung $c$ benötigt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.\footnote{
+    Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt eingesehen am 30.10.2023) \label{ftn:OscarVilez,5:40}
+}
 Um die Startpunkte zu bestimmen wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
- angewand.
+angewand.
 
 \subsection{Endkriterium}
 Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es grundsätzlich zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gegeben sein. 
-In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an manchen Stellen sehr nah an null ist, so dass an 
-
-
-
-mehreren Stellen die Bedingungen erreicht sind.
-
-
-Das kann zu großen Ungenauigkeiten führen. Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
-In der folgenden Implementierung der Durand-Kerner-Methode wurde das zweite Verfahren verwendet, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte, ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
+In dem ersten Verfahren wird die Nullstelle in die Funktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an mehreren Bereichen sehr nah an null ist, so dass an
+Stellen weiter von der Nullstelle entfernt die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. \\
+Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
+In der folgenden Implementierung der Weierstraß-Iteration wurde das zweite Verfahren verwendet, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte, ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
-Im nächsten Abschnitt wird die Durand-Kerner-Methode an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
-\paragraph{Methode}
-Für die Funktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in C$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
+Im nächsten Abschnitt wird die Weierstraß-Iteration an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
+\paragraph{Fixpunktiteration der Weierstraß-Iteration}
+Für die Funktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)$ sind die Nullstellen $s;t;u;v \in \mathbb{C}$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
 \begin{equation*}
     s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
 \end{equation*}
@@ -161,10 +159,10 @@ Zur Überpfüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
 \end{displaymath}
 Daraus kann geschlossen werden, dass alle vier Werte Annährungen der Nullstellen der Polynomfunktion $p(x)$ sind. \\
 Weiterhin, kann aus dem Fundermentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $p(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist. \\
-$\Rightarrow$ Die Durand-Kerner-Methode war für $p(x)$ erfolgreich.
+$\Rightarrow$ Die Weierstraß-Iteration war für $p(x)$ erfolgreich.
 
 \section{Visualisierung}
-TODO
+TODO (maybe bei Beispiel)
 
 
 %--------------------------------------------------------------
@@ -173,18 +171,17 @@ TODO
 TODO
 
 \subsection{Wählen der Startpunkte}
-Nach dem ersten Satz von Cauchy: \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in C \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\footnote{Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)} befinden sich alle Nullstellen in dieser abgeschlossen Kreisscheibe. Um jetzt möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
-Dabei gibt es keinen \glqq besten\grqq\space Standart. Jeder Radius ist für manche Funktionen besser und manche schlechter. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footnote{
-    Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt eingesehen am 30.10.2023)
-} Dieser Radius ist relativ ressourcensparend und einfach zu implementieren. Jedoch kann auch ein anderer Radius gewählt werden.
+Nach dem ersten Satz von Cauchy: \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\footnote{Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)} befinden sich alle Nullstellen in dieser abgeschlossen Kreisscheibe. Um jetzt möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
+Dabei gibt es keinen \glqq besten\grqq\space Standart. Jeder Radius ist für manche Funktionen besser und manche schlechter. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
+Dieser Radius ist relativ ressourcensparend und einfach zu implementieren. Jedoch kann auch ein anderer Radius gewählt werden.
 
 %------------------------------------------------------------------------------------
 \section{Probleme und Einschränkungen}
 \subsection{Normiertes Polynom}
-Für die Durand-Kerner-Methode muss die gegebene Funktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Durand-Kerner-Methode ein normiertes Polynom sein.
+Für die Weierstraß-Iteration muss die gegebene Funktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Weierstraß-Iteration ein normiertes Polynom sein.
 Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
-Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
-Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Durand-Kerner-Methode durchführen.
+Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m \in \mathbb{C}$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
+Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsection{Keine generelle Konvergenz}
 Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode gegen Unendlich keinen festen Wert anstrebt. Das kann man sich so vorstellen: Jede Nullstelle hat einen Bereich in dem sie von der Weierstraß-Iteration gefunden werden kann. Dieser kann auch ins Unendliche gehen, muss aber nicht. Wenn eine Iteration außerhalb dieses Bereiches geht findet der Wert nicht mehr zu der Nullstelle. Dadurch können auch die anderen Nullstellen nicht konvergieren, da eine der Nullstellen falsch ist, so dass die Korrektur nicht mehr funktioniert. Das führt dazu, dass die Methode nicht konvergiert. Dabei ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Da dies allerdings sehr selten ist kann es meist vernachlässigt werden. 
@@ -219,7 +216,7 @@ Die \glqq toString\grqq-Methode wird in der Klasse \glqq Complex\grqq\space übe
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion}
-Für die Durand-Kerner-Methode muss eine Polynomfunktion gegeben sein. Diese wird in meiner Implementierung in eine eigene Klasse ausgelagert.
+Für die Weierstraß-Iteration muss eine Polynomfunktion gegeben sein. Diese wird in meiner Implementierung in eine eigene Klasse ausgelagert.
 
 \paragraph{Aufbau der Klasse}
 Die Klasse \glqq Poly\grqq\space (kurz für Polynomial (englisch) bzw. Polynom (deutsch)) besitzt zwei Attribute, einen Konstruktor und die Funktion \glqq solve()\grqq. Außerdem wurde die \glqq toString\grqq -Methode überschrieben.

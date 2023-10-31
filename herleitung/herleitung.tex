@@ -12,6 +12,7 @@
 \section{Herleitung}
 
 \subsection{Methode}
+Der einfachheit halbar mit reellen zahlen -> kann auf komplexe übertragen werden
 \paragraph{Start}
 $z_k^{(i)} = x;z_k^{(i+1)} = y$ in die Weierstraß-Iteration einsetzen 
 \begin{equation}
@@ -24,37 +25,49 @@ Graph angucken (Beispiel)
     \caption{Beispiel: $x^2-1$ für die Nullstelle $-1$}
 \end{figure}
 %-------------------------------------------------------------------------------------------------------------------
-\paragraph{Wenn alle Nullstellen gefunden konstant} Irrelevant
-Falls die restlichen Nullstellen gefunden wurden waagrechte Gerade -> Für jeden Wert $z_k^(i)$ kommt die Nullstelle $z_k$ raus
-Nicht zu beachten, da die exakte Nullstelle erst im unendlichen gefundne wird
+\paragraph{?}
+Gebrochen rationale Funktion
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{waagrechte Asymptote}
+Hat waagrechte Asymptote
+Sieht man daran:
+\begin{align*}
+    y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+\end{align*}
+Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $x^n$. Werden diese Polynome nun miteinander subtrahiert, ergibt $x^n-x^n$ null. Somit ist der Grad des Differenzpolynoms $n-1$ \\
+\begin{equation*}
+    y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
+\end{equation*}
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{Bedeuteung für die Weierstraß-Iteration}
+Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
+    Beweis, dass waagrechte Asymptote gleiches vorzeichen wie nullstelle hat
+\\
+Da waagrechte Asymptote -> Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$
+-> Methode \glqq entkommt\grqq\space nicht
+-> geht, Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{verhalten in der nähe der Nullstelle}
+$g(x)$ wird immer genauer, wenn die anderen Nullstellen genauer werden
+-> alles wird genauer parallel
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{verhalten auf der Nullstelle}
+$g(z_k) = z_k$ -> Konvergiert -> Nullstelle gefundne
+\\
+Kann man auch daran sehen:
 \begin{align*}
     y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j)} \\
     &= x - (x-z_k) \\
     &= z_k
 \end{align*}
 %-------------------------------------------------------------------------------------------------------------------
-\paragraph{Nicht der Fall}
-Sonst gebrochen rationale Funktion
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Vergleich mit waagrechten}
-Diese verläuft ähnlich die die waagrechte, allerdings hat Definitionslücken und ist um diese \glqq verfälscht\grqq. Diese \glqq Verfälschung\grqq\space nimmt mit steigendem Abstand zu der Definitionslücke ab, da der gebrochene Term der Funktion immer kleiner wird. 
-$g(z_k) = z_k$
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{$z_k$ positiv}
-
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{$z_k$ negativ}
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Verhalten nicht auf der Nullstelle}
-Mit jeder iteration näher an die Nullstlle
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{verhalten auf der Nullstelle}
-$g(z_k) = z_k$ -> Bleibt stehen -> Nullstelle gefunden
-%-------------------------------------------------------------------------------------------------------------------
 \paragraph{Außnahmen und Probleme}
-Definitionslücken
-
-
-
+Wenn zu nah an Definitionslücke verfälschte Werte
+Kann ein Sprung weg sein -> verfälschung aller Werte -> mehr Iterationen benötigt
+\\
+Manchmal nicht Konvergiert, weil hin und herspringen von nähe von Definitionslücken
 
 \end{document}
