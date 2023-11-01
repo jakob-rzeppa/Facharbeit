@@ -75,7 +75,7 @@ nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede 
 %----------------------------------------------------------------------------------------------------
 \section{Funktionsweise}
 \subsection{Bedingungen}
-Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad $n$ des Polynoms muss größer als zwei sein.\footnote{
+Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad des Polynoms $n$ muss größer als oder gleich zwei sein.\footnote{
     vgl. Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Weierstraß-Methode}
 }
@@ -190,7 +190,10 @@ Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind,
 Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei \glqq Bewegungen\grqq\space vorstellen. Einerseits das Annähern an die Nullstelle mit der gegebenen jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
 
 \paragraph{Annährung an die Waagrechte $y=z_k$}
-Diese Nullstellen 
+Wie könnte man das Zeigen?
+
+\paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
+$g(z_k) = z_k$ -> Konvergiert -> Nullstelle gefunden
 
 Wenn man den Schnittpunkt aller Funktionen betrachtet, kann man sehen, dass 
 Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
