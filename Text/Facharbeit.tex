@@ -171,18 +171,22 @@ TODO (maybe bei Beispiel)
 \section{Herleitung}
 In diesem Abschnitt wird auf die Herleitung der Methode und der bestimmung der Startpunkte eingegangen.
 \subsection{Methode}
-Der einfachheit halbar mit reellen zahlen -> kann auf komplexe übertragen werden
-\paragraph{Start}
-$z_k^{(i)} = x;z_k^{(i+1)} = y$ in die Weierstraß-Iteration einsetzen 
+Im Folgenden wird, um es verständlicher zu machen, die Herleitung der Methode nur mit reellen Zahlen durchgeführt. Jedoch kann dies ohne Probleme auf komplexe Zahlen übertragen werden.
+\paragraph{Visualisierung}
+Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
 \begin{equation}
     g(x) = y = x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
 \end{equation}
-Graph angucken (Beispiel)
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=.6]{BeispielHerleitung.png}
+    \caption{Beispiel: $x^2-1$ für die Nullstelle $-1$}
+    %TODO
+\end{figure}\\
 %-------------------------------------------------------------------------------------------------------------------
-\paragraph{?}
-Gebrochen rationale Funktion
+Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion\footnote{Das kann auch an der Gleichung selber gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht.} handelt und wenn die restlichen Nullstellen gefunden wurden um eine waagrechte lineare Funktion\footnote{Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom abgezogen werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt ein konstanter Wert über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.}. 
 %-------------------------------------------------------------------------------------------------------------------
-\paragraph{waagrechte Asymptote}
+\paragraph{Waagrechte Asymptote}
 Hat waagrechte Asymptote
 Sieht man daran:
 \begin{align*}
