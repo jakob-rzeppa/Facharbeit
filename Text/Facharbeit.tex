@@ -62,7 +62,7 @@
 \subsection{Verwendungszwecke}
 
 \section{Weierstraß-Iteration}
-Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten Polynomfunktion.
+Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten\footnote{Univariat bedeutet, dass eine Funktion nur eine Variable hat.} Polynomfunktion.
 Sie wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
 Die Weierstraß-Iteration findet die Nullstellen im Gegensatz zum Newton-Horner-Verfahren\footnote{
     Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
@@ -81,7 +81,7 @@ Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form 
 }
 
 \subsection{Fixpunktiteration der Weierstraß-Iteration}
-Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
+Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen\footnote{Eine Funktion $n$ten Grades hat nach dem Fundamentalsatz der Algebra genau $n$ komplexe Nullstellen.} $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
 \[z_n^{(i+1)} = z_n^{(i)} - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j^{(i)})}\]
 \[z_{n-1}^{(i+1)} = z_{n-1}^{(i)} - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j^{(i)})}\]
 \vspace{0.25mm}
@@ -94,7 +94,7 @@ Denn bei der Gleichung
     z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j^{(i)})}
 \end{equation*}
 wird, wenn $z_{k}^{(i)}$ gleich einem anderen $z^{(i)}$ ist, durch Null dividiert.
-Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen. \\
+Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen.\\
 Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv Wurzeln zu berechnen. Deshalb kann auch ein weniger genauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
 Auf dem Kreis werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Dafür wird das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$ benötigt. Zuletzt wird noch eine Verschiebung $c$ durchgeführt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.
 Um die Startpunkte zu bestimmen wird 
@@ -104,11 +104,8 @@ angewand.\footnote{
 }
 
 \subsection{Endkriterium}
-Um zu bestimmen, ob eine Nullstelle gefunden wurde gibt es zwei oft verwendete Verfahren. Bei beiden muss eine Genauigkeit $g$ (z.B. $0,0001$) gewählt werden.\\ 
-In dem ersten Verfahren wird die potentielle Nullstelle $z_k^{(i)}$ in die gewählte Polynomfunktion eingesetzt und mit der festgelegten Genauigkeit verglichen. Wenn $p(z_k^{(i)}) < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr ist kann daraus geschlossen werden, dass alle Nullstellen, nach dieser Methode, für die gegebene Genauigkeit gefunden wurden. Allerdings hat dieses Verfahren einen Fehler. Selten kann es passieren, dass die Funktion an mehreren Bereichen sehr nah an Null ist, so dass an
-Stellen weiter von der Nullstelle entfernt die Bedingungen erreicht sind. Das kann zu großen Ungenauigkeiten führen. \\
-Das zweite Verfahren vergleicht die Differenz zwischen den letzten beiden Schritten der Weierstraß-Iteration mit der Genauigkeit. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ mit $k=n;n-1;\dots ;1$ in jedem Fall wahr, sind alle Nullstellen auf die Genauigkeit $g$ genau. Bei dieser Methode kann es jedoch vorkommen, wenn die Funktion nach oder vor der Nullstelle sehr stark steigt oder fällt, dass, wenn der Wert in die Funktion eingegeben wird, ein Ergebnis weit von Null entfernt herrauskommt. Allerdings ist man in jedem Fall um die Genauigkeit $g$ nah an der Nullstelle.\\\\
-In der folgenden Implementierung der Weierstraß-Iteration wurde das zweite Verfahren verwendet, da dies einem die Nullstelle mit der gewünschten Genauigkeit zuverlässiger gibt. Auch wenn diese in der Funktion eingesetzt etwas anderes ergeben könnte, ist man immer um die gewünschte Genauigkeit nah an der Nullstelle. Das ist bei der ersten Methode nicht immer der Fall.
+Um zu bestimmen, ob eine Nullstelle gefunden wurde, muss eine gewünschte Genauigkeit $g$ (z.B. $0,0001$) gewählt werden. Diese wird dann mit dem Betrag der Differenz der letzten beiden Schritten der Weierstraß-Iteration verglichen. Ist $|z_k^{(i-1)}-z_k^{(i)}| < g$ wahr ist die Nullstelle $z_k$ auf die Genauigkeit $g$ gefunden. Dies wird für alle Nullstellen wiederholt. Falls alle Nullstellen genau genug sind ist die Weierstraß-Iteration abgeschlossen.\\
+Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert. Darauf wird in dem Abschnitt Probleme und Einschränkungen noch eingegangen. Allerdings muss deswegen eine weitere Endbedingung gestellt sein: eine maximale Anzahl an Iterationen. Dabei muss man wissen, mit welchen Polynomen man zutun hat. Sind diese sehr komplex kann es vorkommen, dass die Weierstraß-Iteration weit über Tausend Iterationen benötigt, um eine vernünftige Genauigkeit zu geben. In solchen Fällen muss man das Limit sehr hoch setzen. In meiner Implementierung wurde ein Limit von 1000 gesetzt um für die meist vorkommenden Polynome zuverlässig zu funktionieren.
 
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
@@ -116,32 +113,32 @@ Im Folgenden wird die Weierstraß-Iteration an einer Polynomfunktion vierten Gra
 \paragraph{Fixpunktiteration der Weierstraß-Iteration}
 Für die Funktion
 \begin{equation*}
-    p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-s)(x-t)(x-u)(x-v)
+    p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-z_1)(x-z_2)(x-z_3)(x-z_4)
 \end{equation*}
-sind die Nullstellen $s;t;u;v \in \mathbb{C}$ gesucht. Auf jede der Nullstellen wird die zuvor beschriebene Methode angewendet:
+sind die Nullstellen $z_1;z_2;z_3;z_4 \in \mathbb{C}$ gesucht. Für jede der Nullstellen wird, wie zuvor beschrieben, eine Gleichung gebildet:
 \begin{equation*}
-    s_{n+1} = s_n-\frac{f(s_n)}{(s_n-t_n)(s_n-u_n)(s_n-v_n)}
-\end{equation*}
-\begin{equation*}
-    t_{n+1} = t_n-\frac{f(t_n)}{(t_n-s_n)(t_n-u_n)(t_n-v_n)}
+    z_1^{(i+1)} = z_1^{(i)}-\frac{p(z_1^{(i)})}{(z_1^{(i)}-z_2^{(i)})(z_1^{(i)}-z_3^{(i)})(z_1^{(i)}-z_4^{(i)})}
 \end{equation*}
 \begin{equation*}
-    u_{n+1} = u_n-\frac{f(u_n)}{(u_n-s_n)(u_n-t_n)(u_n-v_n)}
+    z_2^{(i+1)} = z_2^{(i)}-\frac{p(z_2^{(i)})}{(z_2^{(i)}-z_1^{(i)})(z_2^{(i)}-z_3^{(i)})(z_2^{(i)}-z_4^{(i)})}
 \end{equation*}
 \begin{equation*}
-    v_{n+1} = v_n-\frac{f(v_n)}{(v_n-s_n)(v_n-t_n)(v_n-u_n)}
+    z_3^{(i+1)} = z_3^{(i)}-\frac{p(z_3^{(i)})}{(z_3^{(i)}-z_1^{(i)})(z_3^{(i)}-z_2^{(i)})(z_3^{(i)}-z_4^{(i)})}
+\end{equation*}
+\begin{equation*}
+    z_4^{(i+1)} = z_4^{(i)}-\frac{p(z_4^{(i)})}{(z_4^{(i)}-z_1^{(i)})(z_4^{(i)}-z_2^{(i)})(z_4^{(i)}-z_3^{(i)})}
 \end{equation*}
 \paragraph{Startpunkte}
-Zuvor müssen allerdings die Startpunkte $s_0;t_0;u_0;v_0$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
-$s_0 = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
-$t_0 = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
-$u_0 = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
-$v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
+Zuvor müssen allerdings die Startpunkte $z_1^{(0)};z_2^{(0)};z_3^{(0)};z_4^{(0)}$ bestimmt werden. Dabei ist der Radius des Kreises $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2na_n}| = \frac{19}{6}$, der Abstand zwischen den Startpunkten $\theta = \frac{2\pi}{n} = \frac{1}{2}\pi$ und die Verschiebung $c = \frac{\pi}{2n} = \frac{1}{8}\pi$. Mit diesen Werten können die Startpunkte berechnet werden. \\
+$z_1^{(0)} = r \cos(c) + r \sin(c)i = 2,9256 + 1,2118i$ \\
+$z_2^{(0)} = r \cos(\theta+c) + r \sin(\theta+c)i = -1,2118 + 2,9256i$ \\
+$z_3^{(0)} = r \cos(2\theta+c) + r \sin(2\theta+c)i = -2,9256 - 1,2118i$ \\
+$z_4^{(0)} = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
 
 \paragraph{Ausführung}
 \begin{center}
 \begin{tabular}{c|c c c c}
-    Iteration & s & t & u & v \\
+    Iteration & $z_1$ & $z_3$ & $z_2$ & $z_4$ \\
     \hline
     0 & 2,9256 + 1,2118i & -1,2118 + 2,9256i & -2,9256 - 1,2118i & 1,2118 - 2,9256i \\
     1 & 1,2993 + 0,8722i & -1,8873 + 2,0075i & -3,405 - 0,7665i & -0,0069 - 2,1133i \\
@@ -156,7 +153,7 @@ $v_0 = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
 \end{center}
 \paragraph{Endkriterium}
 Zwischen Iteration Sieben und Acht ist die Differenz zwischen den beiden Werten für jede Nullstelle kleiner als die Genauigkeit $0,0001$. Damit ist das Endkriterium erreicht und die Weierstraß-Iteration abgeschlossen. 
-Die Nullstellen der Polynomfunktion $f(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. 
+Die Nullstellen der Polynomfunktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. 
 \paragraph{Probe}
 Zur Überpfüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
 \begin{displaymath}
@@ -172,6 +169,7 @@ TODO (maybe bei Beispiel)
 
 %--------------------------------------------------------------
 \section{Herleitung}
+In diesem Abschnitt wird auf die Herleitung der Methode und der bestimmung der Startpunkte eingegangen.
 \subsection{Methode}
 Der einfachheit halbar mit reellen zahlen -> kann auf komplexe übertragen werden
 \paragraph{Start}
@@ -193,7 +191,7 @@ Sieht man daran:
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
 \end{align*}
-Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt der $n$te-Term weg, da dieser bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$ \\
+Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt der $n$te-Term weg, da dieser bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$. \\
 \begin{equation*}
     y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
@@ -227,12 +225,13 @@ Kann ein Sprung weg sein -> verfälschung aller Werte -> mehr Iterationen benöt
 Manchmal nicht Konvergiert, weil hin und herspringen von nähe von Definitionslücken
 
 \subsection{Wählen der Startpunkte}
-Nach dem ersten Satz von Cauchy: \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\footnote{Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)} befinden sich alle Nullstellen in dieser abgeschlossen Kreisscheibe. Um jetzt möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
-Dabei gibt es keinen \glqq besten\grqq\space Standart für das Wählen des Radius. Jeder Radius ist für manche Funktionen besser und manche schlechter. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
+Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)}  Um möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
+Dabei gibt es keinen \glqq besten\grqq\space Standart für das Wählen des Radius. Jeder Radius ist für manche Funktionen näher und andere weiter von den Nullstellen entfernt. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
 Dieser Radius ist relativ ressourcensparend und einfach zu implementieren. Jedoch kann auch ein anderer Radius gewählt werden.
 
 %------------------------------------------------------------------------------------
 \section{Probleme und Einschränkungen}
+Die Weierstraß-Iteration hat, neben dem Vorteil, dass sie einfach zu implementieren ist mehrere Nachteile. Auf diese wird im Folgenden eingegangen.
 \subsection{Normiertes Polynom}
 Für die Weierstraß-Iteration muss die gegebene Funktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Weierstraß-Iteration ein normiertes Polynom sein.
 Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
@@ -240,7 +239,7 @@ Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funk
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsection{Keine generelle Konvergenz}
-Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode gegen Unendlich keinen festen Wert anstrebt. Das kann man sich so vorstellen: Jede Nullstelle hat einen Bereich in dem sie von der Weierstraß-Iteration gefunden werden kann. Dieser kann auch ins Unendliche gehen, muss aber nicht. Wenn eine Iteration außerhalb dieses Bereiches geht findet der Wert nicht mehr zu der Nullstelle. Dadurch können auch die anderen Nullstellen nicht konvergieren, da eine der Nullstellen falsch ist, so dass die Korrektur nicht mehr funktioniert. Das führt dazu, dass die Methode nicht konvergiert. Dabei ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Da dies allerdings sehr selten ist kann es meist vernachlässigt werden. 
+Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{Das bedeutet, dass sich die Weierstraß-Iteration immer wieder in dem gleichen Abstand wiederholt.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert. Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist kann es meist vernachlässigt werden. 
 
 \section{Implementierung}
 \subsection{Einleitung}

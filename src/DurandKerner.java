@@ -66,6 +66,7 @@ public class DurandKerner {
 
         // The accuracy of the Durand-Kerner-Method
         double accuracy = Math.pow(10, -4);
+        double maxIterations = 1000;
 
         System.out.println("function: " + p.toString());
 
@@ -91,7 +92,7 @@ public class DurandKerner {
             System.out.println();
 
             // check if change is less than eqsilon
-            if (isAccurateEnough(newRoots, roots, accuracy)) {
+            if (isAccurateEnough(newRoots, roots, accuracy) || ctr >= maxIterations) {
                 running = false;
             }
 
