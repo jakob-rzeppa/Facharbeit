@@ -82,12 +82,11 @@ Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form 
 
 \subsection{Fixpunktiteration der Weierstraß-Iteration}
 Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
-\[z_n^{(i+1)} = x - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j^{(i)})}\]
-\[z_{n-1}^{(i+1)} = x - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j^{(i)})}\]
+\[z_n^{(i+1)} = z_n^{(i)} - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j^{(i)})}\]
+\[z_{n-1}^{(i+1)} = z_{n-1}^{(i)} - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j^{(i)})}\]
 \vspace{0.25mm}
 \[\dots\]
-\[z_{1}^{(i+1)} = x - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j^{(i)})}\]
-
+\[z_{1}^{(i+1)} = z_1^{(i)} - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j^{(i)})}\]
 \subsection{Startpunkte}
 Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)} \in \mathbb{C}$ gesetzt werden. Diese können beliebig gewählt werden. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen einen imaginären Teil ungleich Null haben. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch Null dividiert wird.
 Denn bei der Gleichung
@@ -174,7 +173,58 @@ TODO (maybe bei Beispiel)
 %--------------------------------------------------------------
 \section{Herleitung}
 \subsection{Methode}
-TODO
+Der einfachheit halbar mit reellen zahlen -> kann auf komplexe übertragen werden
+\paragraph{Start}
+$z_k^{(i)} = x;z_k^{(i+1)} = y$ in die Weierstraß-Iteration einsetzen 
+\begin{equation}
+    g(x) = y = x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
+\end{equation}
+Graph angucken (Beispiel)
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{?}
+Gebrochen rationale Funktion
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{waagrechte Asymptote}
+Hat waagrechte Asymptote
+Sieht man daran:
+\begin{align*}
+    y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+\end{align*}
+Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt der $n$te-Term weg, da dieser bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$ \\
+\begin{equation*}
+    y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
+\end{equation*}
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{Bedeuteung für die Weierstraß-Iteration}
+Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
+    Beweis, dass waagrechte Asymptote gleiches vorzeichen wie nullstelle hat
+\\
+Da waagrechte Asymptote -> Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$
+-> Methode \glqq entkommt\grqq\space nicht
+-> geht, Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{verhalten in der nähe der Nullstelle}
+$g(x)$ wird immer genauer, wenn die anderen Nullstellen genauer werden
+-> alles wird genauer parallel
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{verhalten auf der Nullstelle}
+$g(z_k) = z_k$ -> Konvergiert -> Nullstelle gefundne
+\\
+Kann man auch daran sehen:
+\begin{align*}
+    y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j)} \\
+    &= x - (x-z_k) \\
+    &= z_k
+\end{align*}
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{Außnahmen und Probleme}
+Wenn zu nah an Definitionslücke verfälschte Werte
+Kann ein Sprung weg sein -> verfälschung aller Werte -> mehr Iterationen benötigt
+\\
+Manchmal nicht Konvergiert, weil hin und herspringen von nähe von Definitionslücken
 
 \subsection{Wählen der Startpunkte}
 Nach dem ersten Satz von Cauchy: \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\footnote{Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)} befinden sich alle Nullstellen in dieser abgeschlossen Kreisscheibe. Um jetzt möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
