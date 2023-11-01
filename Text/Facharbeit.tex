@@ -186,6 +186,22 @@ Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichun
 %-------------------------------------------------------------------------------------------------------------------
 Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion\footnote{Das kann auch an der Gleichung selber gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht.} handelt und wenn die restlichen Nullstellen gefunden wurden um eine waagrechte lineare Funktion\footnote{Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom abgezogen werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt ein konstanter Wert über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.}. 
 %-------------------------------------------------------------------------------------------------------------------
+\paragraph{Bedeuteung für die Weierstraß-Iteration}
+Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei \glqq Bewegungen\grqq\space vorstellen. Einerseits das Annähern an die Nullstelle mit der gegebenen jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
+
+\paragraph{Annährung an die Waagrechte $y=z_k$}
+Diese Nullstellen 
+
+Wenn man den Schnittpunkt aller Funktionen betrachtet, kann man sehen, dass 
+Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
+    Beweis, dass waagrechte Asymptote gleiches vorzeichen wie nullstelle hat
+\\
+Da waagrechte Asymptote -> Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$
+-> Methode \glqq entkommt\grqq\space nicht
+-> geht, Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran
+
+Besteht aus zwei bewegungen
+%-------------------------------------------------------------------------------------------------------------------
 \paragraph{Waagrechte Asymptote}
 Hat waagrechte Asymptote
 Sieht man daran:
@@ -199,14 +215,6 @@ Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen be
 \begin{equation*}
     y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Bedeuteung für die Weierstraß-Iteration}
-Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
-    Beweis, dass waagrechte Asymptote gleiches vorzeichen wie nullstelle hat
-\\
-Da waagrechte Asymptote -> Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$
--> Methode \glqq entkommt\grqq\space nicht
--> geht, Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran
 %-------------------------------------------------------------------------------------------------------------------
 \paragraph{verhalten in der nähe der Nullstelle}
 $g(x)$ wird immer genauer, wenn die anderen Nullstellen genauer werden
