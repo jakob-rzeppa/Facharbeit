@@ -171,7 +171,7 @@ TODO (maybe bei Beispiel)
 \section{Herleitung}
 In diesem Abschnitt wird auf die Herleitung der Methode und der bestimmung der Startpunkte eingegangen.
 \subsection{Methode}
-Im Folgenden wird, um es verständlicher zu machen, die Herleitung der Methode nur mit reellen Zahlen durchgeführt. Jedoch kann dies ohne Probleme auf komplexe Zahlen übertragen werden.
+Auf die Herleitung der Methode wird im Folgenden, der Einfachheit halber, nur mit reellen Zahlen eingegangen. Jedoch kann es ohne Probleme auch auf komplexe Zahlen übertragen werden.
 \paragraph{Visualisierung}
 Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
 \begin{equation}
@@ -187,23 +187,32 @@ Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichun
 Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion\footnote{Das kann auch an der Gleichung selber gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht.} handelt und wenn die restlichen Nullstellen gefunden wurden um eine waagrechte lineare Funktion\footnote{Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom abgezogen werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt ein konstanter Wert über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.}. 
 %-------------------------------------------------------------------------------------------------------------------
 \paragraph{Bedeuteung für die Weierstraß-Iteration}
-Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei \glqq Bewegungen\grqq\space vorstellen. Einerseits das Annähern an die Nullstelle mit der gegebenen jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
+Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei \glqq Bewegungen\grqq\space vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
 
 \paragraph{Annährung an die Waagrechte $y=z_k$}
 Wie könnte man das Zeigen?
 
 \paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
-$g(z_k) = z_k$ -> Konvergiert -> Nullstelle gefunden
+Wenn man eine der gebrochen rationalen Funktionen betrachtet kann erkannt werden, dass an einer Stelle des Graphen $g(z_k) = z_k$ ist. Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, wird ein $z_k^{(i+1)}$ zurückgegeben, das näher an $z_k$ als $z_k^{(i)}$ ist. Um das zu zeigen muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt.
+\paragraph{Waagrechte Asymptote}
+\begin{align*}
+    y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
+\end{align*}
+Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt der $n$te-Term weg, da dieser bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$. \\
+\begin{equation*}
+    y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
+\end{equation*}
+Da der Nenner und Zähler den Gleichen grad haben hat $g(x)$ eine waagrechte Asymptote.
 
-Wenn man den Schnittpunkt aller Funktionen betrachtet, kann man sehen, dass 
-Mit der ersten Iteration wird, falls weit genug von Definitionslücke weg, auf positive oder negative seite gegangen
-    Beweis, dass waagrechte Asymptote gleiches vorzeichen wie nullstelle hat
-\\
+\paragraph{Verhalten der Funktion}
+Da $g(x)$ eine waagrechte Asymptote besitzt und $g(z_k) = z_k$ an exakt einer Stelle ist.
 Da waagrechte Asymptote -> Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$
 -> Methode \glqq entkommt\grqq\space nicht
 -> geht, Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran
 
-Besteht aus zwei bewegungen
 %-------------------------------------------------------------------------------------------------------------------
 \paragraph{Waagrechte Asymptote}
 Hat waagrechte Asymptote
