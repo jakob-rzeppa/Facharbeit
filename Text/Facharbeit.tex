@@ -62,12 +62,14 @@
 \subsection{Verwendungszwecke}
 
 \section{Weierstraß-Iteration}
-Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten\footnote{Univariat bedeutet, dass eine Funktion nur eine Variable hat.} Polynomfunktion.
-Sie wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.
-Die Weierstraß-Iteration findet die Nullstellen im Gegensatz zum Newton-Horner-Verfahren\footnote{
-    Das Newton-Horner-Verfahren ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode gefunden und dannach mithilfe des Horner-Schemas von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
-}
-nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
+Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten\footnote{Univariat bedeutet, dass eine Funktion nur eine Variable hat.} Polynomfunktion. 
+Sie wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.\\
+Die Weierstraß-Iteration baut auf dem Newton-Horner-Verfahren auf. Dieses ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode\footnote{
+    Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
+} gefunden und dannach mithilfe des Horner-Schemas\footnote{
+    math.uni-hamburg.de: 2.1 Horner-Schema, URL: \url{https://www.math.uni-hamburg.de/home/oberle/skripte/numerik/numerik02.pdf} (Zuletzt eingesehen am 04.11.2023)
+} von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
+Im Gegensatz zum Newton-Horner-Verfahren findet die Weierstraß-Iteration die Nullstellen nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
     vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }
@@ -80,7 +82,7 @@ Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form 
     \label{ftn:Wikipedia-Weierstraß-Methode}
 }
 
-\subsection{Fixpunktiteration der Weierstraß-Iteration}
+\subsection{Gleichungen für die Weierstraß-Iteration}
 Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas genauer. Dafür werden $n$ Gleichungen für die $n$ Nullstellen\footnote{Eine Funktion $n$ten Grades hat nach dem Fundamentalsatz der Algebra genau $n$ komplexe Nullstellen.} $z_n;z_{n-1};\dots;z_1$ gebildet. Über diese wird, bis das Endkriterium erreicht ist, iteriert. Dabei ist $i$ die Anzahl der Iterationen und wird pro Iteration um 1 inkrementiert.
 \[z_n^{(i+1)} = z_n^{(i)} - \frac{p(z_n^{(i)})}{\prod_{j=1;j\neq n}^{n}(z_n^{(i)}-z_j^{(i)})}\]
 \[z_{n-1}^{(i+1)} = z_{n-1}^{(i)} - \frac{p(z_{n-1}^{(i)})}{\prod_{j=1;j\neq n-1}^{n}(z_{n-1}^{(i)}-z_j^{(i)})}\]
@@ -110,7 +112,7 @@ Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert.
 %-----------------------------------------------------------------------------------------------------------
 \section{Beispiel}
 Im Folgenden wird die Weierstraß-Iteration an einer Polynomfunktion vierten Grades beispielhaft durchgeführt. Dabei wird die Genauigkeit im Beispiel auf vier Nachkommastellen begrenzt, was zu Ungenauigkeiten kleiner als $0,0001$ führen kann.
-\paragraph{Fixpunktiteration der Weierstraß-Iteration}
+\paragraph{Iteration}
 Für die Funktion
 \begin{equation*}
     p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4 = (x-z_1)(x-z_2)(x-z_3)(x-z_4)
@@ -193,8 +195,9 @@ Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei mite
 \textit{Wie könnte man zeigen, dass sich mit genaueren Nullstellen $g(x)$ an $y=z_k$ annährt?}
 
 \paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
-Wenn man eine der gebrochen rationalen Funktionen betrachtet kann erkannt werden, dass an einer Stelle des Graphen $g(z_k) = z_k$ ist. Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, wird ein $z_k^{(i+1)}$ zurückgegeben, das näher an $z_k$ als $z_k^{(i)}$ ist. Um das zu zeigen muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt.
-\paragraph{Waagrechte Asymptote}
+Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
+%-------------------------------------------------------------------------------------------------------------------
+Für die Herleitung diese Aussage muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt.
 \begin{align*}
     g(x) = y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
@@ -205,22 +208,16 @@ Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen be
 \begin{equation*}
     g(x) = y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
-Da der Nenner und Zähler den Gleichen grad haben hat $g(x)$ eine waagrechte Asymptote.
-
+Da der Nenner und Zähler den gleichen Grad haben hat $g(x)$ eine waagrechte Asymptote\footnote{
+    vgl. studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt eingesehen am 04.11.2023) \label{ftn:studimup.de}
+}.\\\\
 %-------------------------------------------------------------------------------------------------------------------
-\paragraph{Verhalten der Funktion}
-Da $g(x)$ eine waagrechte Asymptote besitzt und $g(z_k) = z_k$ an exakt einer Stelle ist:\\
-- Mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$ und $|g(x)|>|g(z_k)|$\\
-- Methode \glqq entkommt\grqq\space nicht\\
-- Geht, mit nötigem Abstand zu Definitionslücken $|g(x)|<|x|$, näher an die Nullstelle herran\\
-\textit{Wie könnte man das zeigen oder was könnte ein Ansatz dazu sein? Falls der Beweis dafür zu komplex wird würde es (denke ich) reichen, wenn ich nur einen groben Ansatz erkläre.}
+Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem ist $|g(x)|>|g(z_k)| \land (g(x) \text{ hat das gleiche Vorzeichen wie } z_k)$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor wahr\footnote{
+    Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrechnen, indem man die Faktoren vor der höchsten Potenz im Zähler durch den Faktor der höchsten Potenz im Nenner teilt\footref{ftn:studimup.de}. Da das Nennerpolynom normiert ist, ist die waagrechte Asymptote gleich des Faktors vor der höchsten Potenz im Zähler. Der Betrag dieser ist größer als $|z_k|$ und hat das gleiche Vorzeichen wie $z_k$.
+}. Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert, welcher näher an $z_k$ als $z_k^{(i)}$ ist, zurückgibt.
 
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Außnahmen und Probleme}
-Wenn zu nah an Definitionslücke verfälschte Werte
-Kann ein Sprung weg sein -> verfälschung aller Werte -> mehr Iterationen benötigt
-\\
-Manchmal nicht Konvergiert, weil hin und herspringen von nähe von Definitionslücken
+\paragraph{Schluss}
+Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an $z_k$ $g(z_k) = z_k$ ist und mit einem höheren $i$ $z_k^{(i)}$ meist genauer wird, konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt Probleme und Einschränkungen wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
 
 \subsection{Wählen der Startpunkte}
 Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)}  Um möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
@@ -284,8 +281,11 @@ Dem Konstruktor muss ein Array der Koeffizienten, wie bei den Attributen beschri
 Das Lösen des Polynoms wird in der Methode \glqq solve()\grqq\space implementiert. Diese ist \glqq public\grqq, weil von Außerhalb auf die Funktion zugegriffen wird. 
 
 \paragraph{Normieren}
+Wie in Probleme und Einschränkungen beschrieben, muss für die Weierstraß-Iteration ein normiert Polynom gegeben sein. Um ein beliebiges Polynom zu normieren wird in der Methode \glqq norm()\grqq\space jeder Koeffizient des Polynoms durch den Koeffizient des Terms mit dem höchsten Grad geteilt.
 
 \section{Fazit}
+- Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten
+
 
 \section{Code}
 
