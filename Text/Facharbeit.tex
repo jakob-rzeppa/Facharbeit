@@ -20,6 +20,7 @@
 \usepackage{url}
 
 \usepackage{tikz}
+\usepackage{pgfplots}
 
 \setlength{\emergencystretch}{15pt}
 
@@ -165,15 +166,11 @@ Daraus kann geschlossen werden, dass alle vier Werte Annährungen der Nullstelle
 Weiterhin, kann aus dem Fundermentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $p(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist. \\
 $\Rightarrow$ Die Weierstraß-Iteration war für $p(x)$ erfolgreich.
 
-\section{Visualisierung}
-TODO (maybe bei Beispiel)
-
-
 %--------------------------------------------------------------
 \section{Herleitung}
 In diesem Abschnitt wird auf die Herleitung der Methode und der bestimmung der Startpunkte eingegangen.
 \subsection{Methode}
-Auf die Herleitung der Methode wird im Folgenden, der Einfachheit halber, nur mit reellen Zahlen eingegangen. Jedoch kann es ohne Probleme auch auf komplexe Zahlen übertragen werden.
+Auf die Herleitung der Methode wird, der Einfachheit halber, nur mit reellen Zahlen eingegangen. Jedoch kann die Herleitung, mit wenigen Veränderungen, auch auf komplexe Zahlen übertragen werden.
 \paragraph{Visualisierung}
 Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
 \begin{equation}
@@ -181,9 +178,8 @@ Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichun
 \end{equation}
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=.6]{BeispielHerleitung.png}
-    \caption{Beispiel: (Wird noch ersetzt)}
     %TODO
+    \caption{Beispiel: (Wird noch ersetzt)}
 \end{figure}\\
 %-------------------------------------------------------------------------------------------------------------------
 Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion\footnote{Das kann auch an der Gleichung selber gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht.} handelt und wenn die restlichen Nullstellen gefunden wurden um eine waagrechte lineare Funktion\footnote{Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom abgezogen werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt ein konstanter Wert über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.}. 

@@ -42,7 +42,8 @@ public class DurandKerner {
         Complex[] roots = new Complex[p.degree];
 
         for (int i = 0; i < p.degree; i++) {
-            roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
+            //roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
+            roots[i] = new Complex(radius * Math.cos(i * theta + offset), 0);
             System.out.println(roots[i].round(4));
         }
         return roots;
@@ -108,7 +109,7 @@ public class DurandKerner {
     }
 
     public static void main(String[] args) {
-        Poly p = new Poly(-1,0,1);
+        Poly p = new Poly(2,2,-4,1);
         durandKerner(p);
     }
 }
