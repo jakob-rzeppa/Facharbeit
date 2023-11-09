@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class DurandKerner {
+public class Weierstrass {
     /**
      * @param roots are the "roots" of the last iteration
      * @param index is the index of the current iteration
