@@ -241,8 +241,7 @@ Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für
 
 \section{Implementierung}
 \subsection{Einleitung}
-Bei der Implementierung der Weierstraß-Iteration in Java wurde größtenteils auf eine funktionale Programmierweise gesetzt. Dabei befinden sich in der Datei \glqq Weierstrass\grqq\space nur statische Funktionen.
-
+Bei der Implementierung der Weierstraß-Iteration in Java wurde größtenteils auf eine funktionale Programmierweise gesetzt. Dabei befinden sich in der Datei \glqq Weierstrass.java\grqq\space nur statische Funktionen. Neben der funktionalen Implementierung der Weierstraß-Iteration werden zwei Klassen verwendet. Einerseits sind die komplexen Zahlen und andererseits die Polynomfunktion in einer eigenen Klasse. Dabei wurden allerdings auch viele statische Hilfsfunktionen verwendet. Der \glqq Entry-Point\grqq\space der Weierstraß-Iteration befindet sich in der \glqq main\grqq -Methode der Klasse \glqq Weierstrass\grqq. Die weiteren \glqq main\grqq -Methoden sind nur zum Debugen.
 
 \subsection{Komplexe Zahlen}
 In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq\space zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
@@ -290,6 +289,8 @@ Wie in Probleme und Einschränkungen beschrieben, muss für die Weierstraß-Iter
 
 \paragraph{\glqq toString\grqq -Methode}
 In der \glqq toString\grqq -Methode wird aus dem Polynom eine lesbare Form gemacht und als String zurückgegeben.
+
+\subsection{Weierstraß-Iteration}
 
 \section{Fazit}
 \subsection{Zusammenfassung}
