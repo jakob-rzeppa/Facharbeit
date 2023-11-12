@@ -246,51 +246,84 @@ Bei der Implementierung der Weierstraß-Iteration in Java wurde größtenteils a
 \subsection{Komplexe Zahlen}
 In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq\space zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
 
-\paragraph{Aufbau der Klasse}
-Die Klasse \glqq Complex\grqq\space besitzt zwei Attribute, einen Konstruktor und mehrere Funktionen für die Operationen. Außerdem ist die \glqq toString\grqq-Methode überschrieben und eine Methode zum runden implementiert. Alle Attribute sind \glqq private\grqq, da sie von außerhalb nicht benötigt werden und jede Methode \glqq public\grqq, da diese auch von Außerhalb aufgerufen werden.
+\subsubsection{Attribute}
+Die Attribute \glqq real\grqq\space und \glqq imaginary\grqq\space repräsentieren den reellen und imaginären Teil der komplexen Zahl.
 
-\paragraph{Attribute}
-Beide Attribute sind vom Datentyp \glqq double\grqq, um möglichst genaue und große Dezimalzahlen darstellen zu können. Dabei steht \glqq re\grqq\space für den reellen und \glqq im\grqq\space für den imaginären Teil.
+\subsubsection{Konstruktor}
+\paragraph{Complex(double real, double imaginary)} 
+Initialisiert eine komplexe Zahl mit einem gegebenen Real- und Imaginärteil.
 
-\paragraph{Konstruktor}
-Der Konstruktor nimmt einen reellen und imaginären Teil entgegen und speichert diese in den Attributen.
+\subsubsection{Methoden}
+\paragraph{public double abs()} 
+Berechnet und gibt den Betrag der komplexen Zahl zurück.
 
-\paragraph{Hilfsfunktionen}
-Die vier Hilfsfunktionen für die Grundrechenarten Addition, Subtraktion, Multiplikation und Division\footnote{ingenieurkurse.de: Grundrechenarten der komplexen Zahlen, URL: \url{https://www.ingenieurkurse.de/hoehere-mathematik-analysis-lineare-algebra/komplexe-zahlen/grundrechenarten-der-komplexen-zahlen.html} (Zuletzt eingesehen: 26.10.2023)\label{ftn:grundrechenarten}} nehmen zwei komplexe Zahlen (Instanzen der Klasse \glqq Complex\grqq) entgegen und geben das Ergebnis zurück. 
-Außerdem gibt es eine Hilfsfunktionen für das Potenzieren. Diese nimmt eine komplexe Zahl als Basis und ein Integer als Exponent entgegen. Zuerst wird geprüft, ob der Exponent positiv oder Null ist, da negative Potenzierung nicht implementiert ist. Ist das nicht der Fall wird eine \glqq RuntimeException\grqq, mit passender Fehlermeldung, ausgelöst. Dannach wird, falls der Exponent Null ist, Eins als komplexe Zahl zurückgegeben. Sonst wird, mithilfe eine \glqq for-Schleife\grqq, das Ergebnis ausgerechnet.
+\paragraph{public Complex round(int accuracyDecimalPlaces)} 
+Rundet den Real- und Imaginärteil auf die angegebene Anzahl von Dezimalstellen und gibt eine neue komplexe Zahl zurück.
 
-\paragraph{Betrag}
-Die nicht statische Funktion \glqq abs()\grqq\space (kurz für \glqq absolute Value\grqq\space bzw. den Absolutbetrag) gibt den Betrag der Instanz als \glqq double\grqq\space zurück. Dieser ist für komplexe Zahlen als $|z| := \sqrt{x^2+y^2}$, wo $x$ gleich dem reellen und $y$ gleich dem imaginären Teil ist, definiert.\footref{ftn:grundrechenarten}
+\paragraph{@Override public String toString()} 
+Gibt eine lesbare Repräsentation der komplexen Zahl als String zurück.
 
-\paragraph{Runden}
-Die Methode \glqq round()\grqq\space gibt eine neue komplexe Zahl zurück, bei welcher der reelle und imaginäre Teil auf vier Nachkommastellen gerundet wurden.
-
-\paragraph{\glqq toString\grqq-Methode}
-Die \glqq toString\grqq-Methode wird in der Klasse \glqq Complex\grqq\space überschrieben, um die komplexe Zahl als String zurückzugegeben.
+\subsubsection{Statische Methoden}
+Die statischen Methoden führen grundlegende Rechenoperationen Addition, Subtraktion, Multiplikation, Division und Potenzierung mit komplexen Zahlen durch.
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion}
-Für die Weierstraß-Iteration muss eine Polynomfunktion gegeben sein. Diese wird in meiner Implementierung in eine eigene Klasse ausgelagert.
+\subsubsection{Attribute}
+\paragraph{coefficients}
+Ein Array von Gleitkommazahlen (double), das die Koeffizienten des Polynoms enthält. Der Index repräsentiert den Exponenten des zugehörigen Terms.
+\paragraph{degree}
+Ein Integer, der den Grad des Polynoms angibt. Der Grad entspricht dem höchsten Exponenten im Polynom.
 
-\paragraph{Aufbau der Klasse}
-Die Klasse \glqq Poly\grqq\space (kurz für Polynomial (englisch) bzw. Polynom (deutsch)) besitzt zwei Attribute, einen Konstruktor und die Funktion \glqq solve()\grqq. Außerdem wurde die \glqq toString\grqq -Methode überschrieben.
+\subsubsection{Konstruktor}
+Der Konstruktor \glqq Poly(double... coefficients)\grqq, erstellt ein Polynom mit den gegebenen Koeffizienten.
 
-\paragraph{Attribute}
-Bei dem ersten Attribut \glqq coefficients\grqq\space handelt es sich um die Koeffizienten. Diese werden in einem Array gespeichert, wo der Index den Exponenten des Terms beschreibt. Das zweite Attribut ist der Grad der Funktion. Beide Attribute sind \glqq public\grqq, da auf diese von Außerhalb zugegriffen wird.
+\subsubsection{Methoden}
+\paragraph{public void normalise()} 
+Eine Methode, die das Polynom für die Weierstraß-Iteration normiert. Hierbei wird jeder Koeffizient durch den führenden Koeffizienten $a_n$ des Polynoms geteilt. Die Nullstellen des Polynoms ändern sich nicht, aber die Darstellung des Polynoms ändert sich.
 
-\paragraph{Konstruktor}
-Dem Konstruktor muss ein Array der Koeffizienten, wie bei den Attributen beschrieben, übergeben werden. Dieses wird in dem Attribut \glqq coefficients\grqq\space gespeichert. Infolge dessen wird der Grad des Polynoms bestimmt, indem die Länge des Arrays minus eins gerechnet wird.
+\paragraph{public Complex solve(Complex val)}
+Eine Methode, die den Funktionswert des Polynoms für einen gegebenen komplexen Wert \glqq val\grqq\space berechnet. Dabei wird das Horner-Schema\footnote{
+    Das Horner-Schema ist eine effiziente Methode zur Berechnung des Funktionswerts eines Polynoms. Es erfolgt eine schrittweise Auswertung, bei der jeder Term des Polynoms mit dem $x$-Wert multipliziert und mit dem vorherigen Ergebnis addiert wird, wodurch der Rechenaufwand minimiert wird.
+} verwendet, um die Auswertung effizient durchzuführen. 
 
-\paragraph{Lösen der Polynomfunktion}
-Das Lösen des Polynoms wird in der Methode \glqq solve()\grqq\space implementiert. Diese ist \glqq public\grqq, weil von Außerhalb auf die Funktion zugegriffen wird. 
+\paragraph{@Override public String toString()}
+Die \glqq toString()\grqq -Methode wurde überschrieben, um eine lesbare Darstellung des Polynoms auszugeben. Die Methode berücksichtigt verschiedene Fälle, einschließlich der Anzeige von Termen mit positiven oder negativen Koeffizienten und der Auslassung von Termen mit Koeffizienten gleich null.
 
-\paragraph{Normieren}
-Wie in Probleme und Einschränkungen beschrieben, muss für die Weierstraß-Iteration ein normiert Polynom gegeben sein. Um ein beliebiges Polynom zu normieren wird in der Methode \glqq norm()\grqq\space jeder Koeffizient des Polynoms durch den Koeffizient des Terms mit dem höchsten Grad geteilt.
-
-\paragraph{\glqq toString\grqq -Methode}
-In der \glqq toString\grqq -Methode wird aus dem Polynom eine lesbare Form gemacht und als String zurückgegeben.
-
+%----------------------------------------------------------------------------------------------------------
 \subsection{Weierstraß-Iteration}
+
+\subsubsection{calc(Poly p, Complex[] roots, int index)}
+Die \glqq calc-Methode\grqq\space berechnet die nächste Iteration für eine NUllstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
+Für die Berechnung werden zunächst der Zähler (\glqq numerator\grqq) und der Nenner (\glqq denominator\grqq) des Weierstrass-Korrekturterms berechnet. Dann wird dieser Korrekturterm von der aktuellen Nullstelle subtrahiert, um die nächste Näherung zu erhalten.
+
+\subsubsection{startingPoints(Poly p)}
+Die \glqq startingPoints\grqq-Methode generiert anhand der Eigenschaften des Polynoms anfängliche Schätzungen für die Nullstellen. Sie nimmt als Parameter das Polynom \glqq p\grqq\space entgegen und gibt ein Array von komplexen Zahlen zurück, das die initialen Schätzungen der Nullstellen enthält.\\
+Die Methode verwendet die zuvor beschreibenen Berechnungen, um den Radius und den Winkel für die Platzierung der Anfangsschätzungen auf einem Kreis in der komplexen Ebene zu bestimmen. Die generierten Startpunkte werden als Ausgangspunkte für die Weierstraß-Iteration verwendet.
+
+\subsubsection{isAccurateEnough(Complex[] newRoots, Complex[] oldRoots, double accuracy)}
+Die \glqq isAccurateEnough\grqq-Methode überprüft, ob die Nullstellen ausreichend genau konvergiert sind. Sie vergleicht den Unterschied zwischen den neuen Nullstellen und den alten Nullstellen mit einer vorgegebenen Genauigkeitsgrenze (accuracy).\\
+Die Methode gibt Wahr zurück, wenn alle Nullstellen innerhalb der Genauigkeitsgrenze konvergiert sind, andernfalls gibt sie Falsch zurück.
+
+\subsubsection{weierstrass(Poly p)}
+Die \glqq Weierstrass\grqq-Methode ist die Hauptmethode der Weierstraß-Iteration. Sie nimmt ein Polynom entgegen und gibt ein Array von komplexen Zahlen mit Nährungen der Nullstellen des Polynoms zurück. Die Methode kann in sechs Schritte unterteilt werden.
+
+\paragraph{1. Polynom normieren}
+Zuerst wird das Polynom normiert, um die Weierstraß-Iteration möglich zu machen. Dafür wird die Methode \glqq normalise()\grqq\space der Polynomfunktion aufgerufen.
+
+\paragraph{2. Genauigkeit und maximale Iterationen festlegen}
+Darauffolgend wird die Genauigkeit mit $10^{-4}$ und maximale Anzahl an Iterationen mit $1000$ festgelegt.
+
+\paragraph{3. Initialisierung der Nullstellen}
+Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Nullstellen in einem Array Initialisiert.
+
+\paragraph{4. Durchführen der Weierstraß-Iteration}
+Jetzt kann eine Schleife gestartet werden, die solange läuft, bis die Konvergenz erreicht ist oder die maximale Anzahl von Iterationen erreicht ist. In dieser wird die Funktion \glqq calc(Poly p, Complex[] roots, int index)\grqq\space für alle Nullstellen bei jeder Iteration ausgeführt.
+
+\paragraph{5. Probe}
+Nach Abschluss der Iteration wird eine Probeausgabe für jede gefundene Wurzel gemacht, um die Genauigkeit zu überprüfen.
+
+\paragraph{6. Rückgabe der Nährungen der Nullstellen}
+Zuletzt wird das endgültige Array der berechneten Wurzeln zurückgegeben.
 
 \section{Fazit}
 \subsection{Zusammenfassung}
@@ -311,21 +344,4 @@ In der \glqq toString\grqq -Methode wird aus dem Polynom eine lesbare Form gemac
 - Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten\\
 - Der richtige Beweis ist einfach zu komplex für ein Unterthema in einer Facharbeit.
 
-
-\section{Code}
-
-\begin{lstlisting}[language=Java, title={Complex.java: Z. 19-29}]
-    public static Complex plus(Complex a, Complex b) {
-            double re = a.re + b.re;
-            double im = a.im + b.im;
-        return new Complex(re, im);
-    }
-    
-    public static Complex minus(Complex a, Complex b) {
-        double re = a.re - b.re;
-        double im = a.im - b.im;
-        return new Complex(re, im);
-    }
-    \end{lstlisting}
-    
 \end{document}

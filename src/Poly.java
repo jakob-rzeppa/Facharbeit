@@ -1,24 +1,43 @@
+/**
+ * The "Poly" class represents a polynomial with real coefficients and provides methods
+ * for normalization, solving for complex values, and generating a string representation.
+ */
 class Poly {
+	/**
+     * Array containing coefficients of the polynomial, where the index represents the power of x.
+     * For example, coefficients[2] represents the coefficient of x^2.
+     */
     public double[] coefficients;
+
+	/**
+     * The degree of the polynomial, which is the highest power of x with a non-zero coefficient.
+     */
     public int degree;
 
     /**
-     * takes a function of the form f(x) = a_n * x^(n) + a_n-1 * x^(n-1) + ... + a_1 * x + a_0 as input
-     * @param coefficients contains all coefficients a of the function with the index of which representing n
-     * there may be no coefficients that equals zero after the last non zero coefficient
+     * Constructs a polynomial with the given coefficients.
      */
     Poly(double... coefficients) {
         this.coefficients = coefficients;
         this.degree = coefficients.length - 1;
     }
 
+	/**
+     * Normalizes the polynomial by dividing each coefficient by the leading coefficient.
+	 * The roots of the polynomial won't change.
+     */
 	public void normalise() {
-		// for the Durand-Kerner-Method a_n has to be equal to one -> devide every a by a_n (the polynomial won't be the same, but the roots stay the same)
 		for (int i = 0; i < this.coefficients.length; i++) {
             this.coefficients[i] = this.coefficients[i] / this.coefficients[degree];
         }
 	}
 
+	/**
+     * Solves the polynomial for a given complex value.
+     *
+     * @param val 	The complex value for which the polynomial is evaluated.
+     * @return 		The complex result of evaluating the polynomial for the given value.
+     */
     public Complex solve(Complex val) {
 		Complex result = new Complex(0, 0);
         for (int i = 0; i < coefficients.length; i++) {
@@ -29,46 +48,38 @@ class Poly {
         return result;
     }
 
+	/**
+     * Generates a string representation of the polynomial.
+     *
+     * @return A string representing the polynomial in a human-readable form.
+     */
     @Override
-    public String toString() {
-        //edge cases
+	public String toString() {
 		if (coefficients.length == 0) {
 			return "";
-		} if (coefficients.length == 1) {
-			return coefficients[0] + "";
-		} if (coefficients.length == 2) {
-			if (coefficients[0] >= 0) {
-				return coefficients[1] + "x +" + coefficients[0];
-			} else {
-				return coefficients[1] + "x " + coefficients[0];
-			}
 		}
 
-        String out = "";
-		for (int i = coefficients.length - 1; i > 1; i--) {
+		StringBuilder out = new StringBuilder();
+
+		for (int i = coefficients.length - 1; i >= 0; i--) {
 			if (coefficients[i] == 0) {
 				continue;
 			}
-			if (coefficients[i] >= 0) {
-				out += "+" + coefficients[i] + "x^(" + i + ") ";
-			} else {
-				out += coefficients[i] + "x^(" + i + ") ";
+
+			if (out.length() > 0) {
+				out.append(coefficients[i] >= 0 ? " + " : " - ");
 			}
-		}
-		if (coefficients[1] >= 0) {
-			if (coefficients[0] >= 0) {
-				out += "+" + coefficients[1] + "x" + " +" + coefficients[0];
+
+			double absCoefficient = Math.abs(coefficients[i]);
+			if (i > 1) {
+				out.append(absCoefficient).append("x^(").append(i).append(")");
+			} else if (i == 1) {
+				out.append(absCoefficient).append("x");
 			} else {
-				out += "+" + coefficients[1] + "x" + " " + coefficients[0];
-			}
-		} else {
-			if (coefficients[0] >= 0) {
-				out += coefficients[1] + "x" + " +" + coefficients[0];
-			} else {
-				out += coefficients[1] + "x" + " " + coefficients[0];
+				out.append(absCoefficient);
 			}
 		}
 
-		return out;
-    }
+		return out.toString();
+	}
 }
