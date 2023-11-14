@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Weierstrass
@@ -58,8 +59,7 @@ public class Weierstrass {
         Complex[] roots = new Complex[p.degree];
 
         for (int i = 0; i < p.degree; i++) {
-            //roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
-            roots[i] = new Complex(radius * Math.cos(i * theta + offset), 0);
+            roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
             System.out.println(roots[i].round(4));
         }
         return roots;
@@ -97,7 +97,7 @@ public class Weierstrass {
 
         // The accuracy of the Weierstrass-Iteration
         double accuracy = Math.pow(10, -4);
-        double maxIterations = 1000;
+        double maxIterations = 100;
 
         System.out.println("function: " + p.toString());
 
@@ -131,6 +131,7 @@ public class Weierstrass {
         }
 
         // Probe
+        System.out.println("---- " + p + " ----");
         for (Complex r : roots) {
             System.out.println("Probe: f(" + r.round(4) + ") = " + p.solve(r).round(4));
         }
@@ -138,9 +139,34 @@ public class Weierstrass {
         return roots;
     }
 
-    //TODO
     public static void main(String[] args) {
-        Poly p = new Poly(2,2,-4,1);
-        weierstrass(p);
+        List<Double> coefficientsList = new ArrayList<Double>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        boolean running = true;
+        int i = 0;
+        while (running) {
+            System.out.println("Please input a coefficient for the " + i + "th Term or 'done':");
+            String input = scanner.next();
+            if (!input.equals("done")) {
+                try {
+                    coefficientsList.add(Double.parseDouble(input));
+                } catch (NumberFormatException e) {
+                    System.err.println("You need to input a valid number!");
+                    i--;
+                }
+            } else {
+                running = false;
+            }
+            i++;
+        }
+        scanner.close();
+        double[] coefficients = new double[coefficientsList.size()];
+        for (int j = 0; j < coefficientsList.size(); j++) {
+            coefficients[j] = coefficientsList.get(j);
+        }
+        Poly polynom = new Poly(coefficients);
+        weierstrass(polynom);
     }
 }

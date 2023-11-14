@@ -204,7 +204,7 @@ Wenn die restlichen Nullstellen gefunden wurden handelt es sich um eine waagrech
 Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annährungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
 
 \paragraph{Annährung an die Waagrechte $y=z_k$}
-
+Wie in der Abbildung zuvor zu sehen nährt sich die Funktion mit genaueren Nullstellen an die Funktion $y=z_k$ an. Das hat zur Folge, dass die einzelnen Schritte der Weierstraß-Iteration schneller genau werden. Dabei dient die Annährung an $y=z_k$, da die Gleichung, statt der Nullstelle, genauer wird, mehr als Beschleunigung der Methode, während das Annähren an die Nullstelle mithilfe der Gleichung die eigendliche Annährung bringt.
 
 \paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
 Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
@@ -247,11 +247,7 @@ Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für
 
 \section{Implementierung}
 \subsection{Einleitung}
-%TODO Einleitung
-
-%TODO Sagen dass das klassen sind
-
-%TODO output
+Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei wurde die Weierstraß-Iteration in der Klasse \glqq Weierstrass\grqq\space implementiert. Neben dieser Klasse wurden zwei Klassen \glqq Poly\grqq\space und \glqq Complex\grqq\space erstellt. Diese haben die Funktion Polynomfunktionen und komplexe Zahlen darzustellen. In der Klasse \glqq Weierstrass\grqq\space befindet sich der \glqq Entry-Point\grqq\space bzw. die \glqq main\grqq-Methode des Programmes.
 
 \subsection{Komplexe Zahlen}
 In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Es ist möglich mithilfe einer Bibliothek komplexe Zahlen zu nutzen, jedoch ist es nicht gegeben, dass alle nötigen Operationen eingebaut sind. Deshalb habe ich mich dazu entschieden eine eigene Klasse \glqq Complex\grqq\space zu schreiben, um volle Kontrolle über die Methoden und Implementierung der komplexen Zahlen zu haben.
@@ -278,13 +274,11 @@ Die statischen Methoden führen grundlegende Rechenoperationen Addition, Subtrak
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion}
-Polynomfunktionen werden in der Klasse \glqq Poly\grqq\space 
+Polynomfunktionen werden mit der Klasse \glqq Poly\grqq\space dargestellt. 
 
 \subsubsection{Attribute}
-\paragraph{coefficients}
-Ein Array von Gleitkommazahlen (double), das die Koeffizienten des Polynoms enthält. Der Index repräsentiert den Exponenten des zugehörigen Terms.
-\paragraph{degree}
-Ein Integer, der den Grad des Polynoms angibt. Der Grad entspricht dem höchsten Exponenten im Polynom.
+In dem Array \glqq coefficients\grqq\space von Gleitkommazahlen (double) sind die Koeffizienten des Polynoms enthält. Der Index repräsentiert den Exponenten des zugehörigen Terms.
+Der Grad des Polynoms wird als Integer in dem Attribut \glqq degree\grqq\space gespeichert. 
 
 \subsubsection{Konstruktor}
 Der Konstruktor \glqq Poly(double... coefficients)\grqq, erstellt ein Polynom mit den gegebenen Koeffizienten.
@@ -336,6 +330,9 @@ Nach Abschluss der Iteration wird eine Probeausgabe für jede gefundene Wurzel g
 
 \paragraph{6. Rückgabe der Nährungen der Nullstellen}
 Zuletzt wird das endgültige Array der berechneten Wurzeln zurückgegeben.
+
+\subsection{Input/Output}
+%TODO
 
 \section{Fazit}
 \subsection{Zusammenfassung}
