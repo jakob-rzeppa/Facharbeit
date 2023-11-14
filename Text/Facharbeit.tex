@@ -183,34 +183,37 @@ Auf die Herleitung der Methode wird, der Einfachheit halber, nur mit reellen Zah
 Für die Herleitung der Methode macht es Sinn den Graph einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
 \begin{equation}
     g(x) = y = x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
-\end{equation}
+\end{equation}\\
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=.6]{BeispielHerleitung.png}
+    %\includegraphics[scale=.6]{./BeispielHerleitung.png}
     %TODO
-    \caption{Beispiel: (Wird noch ersetzt)}
+    \caption{Beispiel:}
 \end{figure}\\
 %-------------------------------------------------------------------------------------------------------------------
-Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, es sich um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht. 
-Wenn die restlichen Nullstellen gefunden wurden handelt es sich um eine waagrechte lineare Funktion. Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom dividiert werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt der konstante Wert $z_k^{(i)}$ über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Bedeuteung für die Weierstraß-Iteration}
-Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annährungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
-
-\paragraph{Annährung an die Waagrechte $y=z_k$}
-\textit{Wie könnte man zeigen, dass sich mit genaueren Nullstellen $g(x)$ an $y=z_k$ annährt?}
-
-\paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
-Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
-%-------------------------------------------------------------------------------------------------------------------
-Für die Herleitung diese Aussage muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt.
+Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht:
 \begin{align*}
     g(x) = y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
 \end{align*}
-Da die Polynome im Zähler normiert und vom gleichen Grad sind kann, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt dieser $n$te-Term weg, da er bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$. \\
+Wenn die restlichen Nullstellen gefunden wurden handelt es sich um eine waagrechte lineare Funktion. Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom dividiert werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt der konstante Wert $z_k^{(i)}$ über. Daraus folgt, dass die Funktion waagrecht zu der x-Achse ist.
+%-------------------------------------------------------------------------------------------------------------------
+\paragraph{Bedeuteung für die Weierstraß-Iteration}
+Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annährungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
+
+\paragraph{Annährung an die Waagrechte $y=z_k$}
+
+
+\paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
+Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
+%-------------------------------------------------------------------------------------------------------------------
+Für die Herleitung diese Aussage muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt. Dafür kann man sich die zuvor hergeleitete Gleichung
+\begin{equation*}
+    g(x) = y = \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
+\end{equation*}
+angucken. Da die Polynome im Zähler normiert und vom gleichen Grad sind, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt dieser $n$te-Term weg, da er bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$. \\
 \begin{equation*}
     g(x) = y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
@@ -218,9 +221,9 @@ Da der Nenner und Zähler den gleichen Grad haben hat $g(x)$ eine waagrechte Asy
     vgl. studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt eingesehen am 04.11.2023) \label{ftn:studimup.de}
 }.\\\\
 %-------------------------------------------------------------------------------------------------------------------
-Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem ist $|g(x)|>|g(z_k)| \land (g(x) \text{ hat das gleiche Vorzeichen wie } z_k)$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor wahr\footnote{
-    Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrechnen, indem man die Faktoren vor der höchsten Potenz im Zähler durch den Faktor der höchsten Potenz im Nenner teilt\footref{ftn:studimup.de}. Da das Nennerpolynom normiert ist, ist die waagrechte Asymptote gleich des Faktors vor der höchsten Potenz im Zähler. Der Betrag dieser ist größer als $|z_k|$ und hat das gleiche Vorzeichen wie $z_k$.
-}. Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert, welcher näher an $z_k$ als $z_k^{(i)}$ ist, zurückgibt.
+Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem ist $|g(x)|>|g(z_k)| \land (g(x) \text{ hat das gleiche Vorzeichen wie } z_k)$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor wahr.
+Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrechnen, indem man die Faktoren vor der höchsten Potenz im Zähler durch den Faktor der höchsten Potenz im Nenner teilt\footref{ftn:studimup.de}. Da das Nennerpolynom normiert ist, ist die waagrechte Asymptote gleich des Faktors vor der höchsten Potenz im Zähler. Der Betrag dieser ist größer als $|z_k|$ und hat das gleiche Vorzeichen wie $z_k$.
+Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert, welcher näher an $z_k$ als $z_k^{(i)}$ ist, zurückgibt.
 
 \paragraph{Schluss}
 Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an $z_k$ $g(z_k) = z_k$ ist und mit einem höheren $i$ $z_k^{(i)}$ meist genauer wird, konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt Probleme und Einschränkungen wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
