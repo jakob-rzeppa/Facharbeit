@@ -48,7 +48,7 @@ public class Weierstrass {
      * @param p The polynomial for which roots are being calculated.
      * @return  Array of initial guesses for the roots.
      */
-    private static Complex[] startingPoints(Poly p) {
+    private static Complex[] startingPoints(Poly p, int accuracyDecimalPlaces) {
         // check so that there is no devision by zero
         double t1 = (p.coefficients[1] == 0) ? 1 : p.coefficients[1];
         double t2 = (p.coefficients[p.degree] == 0) ? 1: p.coefficients[p.degree];
@@ -58,10 +58,12 @@ public class Weierstrass {
         double offset = Math.PI / (2 * p.degree);
         Complex[] roots = new Complex[p.degree];
 
+        System.out.println("iteration: 0");
         for (int i = 0; i < p.degree; i++) {
             roots[i] = new Complex(radius * Math.cos(i * theta + offset), radius * Math.sin(i * theta + offset));
-            System.out.println(roots[i].round(4));
+            System.out.println("i = " + i + ": " + roots[i].round(accuracyDecimalPlaces));
         }
+        System.out.println();
         return roots;
     }
 
@@ -96,13 +98,15 @@ public class Weierstrass {
         p.normalise();
 
         // The accuracy of the Weierstrass-Iteration
-        double accuracy = Math.pow(10, -4);
-        double maxIterations = 100;
+        double accuracy = Math.pow(10, -10);
+        int accuracyDecimalPlaces = 10;
+        double maxIterations = 1000;
 
-        System.out.println("function: " + p.toString());
+        System.out.println("polynom: " + p.toString());
+        System.out.println();
 
         // init roots -> starting points
-        Complex[] roots = startingPoints(p);
+        Complex[] roots = startingPoints(p, accuracyDecimalPlaces);
 
         boolean running = true;
         int ctr = 0;
@@ -118,7 +122,7 @@ public class Weierstrass {
             }
 
             for (int i = 0; i < roots.length; i++) {
-                System.out.println("i = " + i + ": " + newRoots[i].round(4));
+                System.out.println("i = " + i + ": " + newRoots[i].round(accuracyDecimalPlaces));
             }
             System.out.println();
 
@@ -133,7 +137,7 @@ public class Weierstrass {
         // Probe
         System.out.println("---- " + p + " ----");
         for (Complex r : roots) {
-            System.out.println("Probe: f(" + r.round(4) + ") = " + p.solve(r).round(4));
+            System.out.println("Probe: f(" + r.round(accuracyDecimalPlaces) + ") = " + p.solve(r).round(accuracyDecimalPlaces));
         }
 
         return roots;
@@ -161,7 +165,9 @@ public class Weierstrass {
             }
             i++;
         }
+        System.out.println();
         scanner.close();
+
         double[] coefficients = new double[coefficientsList.size()];
         for (int j = 0; j < coefficientsList.size(); j++) {
             coefficients[j] = coefficientsList.get(j);

@@ -302,7 +302,7 @@ Die \glqq toString()\grqq -Methode wurde überschrieben, um eine lesbare Darstel
 Die \glqq calc-Methode\grqq\space berechnet die nächste Iteration für eine NUllstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
 Für die Berechnung werden zunächst der Zähler (\glqq numerator\grqq) und der Nenner (\glqq denominator\grqq) des Weierstrass-Korrekturterms berechnet. Dann wird dieser Korrekturterm von der aktuellen Nullstelle subtrahiert, um die nächste Näherung zu erhalten.
 
-\subsubsection{startingPoints(Poly p)}
+\subsubsection{startingPoints(Poly p, int accuracyDecimalPlaces)}
 Die \glqq startingPoints\grqq-Methode generiert anhand der Eigenschaften des Polynoms anfängliche Schätzungen für die Nullstellen. Sie nimmt als Parameter das Polynom \glqq p\grqq\space entgegen und gibt ein Array von komplexen Zahlen zurück, das die initialen Schätzungen der Nullstellen enthält.\\
 Die Methode verwendet die zuvor beschreibenen Berechnungen, um den Radius und den Winkel für die Platzierung der Anfangsschätzungen auf einem Kreis in der komplexen Ebene zu bestimmen. Die generierten Startpunkte werden als Ausgangspunkte für die Weierstraß-Iteration verwendet.
 
@@ -332,7 +332,13 @@ Nach Abschluss der Iteration wird eine Probeausgabe für jede gefundene Wurzel g
 Zuletzt wird das endgültige Array der berechneten Wurzeln zurückgegeben.
 
 \subsection{Input/Output}
-%TODO
+Der Input erfolgt mithilfe der Bibliothek \glqq java.util.Scanner\grqq\space in der \glqq main\grqq-Methode. Dabei wird für jeden Term des Polynoms nach dem Koeffizienten gefragt. Es wird bei dem $0$ten Term begonnen und in aufsteigender Reihenfolge weitergefragt. Wenn der gewünschte Grad erreicht ist kann der Nutzer \glqq done\grqq\space eingeben und die Weierstraß-Iteration wird mit dem gegebenen Polynom ausgeführt.\\
+\\
+Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während die Weierstraß-Iteration ausgeführt wird werden alle Nährungen an die Nullstellen für diese Iteration angegeben. Zuletzt wird das Polynom ein letztes mal ausgegeben und jede der Nullstellen in dieses eingesetzt. Bei diesen sollte, falls die Weierstraß-Iteration funktiontiert hat \glqq 0.0\grqq\space herrauskommen.\footnote{
+    %TODO screenshot beispiel
+}
+
+%TODO footnote zu jeder Methode
 
 \section{Fazit}
 \subsection{Zusammenfassung}
