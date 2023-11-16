@@ -63,7 +63,6 @@ Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion h
 \\
 Algebraisch können die Nullstellen einer Polynomfunktion maximal bis zum vierten Grad gefunden werden. Für alle restlichen Polynome muss auf ein anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik.\\
 In der Numerik gibt es viele Unterschiedliche Verfahren für die Nullstellenberechnung. Dabei werde ich die Weierstraß-Iteration in Java implementieren.
-- Man braucht Nullstellen von Polynomfunktion für vieles\\
 
 \subsection{Wie bin ich auf das Thema gekommen?}
 
@@ -98,10 +97,7 @@ Bei der Weierstraß-Iteration wird mit jeder Iteration jede Nullstelle etwas gen
 \[\dots\]
 \[z_{1}^{(i+1)} = z_1^{(i)} - \frac{p(z_{1}^{(i)})}{\prod_{j=1;j\neq 1}^{n}(z_{1}^{(i)}-z_j^{(i)})}\]
 \subsubsection{Startpunkte}
-Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)} \in \mathbb{C}$ gesetzt werden. Diese können beliebig gewählt werden. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen einen imaginären Teil ungleich Null haben müssen. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch Null dividiert wird.\footnote{
-    Falls zwei Startpunkte $z_k^{(0)}$ gleich sind wird in der ersten Iteration durch Null dividiert, was nicht möglich ist. Das ist der Fall, da in den einzelnen linearen Faktioren ein Startpunkt mit einem anderen Subtrahiert wird. Wenn dabei nun gleiche Startpunkte eingesetzt werden ergibt dieser lineare Faktor Null. Da jedes paar von Startpunkten in den $n$ Gleichungen vorkommt kann kein Startpunkt gleich einem anderen sein.
-}
-Denn bei der Gleichung
+Zunächst müssen alle Startpunkte $z_n^{(0)};z_{n-1}^{(0)};\dots;z_1^{(0)} \in \mathbb{C}$ gesetzt werden. Diese können beliebig gewählt werden. Es muss jedoch beachtet werden, dass Startpunkte für komplexe Nullstellen einen imaginären Teil ungleich Null haben müssen. Außerdem müssen alle Startpunkte unterschiedlich sein, damit bei der ersten Iteration nicht durch Null dividiert wird. Denn bei der Gleichung
 \begin{equation*}
     z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j^{(i)})}
 \end{equation*}
@@ -244,7 +240,7 @@ Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funk
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsubsection{Keine generelle Konvergenz}
-Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{Das bedeutet, dass sich die Weierstraß-Iteration immer wieder in dem gleichen Abstand wiederholt.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert. Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist kann es meist vernachlässigt werden. 
+Die Weierstraß-Iteration ist nicht generell Konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{d. h. die Weierstraß-Iteration wiederholt sich immer wieder in dem gleichen Abstand.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert. Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist kann es meist vernachlässigt werden. 
 
 \section{Implementierung}
 \subsection{Einleitung}
