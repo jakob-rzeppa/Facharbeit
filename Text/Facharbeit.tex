@@ -56,24 +56,27 @@
 \section{Einleitung}
 
 \subsection{Problemstellung}
-Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion herrausfinden. In der Schule lernt man mit der PQ-Formel oder ABC-Formel das Finden von Nullstellen zweiten Grades. Manchmal werden außerdem kubische Funktionen und deren Nullstellen betrachtet. Doch wie verhält es sich mit Polynomen $n$ten Grades?\\
-\\
-Algebraisch können die Nullstellen einer Polynomfunktion maximal bis zum vierten Grad gefunden werden. Für alle restlichen Polynome muss auf ein anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik.\\
-In der Numerik gibt es viele Unterschiedliche Verfahren für die Nullstellenberechnung. Dabei werde ich die Weierstraß-Iteration in Java implementieren.
+Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion herrausfinden. In der Schule lernt man mit der PQ-Formel oder ABC-Formel das Finden von Nullstellen zweiten Grades. Manchmal werden außerdem kubische Funktionen und deren Nullstellen betrachtet, jedoch wird das algebraische finden von Nullstellen ab dem vierten Grad meist unmöglich. Für diese muss meist auf ein anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annärhungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?
 
 \subsection{Wie bin ich auf das Thema gekommen?}
+Seid ich das erste mal Nullstellenberechnung mithilfe der PQ-Formel hatte hat es mich interessiert, wie man die Nullstellen von Polynomen mit einem Grad größer als zwei findet. Als Herr Heydecke mir das Thema Numerisches lösen von linearen Gleichungssystemen vorgeschlagen hatte habe ich mich an mein Interesse für das Lösen der Nullstellen von Polynomfunktionen erinnert und entschieden dieses Thema für die Facharbeit zu wählen.
 
 \subsection{Herangehensweise}
+Um die Problemfrage zu lösen werde ich zuerst unterschiedliche Verfahren vergleichen. Von diesen werde ich das Geeingnetste näher betrachten. Daraufhin werde ich die gewählte Methode implementieren. 
+
+\section{Vergleich von Methoden}
+In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnung. Das meist bekannteste ist das Newton-Methode\footnote{
+    Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
+} oder das Bisektionsverfahren bzw. der Zwischenwertsatz\footnote{
+    mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf}
+}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet.\\
+\\
+Wenn man alle Nullstellen finden möchte muss man komplexere Verfahren in betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode wie die Weierstraß-Iteration, das Aberth-Ehrlich-Verfahren, das Trennkreisverfahren oder das Newton-Horner-Verfahren an. Dabei finden die drei ersten Methoden die Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grund ist das Newton-Horner-Verfahren meist langsamer als die anderen Methoden und wird nicht weiter behandelt. Das Trennkreisverfahren basiert auf komplexeren mathematischen Grundlagen als die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren und ist deshalb schwieriger zu implementieren. Zuletzt bleibt die Entscheidung zwischen der Weierstraß-Iteration und dem Aberth-Ehrlich-Verfahren. Beide Verfahren sind sich sehr ähnlich. Das Aberth-Ehrlich-Verfahren ist etwas schneller als die Weierstraß-Iteration, benutzt jedoch die Ableitung des Polynoms und ist ein wenig komplexer. Aus diesem Grund wird die Weierstraß-Iteration implementiert. Diese ist nicht das schnellste Verfahren, jedoch kann sie gut Implementiert werden und ist besser als die anderen Verfahren zu beschreiben.
+%TODO Fußnoten
 
 \section{Weierstraß-Iteration}
-Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, ist ein iteratives Verfahren, zur numerischen Bestimmung aller komplexen Nullstellen einer univariaten\footnote{Univariat bedeutet, dass eine Funktion nur eine Variable hat.} Polynomfunktion. 
-Sie wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.\\
-Die Weierstraß-Iteration baut auf dem Newton-Horner-Verfahren auf. Dieses ist eine Kombination der Newton-Methode und des Horner-Schemas. Dabei wird eine Nullstelle mithilfe der Newton-Methode\footnote{
-    Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
-} gefunden und dannach mithilfe des Horner-Schemas\footnote{
-    math.uni-hamburg.de: 2.1 Horner-Schema, URL: \url{https://www.math.uni-hamburg.de/home/oberle/skripte/numerik/numerik02.pdf} (Zuletzt eingesehen am 04.11.2023)
-} von der Funktion entfernt. Das Verfahren wird bis alle Nullstellen gefunden wurden wiederholt.
-Im Gegensatz zum Newton-Horner-Verfahren findet die Weierstraß-Iteration die Nullstellen nicht nacheinander, sondern parallel. Das bedeutet, dass bei jedem Schritt jede Nullstelle genauer wird und nicht jede Nullstelle nacheinander approximiert wird.\footnote{
+\subsection{Herkunft}%TODO Einleitung
+Die Weierstraß-Iteration, auch genannt Durand-Kerner-Methode, wurde von Karl Weierstraß zwischen 1859 und 1891 als Teil seines Beweises des Fundamentalsatzes der Algebra entwickelt und 1960 von Durand sowie 1966 von Immo Kerner unabhängig voneinander wiederentwickelt.\footnote{
     vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }
