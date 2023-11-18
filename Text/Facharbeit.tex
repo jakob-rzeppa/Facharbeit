@@ -71,7 +71,16 @@ In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnu
     mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf}
 }. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet.\\
 \\
-Wenn man alle Nullstellen finden möchte muss man komplexere Verfahren in betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode wie die Weierstraß-Iteration, das Aberth-Ehrlich-Verfahren, das Trennkreisverfahren oder das Newton-Horner-Verfahren an. Dabei finden die drei ersten Methoden die Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grund ist das Newton-Horner-Verfahren meist langsamer als die anderen Methoden und wird nicht weiter behandelt. Das Trennkreisverfahren basiert auf komplexeren mathematischen Grundlagen als die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren und ist deshalb schwieriger zu implementieren. Zuletzt bleibt die Entscheidung zwischen der Weierstraß-Iteration und dem Aberth-Ehrlich-Verfahren. Beide Verfahren sind sich sehr ähnlich. Das Aberth-Ehrlich-Verfahren ist etwas schneller als die Weierstraß-Iteration, benutzt jedoch die Ableitung des Polynoms und ist ein wenig komplexer. Aus diesem Grund wird die Weierstraß-Iteration implementiert. Diese ist nicht das schnellste Verfahren, jedoch kann sie gut Implementiert werden und ist besser als die anderen Verfahren zu beschreiben.
+Wenn man alle Nullstellen finden möchte muss man komplexere Verfahren in betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode wie die Weierstraß-Iteration (Durand-Kerner-Methode)\footnote{
+    vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
+    \label{ftn:Wikipedia-Durand-Kerner-Method}
+}, das Aberth-Ehrlich-Verfahren\footnote{
+    Wikipedia: Aberth method, URL: \url{https://en.wikipedia.org/wiki/Aberth_method#:~:text=The%20Aberth%20method%2C%20or%20Aberth,roots%20of%20a%20univariate%20polynomial.} (Zuletzt eingesehen am 18.11.2023)
+}, das Trennkreisverfahren\footnote{
+    Wikipedia: Trennkreisverfahren, URL: \url{https://de.wikipedia.org/wiki/Trennkreisverfahren} (Zuletzt eingesehen am 18.11.2023)
+} oder das Newton-Horner-Verfahren\footnote{
+    Eine Kombination aus der Newton-Methode und dem Horner-Verfahren.
+} an. Dabei finden die drei ersten Methoden die Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grund ist das Newton-Horner-Verfahren meist langsamer als die anderen Methoden und wird nicht weiter behandelt. Unter den restlichen drei Methoden ist die Weierstraß-Iteration am einfachsten zu Implementieren und zu Erklären. Obwohl sie nicht die schnellste Methode ist habe ich mich für sie entschieden, da die Vorteile den Nachteilen überwiegen.
 %TODO Fußnoten
 
 \section{Weierstraß-Iteration}
@@ -332,20 +341,13 @@ Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während
 
 \section{Fazit}
 \subsection{Zusammenfassung}
-- Man bildet $n$ Gleichungen für $n$ Nullstellen\\
-- Man wählt Startpunkte\\
-- Man iteriert mit den Gleichungen, bis Endkriterium erreicht ist\\
-- Findet Nullstellen
+Für die Weierstraß-Iteration bildet man $n$ Gleichungen für alle $n$ Nullstellen. Mit jeder Iteration werden die Annährungen an die Nullstellen genauer. In der Implementierung wird über jede der Nullstellen iteriert und die zuvor Gleichung angewand. Sobald die Annährung die gewünschte Genauigkeit hat ist die Weierstraß-Iteration beendet. Um zu testen ob die Methode erfolgreich war können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit, an maximalen Iteration angegeben sein.
 
 \subsection{Bezug zu der Problemstellung}
-- Jetzt weiß man, wie man Nullstellen numerisch findet\\
-- Damit kann man das und dass machen
-
-\subsection{Wieso die Weierstraß-Iteration?}
-- Weierstraß deswegen gewählt\\
-- Bessere Verfahren, jedoch Weierstraß-Iteration relativ verständlich (Nicht mit extrem komplexen mathematischen Konstrukten)
+Mit der Implementierung der Weierstraß-Iteration in Java ist die Problemfrage, wie man Nullstellen von Polynomen mithilfe des Computers approximieren kann, beandwortet. Dabei ist jedoch wichtig zu erwähnen, dass es viele Unterschiedliche Verfahren mit unterschiedlichen Konvergenzgeschwindigkeiten, Stärken und Schwächen gibt. Außerdem hat auch die Implementierung der einzelnen Methode einen großen Einfluss auf die Geschwindigkeit der Methode. In meiner Implementierung wurde mehr Fokus auf die Lesbarkeit des Codes, statt der Performance gelegt. Letzendlich können jedoch die Nullstellen der Meisten Polynomfunktionen mithilfe dieser Implementierung gefunden werden.
 
 \subsection{Reflektion}
+
 - Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten\\
 - Der richtige Beweis ist einfach zu komplex für ein Unterthema in einer Facharbeit.
 
