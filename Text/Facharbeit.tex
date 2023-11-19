@@ -56,31 +56,38 @@
 \section{Einleitung}
 
 \subsection{Problemstellung}
-Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion herrausfinden. In der Schule lernt man mit der PQ-Formel oder ABC-Formel das Finden von Nullstellen zweiten Grades. Manchmal werden außerdem kubische Funktionen und deren Nullstellen betrachtet, jedoch wird das algebraische finden von Nullstellen ab dem vierten Grad meist unmöglich. Für diese muss meist auf ein anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annärhungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?
+Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion herrausfinden. In der Schule lernt man mit der PQ-Formel oder ABC-Formel das Finden von Nullstellen zweiten Grades. Manchmal werden auch kubische Funktionen und deren Nullstellen betrachtet, jedoch wird das algebraische finden von Nullstellen ab dem vierten Grad meist unmöglich. Für diese muss meist auf ein anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annärhungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?
 
-\subsection{Wie bin ich auf das Thema gekommen?}
-Seid ich das erste mal Nullstellenberechnung mithilfe der PQ-Formel hatte hat es mich interessiert, wie man die Nullstellen von Polynomen mit einem Grad größer als zwei findet. Als Herr Heydecke mir das Thema Numerisches lösen von linearen Gleichungssystemen vorgeschlagen hatte habe ich mich an mein Interesse für das Lösen der Nullstellen von Polynomfunktionen erinnert und entschieden dieses Thema für die Facharbeit zu wählen.
+\subsection{Wie bin ich auf das Thema gekommen?} %TODO besser
+Seid ich das erste mal Nullstellenberechnung hatte hat es mich interessiert, wie man die Nullstellen von Polynomen mit einem Grad größer als zwei findet. Als Herr Heydecke mir das Thema Numerisches lösen von linearen Gleichungssystemen vorgeschlagen hatte habe ich mich an mein Interesse für das Lösen der Nullstellen von Polynomfunktionen erinnert und entschieden dieses Thema für die Facharbeit zu wählen.
 
 \subsection{Herangehensweise}
-Um die Problemfrage zu lösen werde ich zuerst unterschiedliche Verfahren vergleichen. Von diesen werde ich das Geeingnetste näher betrachten. Daraufhin werde ich die gewählte Methode implementieren, um die Problemfrage zu beandworten.
+Um die Problemfrage zu lösen werde ich zuerst ein Verfahren aussuchen. Daraufhin werde ich die gewählte Methode erklären und implementieren, um die Problemfrage zu beandworten. %TODO Zuletzt werde ich die Methode testen und wenn möglich verbessern.
 
-\section{Vergleich von Methoden}
-In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnung. Das meist bekannteste ist das Newton-Methode\footnote{
+\section{Auswahl des Verfahren}
+\subsection{Einleitung}
+In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnung. Das meist bekannteste Verfahren ist die Newton-Methode\footnote{
     Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
 } oder das Bisektionsverfahren bzw. der Zwischenwertsatz\footnote{
     mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf}
-}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet.\\
-\\
+}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet.
+
+\subsection{Vorstellung der infragekommenden Verfahren}
 Wenn man alle Nullstellen finden möchte muss man komplexere Verfahren in betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode wie die Weierstraß-Iteration (Durand-Kerner-Methode)\footnote{
     vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }, das Aberth-Ehrlich-Verfahren\footnote{
     Wikipedia: Aberth method, URL: \url{https://en.wikipedia.org/wiki/Aberth_method} (Zuletzt eingesehen am 18.11.2023)
-}, das Trennkreisverfahren\footnote{
-    Wikipedia: Trennkreisverfahren, URL: \url{https://de.wikipedia.org/wiki/Trennkreisverfahren} (Zuletzt eingesehen am 18.11.2023)
 } oder das Newton-Horner-Verfahren\footnote{
     Eine Kombination aus der Newton-Methode und dem Horner-Verfahren.
-} an. Dabei finden die ersten drei Methoden die Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grund ist das Newton-Horner-Verfahren meist langsamer als die anderen Methoden und wird nicht weiter behandelt. Unter den restlichen drei Methoden ist die Weierstraß-Iteration am einfachsten zu Implementieren und zu Erklären. Obwohl sie nicht die schnellste Methode ist habe ich mich für sie entschieden, da die Vorteile den Nachteilen überwiegen.
+} an.
+
+\subsection{Vergleich der Verfahren}
+Im Folgenden werden die zuvor genannten Verfahren unter den Kriterien Geschwindigkeit und Implementierbarkeit beurteilt.\\
+Die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren finden Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grund kommen die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren mit weniger Iterationen aus. Das muss nicht immer bedeuten, dass diese Verfahren schneller sind, jedoch können Prozesse parallel ausgeführt werden, was zu großen Verbesserungen der Performance führen kann. Außerdem ist das Newton-Horner-Verfahren schwierig zu implementieren, da es eine sehr hohe genauigkeit benötigt um Polynomdivision durchzuführen. Das Aberth-Ehrlich-Verfahren ist deutlich schneller als die Weierstraß-Iteration, jedoch auch komplexer. Deshalb ist es schwieriger zu implementieren als die Weierstraß-Iteration.
+
+\subsection{Fazit}
+Aufgrund der zuvor genannten Schwächen und Stärken der einzelnen Methoden wird für den Rest der Facharbeit die Weierstraß-Iteration genutzt. Dabei hat die Implementierbarkeit eine größere Rolle als die Geschwindigkeit gespielt, da die Geschwindigkeit nur bei sehr komplexen Polynomen eine Rolle spielt und diese meist nicht vorkommen.
 %TODO Fußnoten
 
 \section{Weierstraß-Iteration}
@@ -345,7 +352,7 @@ Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während
 
 \section{Fazit}
 \subsection{Zusammenfassung}
-Für die Weierstraß-Iteration bildet man $n$ Gleichungen für alle $n$ Nullstellen. Mit jeder Iteration werden die Annährungen an die Nullstellen genauer. In der Implementierung wird über jede der Nullstellen iteriert und die zuvor Gleichung angewand. Sobald die Annährung die gewünschte Genauigkeit hat ist die Weierstraß-Iteration beendet. Um zu testen ob die Methode erfolgreich war können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit, an maximalen Iteration angegeben sein.
+Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für alle $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annährungen die gewünschte Genauigkeit haben ist die Weierstraß-Iteration beendet. Um zu testen ob die Methode erfolgreich war können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit, an maximalen Iteration angegeben sein.
 
 \subsection{Bezug zu der Problemstellung}
 Mit der Implementierung der Weierstraß-Iteration in Java ist die Problemfrage, wie man Nullstellen von Polynomen mithilfe des Computers approximieren kann, beandwortet. Dabei ist jedoch wichtig zu erwähnen, dass es viele Unterschiedliche Verfahren mit unterschiedlichen Konvergenzgeschwindigkeiten, Stärken und Schwächen gibt. Außerdem hat auch die Implementierung der einzelnen Methode einen großen Einfluss auf die Geschwindigkeit der Methode. In meiner Implementierung wurde mehr Fokus auf die Lesbarkeit des Codes, statt der Performance gelegt. Letzendlich können jedoch die Nullstellen der Meisten Polynomfunktionen mithilfe dieser Implementierung gefunden werden.
