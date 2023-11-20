@@ -22,87 +22,63 @@
 
 \usepackage{url}
 
-\setlength{\emergencystretch}{15pt}
-
-\lstset{
-    tabsize = 4, %% set tab space width
-    showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
-    numbers = left, %% display line numbers on the left
-    commentstyle = \color{green}, %% set comment color
-    keywordstyle = \color{blue}, %% set keyword color
-    stringstyle = \color{red}, %% set string color
-    rulecolor = \color{black}, %% set frame color to avoid being affected by text color
-    basicstyle = \small \ttfamily , %% set listing font and size
-    breaklines = true, %% enable line breaking
-    numberstyle = \tiny,
+\usepackage{listings}
+\lstset{language=Java,
+	basicstyle=\small,
+	keywordstyle=\color{blue!80!black!100},
+	identifierstyle=,
+	commentstyle=\color{green!50!black!100},
+	stringstyle=\ttfamily,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\small
 }
 
 \title{Numerisches finden von Nullstellen - Implementierung in Java}
 \author{Jakob Rzeppa}
 
 \begin{document}
-\begin{titlepage}
-	\centering
-    {\huge IGSFF LOGO TODO\par}
-	{Grünewaldstraße 12a - 38104 Braunschweig - T. 470 5850\par}
-	\vspace{1cm}
-	{\underline{Seminarfach:}\par}
-	\vspace{1cm}
-    {\large Facharbeit des Schülers \textit{Jakob Rzeppa} \par mit dem Thema: \par}
-    \vspace{1.5cm}
-	{\huge Numerisches finden von Nullstellen - Implementierung in Java\par}
-	\vspace{2cm}
-\end{titlepage}
 
 \tableofcontents
 
 \section{Einleitung}
-
-\subsection{Problemstellung}
-Mithilfe von Nullstellen kann man viel über den Verlauf einer Polynomfunktion herausfinden. In der Schule lernt man mit der PQ-Formel oder ABC-Formel das Finden von Nullstellen zweiten Grades. Manchmal werden auch kubische Funktionen und deren Nullstellen betrachtet, jedoch wird das algebraische Finden der Nullstellen von Polynomfunktionen des vierten oder höheren Grades oft unmöglich. Für diese muss auf einen anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annäherungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?
-
-\subsection{Wie bin ich auf das Thema gekommen?}
-Seit ich das erste Mal Nullstellenberechnung hatte, hat es mich interessiert, wie man die Nullstellen von Polynomen mit einem Grad größer als zwei findet. Als Herr Heydecke mir das Thema numerisches Lösen von linearen Gleichungssystemen vorgeschlagen hatte, habe ich mich an mein Interesse für das Finden der Nullstellen von Polynomfunktionen erinnert und entschieden, dieses Thema für die Facharbeit zu wählen.
-
-\subsection{Herangehensweise}
-Um die Problemfrage zu lösen, werde ich zuerst ein Verfahren aussuchen. Daraufhin erkläre und implementiere ich die gewählte Methode, um die Problemfrage zu beantworten.
-%TODO aus situation vor der facharbeit oder dannach?
+Mithilfe von Nullstellen kann viel über den Verlauf einer Polynomfunktion herausgefunden werden. Polynome ersten bis vierten Grades lassen sich mithilfe von Formeln wie der pq-Formel exakt berechnen. Für Polynome des Grades $n > 4$ gibt es keine allgemeine Formel zur bestimmung der Nullstellen. Für diese muss auf einen anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annäherungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?\\
+\\
+Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. Im letzten Teil der Facharbeit wird meine Implementierung beschrieben und erklärt.\\
+Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seid der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere. %TODO weiterschreiben
+\\
+Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenige Informationen zu diesem spezifischen Thema zu finden sind. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen. %TODO ist das gut?
 
 \section{Auswahl des Verfahren}
-\subsection{Einleitung}
+\subsection{Vorstellung der Verfahren}
 In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnung. Die bekanntesten Verfahren sind die Newton-Methode\footnote{
     Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
-} oder das Bisektionsverfahren bzw. der Zwischenwertsatz\footnote{
+} und das Bisektionsverfahren bzw. der Zwischenwertsatz\footnote{
     mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf}
-}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet. Deshalb kommen sie nicht in Frage.
-
-\subsection{Vorstellung der infragekommenden Verfahren}
+}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet. Da das Ziel ist alle Nullstellen eines Polynoms zu finden, kommen sie nicht in Frage.\\
 Wenn man alle Nullstellen finden möchte, muss man komplexere Verfahren in Betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode, wie die Weierstraß-Iteration (Durand-Kerner-Methode)\footnote{
-    vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt eingesehen am 29.10.2023)
+    vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt aufgerufen: 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }, das Aberth-Ehrlich-Verfahren\footnote{
-    Wikipedia: Aberth method, URL: \url{https://en.wikipedia.org/wiki/Aberth_method} (Zuletzt eingesehen am 18.11.2023)
+    Wikipedia: Aberth method, URL: \url{https://en.wikipedia.org/wiki/Aberth_method} (Zuletzt aufgerufen: 18.11.2023)
 } oder das Newton-Horner-Verfahren\footnote{
     Eine Kombination aus der Newton-Methode und dem Horner-Verfahren.
 } an.
 
-\subsection{Vergleich der Verfahren}
-Im Folgenden werden diese unter den Kriterien Geschwindigkeit und Implementierbarkeit beurteilt.\\
+\subsection{Vergleich der möglichen Verfahren}
+Wichtige Kriterien bei dem vergleich von numerischen Verfahren sind die Geschwindigkeit und Einfachheit der Implementierung.\\
 Die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren finden Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grunde kommen sie mit weniger Iterationen aus. Das muss nicht immer bedeuten, dass diese Verfahren schneller sind. Jedoch können Prozesse parallel ausgeführt werden, was zu großen Verbesserungen der Performance führen kann.\\
-Das Aberth-Ehrlich-Verfahren ist deutlich schneller als die Weierstraß-Iteration, jedoch auch komplexer und deshalb schwieriger zu implementieren. \\
-Das Newton-Horner-Verfahren ist schwierig zu implementieren, da es eine sehr hohe Genauigkeit benötigt, um Polynomdivision mit den genauen Nullstellen durchzuführen.
+Das Aberth-Ehrlich-Verfahren ist deutlich schneller als die Weierstraß-Iteration, benutzt jedoch eine komplexere Gleichung und ist deshalb schwieriger zu implementieren.\\
+Das Newton-Horner-Verfahren ist schwierig zu implementieren, da es eine sehr hohe bis exakte Genauigkeit benötigt, um nach dem Finden einer Nullstelle diese von der Funktion zu entfernen.
 
 \subsection{Fazit}
-Aufgrund der zuvor genannten Schwächen und Stärken der einzelnen Methoden wird für den Rest der Facharbeit die Weierstraß-Iteration genutzt. Dabei hat die Implementierbarkeit eine größere Rolle als die Geschwindigkeit gespielt, da die Geschwindigkeit nur bei sehr komplexen Polynomen eine Rolle spielt und diese meist nicht vorkommen.
-%TODO Fußnoten
+Aufgrund der zuvor genannten Schwächen und Stärken der einzelnen Methoden wähle ich die Weierstraß-Iteration. Dabei hat die Implementierbarkeit eine größere Rolle als die Geschwindigkeit gespielt, da die Geschwindigkeit nur bei sehr komplexen Polynomen wichtig ist und diese meist nicht vorkommen.
 
 \section{Weierstraß-Iteration}
-%TODO was im folgenden passiert
 \subsection{Funktionsweise}
-%TODO was im folgenden passiert
 \subsubsection{Bedingungen}
 Für die Weierstraß-Iteration muss ein normiertes univariates Polynom der Form $p(x) = x^n + a_{n-1} x^{n-1} + \dots + a_1 x + a_0$ gegeben sein. Der Grad des Polynoms $n$ muss größer als oder gleich zwei sein.\footnote{
-    vgl. Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt eingesehen am 29.10.2023)
+    vgl. Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt aufgerufen: 29.10.2023)
     \label{ftn:Wikipedia-Weierstraß-Methode}
 }
 
@@ -129,7 +105,7 @@ Auf dem Kreis werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in
 Um die Startpunkte zu bestimmen wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
 angewandt.\footnote{
-    vgl. Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt eingesehen am 30.10.2023) \label{ftn:OscarVilez,5:40}
+    vgl. Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt aufgerufen: 30.10.2023) \label{ftn:OscarVilez,5:40}
 }
 
 \subsubsection{Endkriterium}
@@ -194,7 +170,6 @@ $\Rightarrow$ Die Weierstraß-Iteration war für $p(x)$ erfolgreich.
 
 %--------------------------------------------------------------
 \subsection{Herleitung}
-In diesem Abschnitt wird auf die Herleitung der Methode und die Herleitung der Bestimmung der Startpunkte eingegangen.
 \subsubsection{Methode}
 Auf die Herleitung der Methode wird, der Einfachheit halber, nur mit reellen Zahlen eingegangen. Jedoch kann die Herleitung, mit wenigen Veränderungen, auch auf komplexe Zahlen übertragen werden.
 \paragraph{Visualisierung}
@@ -205,7 +180,6 @@ Für die Herleitung der Methode macht es Sinn, den Graphen einer einzelnen Gleic
 \begin{figure}[H]
     \centering
     \includegraphics[scale=.6]{./BeispielHerleitung.png}
-    \caption{Beispiel:}
 \end{figure}
 %-------------------------------------------------------------------------------------------------------------------
 Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht:
@@ -235,7 +209,7 @@ angucken. Da die Polynome im Zähler normiert und vom gleichen Grad sind, besitz
     g(x) = y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
 Da der Nenner und Zähler den gleichen Grad haben hat $g(x)$ eine waagrechte Asymptote\footnote{
-    vgl. studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt eingesehen am 04.11.2023) \label{ftn:studimup.de}
+    vgl. studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt aufgerufen: 04.11.2023) \label{ftn:studimup.de}
 }.\\\\
 %-------------------------------------------------------------------------------------------------------------------
 Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem ist $|g(x)|>|g(z_k)| \land (g(x) \text{ hat das gleiche Vorzeichen wie } z_k)$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor wahr.
@@ -246,13 +220,12 @@ Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslüc
 Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird, konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
 
 \subsubsection{Wählen der Startpunkte}
-Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome: 6.3. Erster Satz von Cauchy, URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt eingesehen am 30.10.2023)}  Um möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
+Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome (6.3. Erster Satz von Cauchy), URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt aufgerufen: 30.10.2023)}  Um möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
 Dabei gibt es keinen \glqq besten\grqq\space Standard für das Wählen des Radius. Jeder Radius ist für manche Funktionen näher und andere weiter von den Nullstellen entfernt. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
 Dieser Radius ist relativ ressourcensparend und einfach zu implementieren.
 
 %------------------------------------------------------------------------------------
 \subsection{Probleme und Einschränkungen}
-Im Folgenden wird auf die Nachteile der Weierstraß-Iteration eingegangen.
 \subsubsection{Normiertes Polynom}
 Für die Weierstraß-Iteration muss die gegebene Polynomfunktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Weierstraß-Iteration ein normiertes Polynom sein.
 Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
@@ -260,15 +233,17 @@ Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funk
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsubsection{Keine generelle Konvergenz}
-Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode bei Iterationen gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{d. h. die Weierstraß-Iteration wiederholt sich immer wieder in dem gleichen Abstand.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert.\footnote{
-    %TODO Wikipedia
-} Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist, kann es meist vernachlässigt werden. 
+Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode bei Iterationen gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{d. h. die Weierstraß-Iteration wiederholt sich immer wieder in dem gleichen Abstand.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert.\footref{ftn:Wikipedia-Weierstraß-Methode} Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist, kann es meist vernachlässigt werden. 
+
+
 
 \section{Implementierung}
-\subsection{Einleitung}
 Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei wurden die Klassen \glqq Complex\grqq, \glqq Poly\grqq\space und \glqq Weierstrass\grqq\space implementiert, um komplexe Zahlen, Polynomfunktionen und den Hauptteil der Weierstraß-Iteration darzustellen.
+%TODO ausführlicher
+%TODO warum Java?
+%Grunddatentypen und erweiterten Typen
 
-\subsection{Komplexe Zahlen}
+\subsection{Komplexe Zahlen (Complex)}
 In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Deshalb habe ich mich dazu entschieden, eine eigene Klasse \glqq Complex\grqq\space zu schreiben.
 
 \subsubsection*{Attribute}
@@ -286,7 +261,10 @@ Der Konstruktor initialisiert eine komplexe Zahl mit einem gegebenen Real- und I
 Die statischen Methoden führen die grundlegenden Rechenoperationen Addition, Subtraktion, Multiplikation, Division und Potenzierung mit komplexen Zahlen durch.
 
 %-----------------------------------------------------------------------------------------
-\subsection{Polynomfunktion}\subsubsection*{Attribute}
+\subsection{Polynomfunktion (Poly)}
+%TODO kurze beschreibung
+
+\subsubsection*{Attribute}
 In dem Array \glqq coefficients\grqq\space von Gleitkommazahlen (double) sind die Koeffizienten des Polynoms enthalten. Der Index repräsentiert den Exponenten des zugehörigen Terms.
 Der Grad des Polynoms wird als Integer in dem Attribut \glqq degree\grqq\space gespeichert. 
 
@@ -294,18 +272,20 @@ Der Grad des Polynoms wird als Integer in dem Attribut \glqq degree\grqq\space g
 Der Konstruktor \glqq Poly(double... coefficients)\grqq, erstellt ein Polynom mit den gegebenen Koeffizienten.
 
 \subsubsection*{Methoden}
-\textit{public void normalise()} ist eine Methode, die das Polynom für die Weierstraß-Iteration normiert. Hierbei wird jeder Koeffizient durch den führenden Koeffizienten $a_n$ des Polynoms geteilt. Die Nullstellen des Polynoms ändern sich nicht, aber die Darstellung des Polynoms ändert sich.\\
-\textit{public Complex solve(Complex val)}
-ist eine Methode, die den Funktionswert des Polynoms für einen gegebenen komplexen Wert \glqq val\grqq\space berechnet. Dabei wird das einfache Horner-Schema\footnote{
-    k-achilles.de: Das HORNER-Schema, URL: \url{https://www.k-achilles.de/algorithmen/HORNER-Schema.pdf} (Zuletzt eingesehen am 18.11.2023)
+\textit{public void normalise()} normiert das Polynom. Hierbei wird jeder Koeffizient durch den führenden Koeffizienten $a_n$ des Polynoms geteilt. Die Nullstellen des Polynoms ändern sich nicht, aber die Darstellung des Polynoms ändert sich.\\
+\textit{public Complex solve(Complex val)} berechnet den Funktionswert des Polynoms für einen gegebenen komplexen Wert \glqq val\grqq. Dabei wird das einfache Horner-Schema\footnote{
+    k-achilles.de: Das HORNER-Schema, URL: \url{https://www.k-achilles.de/algorithmen/HORNER-Schema.pdf} (Zuletzt aufgerufen: 18.11.2023)
 } verwendet, um die Auswertung effizient durchzuführen. \\
 \textit{@Override public String toString()} überschreibt die \glqq toString()\grqq -Methode, um eine lesbare Darstellung des Polynoms auszugeben. Die Methode berücksichtigt verschiedene Fälle, einschließlich der Anzeige von Termen mit positiven oder negativen Koeffizienten und der Auslassung von Termen mit Koeffizienten gleich null.
 
 %----------------------------------------------------------------------------------------------------------
-\subsection{Weierstraß-Iteration}
+\subsection{Weierstraß-Iteration (Weierstrass)}
+%TODO kurze beschreibzung
 
 \subsubsection*{calc(Poly p, Complex[] roots, int index)}
-Die \glqq calc-Methode\grqq\space berechnet den nächsten Wert für eine Nullstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
+Die \glqq calc-Methode\grqq\space berechnet den nächsten Wert für eine Nullstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel\footnote{
+    vgl. Abschnitt 3.1.2
+}. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
 Zunächst werden der Zähler (\glqq numerator\grqq) und der Nenner (\glqq denominator\grqq) des Weierstrass-Korrekturterms berechnet. Dann wird dieser Korrekturterm von der aktuellen Nullstelle subtrahiert, um die nächste Näherung zu erhalten.
 
 \subsubsection*{startingPoints(Poly p, int accuracyDecimalPlaces)}
@@ -319,33 +299,35 @@ Die Methode gibt Wahr zurück, wenn alle Nullstellen innerhalb der Genauigkeitsg
 \subsubsection*{weierstrass(Poly p)}
 Die \glqq Weierstrass\grqq-Methode ist die Hauptmethode der Weierstraß-Iteration. Sie nimmt ein Polynom entgegen und gibt ein Array von komplexen Zahlen mit Nährungen der Nullstellen des Polynoms zurück. Die Methode kann in sechs Schritte unterteilt werden.
 
-\paragraph{1. Polynom normieren:}
+\paragraph{a) Polynom normieren:}
 Zuerst wird das Polynom normiert, um die Weierstraß-Iteration möglich zu machen. Dafür wird die Methode \glqq normalise()\grqq\space der Polynomfunktion aufgerufen.
 
-\paragraph{2. Genauigkeit und maximale Iterationen festlegen:}
+\paragraph{b) Genauigkeit und maximale Iterationen festlegen:}
 Darauffolgend wird die Genauigkeit mit $10^{-4}$ und maximale Anzahl an Iterationen mit $1000$ festgelegt.
 
-\paragraph{3. Initialisierung der Nullstellen:}
+\paragraph{c) Initialisierung der Nullstellen:}
 Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Nullstellen in einem Array Initialisiert.
 
-\paragraph{4. Durchführen der Weierstraß-Iteration:}
+\paragraph{d) Durchführen der Weierstraß-Iteration:}
 Jetzt kann eine Schleife gestartet werden, die solange läuft, bis die Konvergenz erreicht ist oder die maximale Anzahl von Iterationen. In dieser wird die Funktion \glqq calc(Poly p, Complex[] roots, int index)\grqq\space für alle Nullstellen bei jeder Iteration ausgeführt.
 
-\paragraph{5. Probe:}
+\paragraph{e) Probe:}
 Nach Abschluss der Iteration wird jede gefundene Nullstelle in das Polynom eingesetzt und ausgegeben, um die Genauigkeit zu überprüfen.
 
-\paragraph{6. Rückgabe der Nährungen der Nullstellen:}
+\paragraph{f) Rückgabe der Nährungen der Nullstellen:}
 Zuletzt wird das endgültige Array der berechneten Wurzeln zurückgegeben.
 
 \subsection{Input/Output}
 Der Input erfolgt mithilfe der Bibliothek \glqq java.util.Scanner\grqq\space in der \glqq main\grqq-Methode. Dabei wird für jeden Term des Polynoms nach dem Koeffizienten gefragt. Es wird bei dem $0$-ten Term begonnen und in aufsteigender Reihenfolge weitergefragt. Wenn der gewünschte Grad erreicht ist, kann der Nutzer \glqq done\grqq\space eingeben und die Weierstraß-Iteration wird mit dem gegebenen Polynom ausgeführt.\\
 \\
 Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während die Weierstraß-Iteration ausgeführt wird, werden alle Nährungen an die Nullstellen für diese Iteration angegeben. Zuletzt wird die Probe aller Nullstellen ausgegeben. Bei dieser sollte, falls die Weierstraß-Iteration funktiontiert hat, \glqq 0.0\grqq\space für jede Nullstelle herauskommen.\footnote{
-    %TODO screenshot beispiel
+    vgl. Abschnitt 6.1
 }
 
 \section{Fazit}
+%TODO zusammen
 \subsection{Zusammenfassung}
+%TODO zu kurz
 Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annährungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an maximalen Iteration angegeben sein.
 
 \subsection{Bezug zu der Problemstellung}
@@ -355,5 +337,116 @@ Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglich
 %TODO
 - Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten\\
 - Der richtige Beweis ist einfach zu komplex für ein Unterthema in einer Facharbeit.
+
+
+\section{Anhang}
+\subsection{Input/Output Beispiel}
+\begin{lstlisting}[keywordstyle=\ttfamily]
+PS C:\Development\Facharbeit\src> java Weierstrass
+Please input a coefficient for the 0th Term or 'done':
+3
+Please input a coefficient for the 1th Term or 'done':
+-4
+Please input a coefficient for the 2th Term or 'done':
+2
+Please input a coefficient for the 3th Term or 'done':
+7
+Please input a coefficient for the 4th Term or 'done':
+-3
+Please input a coefficient for the 5th Term or 'done':
+done
+
+polynom: 1.0x^(4) - 2.3333333333333335x^(3) - 0.6666666666666666x^(2) + 1.3333333333333333x - 1.0
+
+iteration: 0
+i = 0: 1.6552841624 + 0.6856411497i
+i = 1: -0.6856411497 + 1.6552841624i
+i = 2: -1.6552841624 - 0.6856411497i
+i = 3: 0.6856411497 - 1.6552841624i
+
+iteration: 1
+i = 0: 1.8539472642 + 0.5118992343i
+i = 1: 0.1470889953 + 1.0987293667i
+i = 2: -0.8341324115 - 0.3650474203i
+i = 3: 1.1664294853 - 1.2455811807i
+
+iteration: 2
+i = 0: 2.1268684556 - 0.0084935444i
+i = 1: 0.0818868737 + 0.5809472615i
+i = 2: -0.845802451 - 0.1407098505i
+i = 3: 0.9703804549 - 0.4317438666i
+
+iteration: 3
+i = 0: 2.5309652599 - 0.0492014993i
+i = 1: 0.3267937002 + 0.3464210299i
+i = 2: -0.9060995604 + 0.0202659974i
+i = 3: 0.3816739337 - 0.317485528i
+
+iteration: 4
+i = 0: 2.4517265689 - 0.0019358547i
+i = 1: 0.436328963 + 0.5486123919i
+i = 2: -0.9656563518 - 0.002268555i
+i = 3: 0.4109341533 - 0.5444079821i
+
+iteration: 5
+i = 0: 2.4512903802 - 2.09016E-5i
+i = 1: 0.4208896496 + 0.5020943496i
+i = 2: -0.9576001405 - 2.65727E-5i
+i = 3: 0.418753444 - 0.5020468753i
+
+iteration: 6
+i = 0: 2.451294556 - 8.1E-9i
+i = 1: 0.4197084882 + 0.499965846i
+i = 2: -0.9573689688 + 7.97E-8i
+i = 3: 0.419699258 - 0.4999659176i
+
+iteration: 7
+i = 0: 2.4512945632
+i = 1: 0.4197037322 + 0.4999622586i
+i = 2: -0.9573686941
+i = 3: 0.4197037321 - 0.4999622586i
+
+iteration: 8
+i = 0: 2.4512945632
+i = 1: 0.4197037321 + 0.4999622586i
+i = 2: -0.9573686941
+i = 3: 0.4197037321 - 0.4999622586i
+
+---- 1.0x^(4) - 2.3333333333333335x^(3) - 0.6666666666666666x^(2) + 1.3333333333333333x - 1.0 ----
+Probe: f(2.4512945632) = 0.0
+Probe: f(0.4197037321 + 0.4999622586i) = 0.0
+Probe: f(-0.9573686941) = 0.0
+Probe: f(0.4197037321 - 0.4999622586i) = 0.0
+\end{lstlisting}
+
+
+
+\subsection{Programmcode}
+\subsubsection{Complex.java}
+\lstinputlisting[]{../src/Complex.java}
+\subsubsection{Poly.java}
+\lstinputlisting[]{../src/Poly.java}
+\subsubsection{Weierstrass.java}
+\lstinputlisting[]{../src/Weierstrass.java}
+
+
+\subsection{Literaturverzeichnis}
+Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)\\
+\\
+mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf} (Zuletzt aufgerufen: 15.11.2023)\\
+\\
+Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt aufgerufen: 29.10.2023)\\
+\\
+Wikipedia: Aberth method, URL: \url{https://en.wikipedia.org/wiki/Aberth_method} (Zuletzt aufgerufen: 18.11.2023)\\
+\\
+Wikipedia: Weierstraß-(Durand-Kerner)-Verfahren, URL: \url{https://de.wikipedia.org/wiki/Weierstraß-(Durand-Kerner)-Verfahren} (Zuletzt aufgerufen: 29.10.2023)\\
+\\
+Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt aufgerufen: 30.10.2023)\\
+\\
+studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt aufgerufen: 04.11.2023)\\
+\\
+Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome (6.3. Erster Satz von Cauchy), URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt aufgerufen: 30.10.2023)\\
+\\
+k-achilles.de: Das HORNER-Schema, URL: \url{https://www.k-achilles.de/algorithmen/HORNER-Schema.pdf} (Zuletzt aufgerufen: 18.11.2023)
 
 \end{document}
