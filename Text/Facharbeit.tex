@@ -45,9 +45,9 @@
 Mithilfe von Nullstellen kann viel über den Verlauf einer Polynomfunktion herausgefunden werden. Polynome ersten bis vierten Grades lassen sich mithilfe von Formeln wie der pq-Formel exakt berechnen. Für Polynome des Grades $n > 4$ gibt es keine allgemeine Formel zur bestimmung der Nullstellen. Für diese muss auf einen anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annäherungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?\\
 \\
 Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. Im letzten Teil der Facharbeit wird meine Implementierung beschrieben und erklärt.\\
-Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seid der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere. %TODO weiterschreiben
+Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seid der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere und ich mich mehr mit diesem Thema beschäftigen möchte.
 \\
-Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenig zu diesem spezifischen Thema zu finden ist. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen. %TODO ist das gut?
+Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenige Informationen zu diesem spezifischen Thema zu finden sind. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen.
 
 \section{Auswahl des Verfahren}
 \subsection{Vorstellung der Verfahren}
@@ -240,7 +240,7 @@ Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für
 \section{Implementierung}
 Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei wurden die Klassen \glqq Complex\grqq, \glqq Poly\grqq\space und \glqq Weierstrass\grqq\space implementiert, um komplexe Zahlen, Polynomfunktionen und den Hauptteil der Weierstraß-Iteration darzustellen.
 %TODO ausführlicher
-%TODO warum Java?
+%Grunddatentypen und erweiterten Typen
 
 \subsection{Komplexe Zahlen (Complex)}
 In Java sind komplexe Zahlen in keinem Grunddatentyp oder erweiterten Datentyp enthalten. Deshalb habe ich mich dazu entschieden, eine eigene Klasse \glqq Complex\grqq\space zu schreiben.
@@ -261,7 +261,7 @@ Die statischen Methoden führen die grundlegenden Rechenoperationen Addition, Su
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion (Poly)}
-Mit der Klasse \glqq Poly\grqq\space werden Polynomfunktionen dargestellt. Die Methoden dieser Klasse %TODO kein Plan was da abgeht
+Um Polynomfunktionen darzustellen wird die Klasse \glqq Poly\grqq\space beutzt. In dieser werden die Koeffizienten und der Grad des Polynoms gespeichert und für die Weierstraß-Iteration wichtige Methoden implementiert.
 
 \subsubsection*{Attribute}
 In dem Array \glqq coefficients\grqq\space von Gleitkommazahlen (double) sind die Koeffizienten des Polynoms enthalten. Der Index repräsentiert den Exponenten des zugehörigen Terms.
@@ -279,7 +279,7 @@ Der Konstruktor \glqq Poly(double... coefficients)\grqq, erstellt ein Polynom mi
 
 %----------------------------------------------------------------------------------------------------------
 \subsection{Weierstraß-Iteration (Weierstrass)}
-%TODO kurze beschreibzung
+In der Klasse \glqq Weierstrass\grqq\space befindet sich der Hauptteil der Weierstraß-Iteration und \glqq Entry-Point\grqq\space des Programms. Alle Funktionen in der Klasse sind statisch. Die Funktion \glqq weierstrass(Poly p)\grqq\space enthält das Framework der Weierstraß-Iteration, während spezifische Aufgaben in die anderen Funktionen ausgelagert sind. %TODO angucken
 
 \subsubsection*{calc(Poly p, Complex[] roots, int index)}
 Die \glqq calc-Methode\grqq\space berechnet den nächsten Wert für eine Nullstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel\footnote{
@@ -324,19 +324,13 @@ Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während
 }
 
 \section{Fazit}
-%TODO zusammen
-\subsection{Zusammenfassung}
-%TODO zu kurz
-Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annährungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an maximalen Iteration angegeben sein.
-
-\subsection{Bezug zu der Problemstellung}
+Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annährungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an maximalen Iteration angegeben sein. Bei der Implementierung müssen komplexe Zahlen und Polynomfunktionen dargestellt werden. %Weiter
+\\
 Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglichkeit Nullstellen von Polynomen mithilfe des Computers zu approximieren entwickelt. Es gibt allerdings auch andere Verfahren, die andere Stärken und Schwächen haben. In meiner Implementierung wurde mehr Fokus auf die Lesbarkeit des Codes, statt der Performance gelegt. Letzendlich können jedoch die Nullstellen der meisten Polynomfunktionen mithilfe meiner Implementierung gefunden werden.
-
-\subsection{Reflektion}
+\\
 %TODO
 - Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten\\
 - Der richtige Beweis ist einfach zu komplex für ein Unterthema in einer Facharbeit.
-
 
 \section{Anhang}
 \subsection{Input/Output Beispiel}
