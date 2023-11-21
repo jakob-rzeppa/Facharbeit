@@ -42,12 +42,18 @@
 \tableofcontents
 
 \section{Einleitung}
-Mithilfe von Nullstellen kann viel über den Verlauf einer Polynomfunktion herausgefunden werden. Polynome ersten bis vierten Grades lassen sich mithilfe von Formeln wie der pq-Formel exakt berechnen. Für Polynome des Grades $n > 4$ gibt es keine allgemeine Formel zur bestimmung der Nullstellen. Für diese muss auf einen anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. In der Numerik versucht man durch Algorithmen und Annäherungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden. Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?\\
+Mithilfe von Nullstellen kann viel über den Verlauf einer Polynomfunktion herausgefunden werden. Polynome ersten bis vierten Grades lassen sich mithilfe von Formeln wie der pq-Formel exakt berechnen. 
+Für Polynome des Grades $n > 4$ gibt es keine allgemeine Formel zur Bestimmung der Nullstellen. Für diese muss auf einen anderen Teilbereich der Mathematik zurückgegriffen werden: die Numerik. 
+In der Numerik versucht man durch Algorithmen und Annäherungen Nullstellen möglichst genau zu bestimmen. Händisch kann dies sehr lange dauern, jedoch kann mit Computern dieser Prozess extrem beschleunigt werden.
+Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren?\\
 \\
-Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. Im letzten Teil der Facharbeit wird meine Implementierung beschrieben und erklärt.\\
-Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seid der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere und ich mich mehr mit diesem Thema beschäftigen möchte.
+Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. 
+Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. 
+Im letzten Teil der Facharbeit wird meine Implementierung beschrieben und erklärt.\\
+Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seit der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere und ich mich mehr mit diesem Thema beschäftigen möchte.
 \\
-Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenige Informationen zu diesem spezifischen Thema zu finden sind. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen.
+Für die Implementierung des Verfahrens wird die Programmiersprache Java gewählt, da ich mit Java die meiste Erfahrung habe.\\
+Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlichen Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenige Informationen zu diesem spezifischen Thema zu finden sind. Dabei werde ich die Richtigkeit dieser Informationen möglichst überprüfen. %TODO Geht das?
 
 \section{Auswahl des Verfahren}
 \subsection{Vorstellung der Verfahren}
@@ -55,8 +61,8 @@ In der Numerik gibt es viele verschiedene Verfahren für die Nullstellenberechnu
     Prof. Dr. Bernd Engelmann: Numerische Mathematik, 2.4 Das Newton-Verfahren und seine Abkömmlinge (S.24)
 } und das Bisektionsverfahren bzw. der Zwischenwertsatz\footnote{
     mathe-online.at: Zwischenwertsatz und Bisektionsverfahren, URL: \url{https://www.mathe-online.at/nml/materialien/innsbruck/bisektion/Bisektion.pdf}
-}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet. Da das Ziel ist alle Nullstellen eines Polynoms zu finden, kommen sie nicht in Frage.\\
-Wenn man alle Nullstellen finden möchte, muss man komplexere Verfahren in Betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode, wie die Weierstraß-Iteration (Durand-Kerner-Methode)\footnote{
+}. Beide Methoden sind jedoch nur für das Finden einer Nullstelle geeignet. Da das Ziel ist, alle Nullstellen eines Polynoms zu finden, kommen sie nicht infrage.\\
+Wenn man alle Nullstellen finden möchte, muss man komplexere Verfahren in Betracht ziehen. Dabei bieten sich Weiterentwicklungen der Newton-Methode wie die Weierstraß-Iteration (Durand-Kerner-Methode)\footnote{
     vgl. Wikipedia: Durand-Kerner method, URL: \url{https://en.wikipedia.org/wiki/Durand-Kerner_method} (Zuletzt aufgerufen: 29.10.2023)
     \label{ftn:Wikipedia-Durand-Kerner-Method}
 }, das Aberth-Ehrlich-Verfahren\footnote{
@@ -66,7 +72,7 @@ Wenn man alle Nullstellen finden möchte, muss man komplexere Verfahren in Betra
 } an.
 
 \subsection{Vergleich der möglichen Verfahren}
-Wichtige Kriterien bei dem vergleich von numerischen Verfahren sind die Geschwindigkeit und Einfachheit der Implementierung.\\
+Wichtige Kriterien bei dem Vergleich von numerischen Verfahren sind die Geschwindigkeit und Einfachheit der Implementierung.\\
 Die Weierstraß-Iteration und das Aberth-Ehrlich-Verfahren finden Nullstellen simultan, während das Newton-Horner-Verfahren die Nullstellen nacheinander findet. Aus diesem Grunde kommen sie mit weniger Iterationen aus. Das muss nicht immer bedeuten, dass diese Verfahren schneller sind. Jedoch können Prozesse parallel ausgeführt werden, was zu großen Verbesserungen der Performance führen kann.\\
 Das Aberth-Ehrlich-Verfahren ist deutlich schneller als die Weierstraß-Iteration, benutzt jedoch eine komplexere Gleichung und ist deshalb schwieriger zu implementieren.\\
 Das Newton-Horner-Verfahren ist schwierig zu implementieren, da es eine sehr hohe bis exakte Genauigkeit benötigt, um nach dem Finden einer Nullstelle diese von der Funktion zu entfernen.
@@ -100,17 +106,17 @@ Zunächst müssen alle Startpunkte $z_n^{(0)},z_{n-1}^{(0)},\dots,z_1^{(0)} \in 
 \end{equation*}
 wird, wenn $z_{k}^{(i)}$ gleich einem anderen $z^{(i)}$ ist, durch Null dividiert.
 Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen.\\
-Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv Wurzeln zu berechnen. Deshalb kann auch ein ungenauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
+Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv, Wurzeln zu berechnen. Deshalb kann auch ein ungenauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
 Auf dem Kreis werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Dafür wird das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$ benötigt. Zuletzt wird noch eine Verschiebung $c$ durchgeführt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.
-Um die Startpunkte zu bestimmen wird 
+Um die Startpunkte zu bestimmen, wird 
 \[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
 angewandt.\footnote{
     vgl. Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt aufgerufen: 30.10.2023) \label{ftn:OscarVilez,5:40}
 }
 
 \subsubsection{Endkriterium}
-Um zu bestimmen, ob eine Nullstelle gefunden wurde, muss eine gewünschte Genauigkeit $g$ (z.B. $0,0001$) gewählt werden. Diese wird dann mit dem Betrag der Differenz der letzten beiden Schritte der Weierstraß-Iteration verglichen. Wenn $|z_k^{(i-1)}-z_k^{(i)}| < g$ gilt, dann ist die Nullstelle $z_k$ mit der Genauigkeit $g$ gefunden. Dies wird für alle Nullstellen wiederholt. Falls alle Nullstellen genau genug sind ist die Weierstraß-Iteration abgeschlossen.\\
-Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert. Darauf wird in dem Abschnitt 3.4.2 noch eingegangen. Daher muss eine weitere Endbedingung gestellt sein: Eine maximale Anzahl an Iterationen. Dabei muss man wissen, mit welchen Polynomen man zutun hat. Sind diese sehr komplex, kann es vorkommen, dass die Weierstraß-Iteration weit über Tausend Iterationen benötigt, um eine vernünftige Genauigkeit zu erreichen. In solchen Fällen muss man das Limit sehr hoch setzen. In meiner Implementierung wurde ein Limit von 1000 gesetzt, um für die meisten Polynome zuverlässig zu funktionieren.
+Um zu bestimmen, ob eine Nullstelle gefunden wurde, muss eine gewünschte Genauigkeit $g$ (z. B. $0,0001$) gewählt werden. Diese wird dann mit dem Betrag der Differenz der letzten beiden Schritte der Weierstraß-Iteration verglichen. Wenn $|z_k^{(i-1)}-z_k^{(i)}| < g$ gilt, dann ist die Nullstelle $z_k$ mit der Genauigkeit $g$ gefunden. Dies wird für alle Nullstellen wiederholt. Falls alle Nullstellen genau genug sind, ist die Weierstraß-Iteration abgeschlossen.\\
+Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert. Darauf wird in dem Abschnitt 3.4.2 noch eingegangen. Daher muss eine weitere Endbedingung gestellt sein: Eine maximale Anzahl an Iterationen. Dabei muss man wissen, mit welche Polynome vorliegen. Sind diese sehr komplex, kann es vorkommen, dass die Weierstraß-Iteration weit über tausend Iterationen benötigt, um eine vernünftige Genauigkeit zu erreichen. In solchen Fällen muss man das Limit sehr hoch setzen. In meiner Implementierung wurde ein Limit von 1000 gesetzt, um für die meisten Polynome zuverlässig zu funktionieren.
 
 %-----------------------------------------------------------------------------------------------------------
 \subsection{Beispiel}
@@ -157,7 +163,7 @@ $z_4^{(0)} = r \cos(3\theta+c) + r \sin(3\theta+c)i = 1,2118 - 2,9256i$
 \end{tabular}
 \end{center}
 \paragraph{Endkriterium}
-Zwischen Iteration Sieben und Acht ist die Differenz zwischen den beiden Werten für jede Nullstelle kleiner als die Genauigkeit $0,0001$. Damit ist das Endkriterium erreicht und die Weierstraß-Iteration abgeschlossen. 
+Zwischen Iteration sieben und acht ist die Differenz zwischen den beiden Werten für jede Nullstelle kleiner als die Genauigkeit $0,0001$. Damit ist das Endkriterium erreicht und die Weierstraß-Iteration abgeschlossen. 
 Die Nullstellen der Polynomfunktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei ca. $0,8421; -4,6149; -0,1136 - 1,0081i; -0,1136 + 1,0081$. 
 \paragraph{Probe}
 Zur Überprüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
@@ -165,13 +171,13 @@ Zur Überprüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
     f(0,8421) \approx 0; p(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; p(-0,1136 + 1,0081i) \approx 0
 \end{displaymath}
 Daraus kann geschlossen werden, dass alle vier Werte Annäherungen der Nullstellen der Polynomfunktion $p(x)$ sind. \\
-Weiterhin, kann aus dem Fundamentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $p(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefunden Nullstellen ist. \\
+Weiterhin kann aus dem Fundamentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $p(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefundenen Nullstellen ist. \\
 $\Rightarrow$ Die Weierstraß-Iteration war für $p(x)$ erfolgreich.
 
 %--------------------------------------------------------------
 \subsection{Herleitung}
 \subsubsection{Methode}
-Auf die Herleitung der Methode wird, der Einfachheit halber, nur mit reellen Zahlen eingegangen. Jedoch kann die Herleitung, mit wenigen Veränderungen, auch auf komplexe Zahlen übertragen werden.
+Auf die Herleitung der Methode wird der Einfachheit halber nur mit reellen Zahlen eingegangen. Jedoch kann die Herleitung mit wenigen Veränderungen auch auf komplexe Zahlen übertragen werden.
 \paragraph{Visualisierung}
 Für die Herleitung der Methode macht es Sinn, den Graphen einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
 \begin{equation}
@@ -182,20 +188,21 @@ Für die Herleitung der Methode macht es Sinn, den Graphen einer einzelnen Gleic
     \includegraphics[scale=.6]{./BeispielHerleitung.png}
 \end{figure}
 %-------------------------------------------------------------------------------------------------------------------
-Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese, mit ein wenig umstellen, aus einem Polynom geteilt durch ein anderes Polynom besteht:
+Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese mit ein wenig umstellen aus einem Polynom geteilt durch ein anderes Polynom besteht:
 \begin{align*}
     g(x) = y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
     &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
 \end{align*}
-Wenn die restlichen Nullstellen gefunden wurden handelt es sich um eine waagrechte lineare Funktion. Das liegt daran, dass alle linearen Faktoren des Polynoms, außer dem der gesuchten Nullstelle, gefunden wurden und nun von dem Polynom dividiert werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt der konstante Wert $z_k^{(i)}$ über. Daraus folgt, dass die Funktion waagrecht zu der $x$-Achse ist.
+Wenn die restlichen Nullstellen gefunden wurden, handelt es sich um eine waagrechte lineare Funktion. Das liegt daran, dass alle linearen Faktoren des Polynoms außer dem der gesuchten Nullstelle gefunden wurden und nun von dem Polynom dividiert werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt der konstante Wert $z_k^{(i)}$ über. Daraus folgt, dass die Funktion waagrecht zu der $x$-Achse ist.
 %-------------------------------------------------------------------------------------------------------------------
 \paragraph{Bedeutung für die Weierstraß-Iteration}
-Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annäherungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annäheren der Funktion g(x) an die Waagrechte $y=z_k$, mit immer Genaueren restlichen Nullstellen.
+Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annäherungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähern der Funktion $g(x)$ an die Waagrechte $y=z_k$, mit immer genaueren restlichen Nullstellen.
 
 \paragraph{Annäherung an die Waagrechte $y=z_k$}
-Wie in der Abbildung zuvor zu sehen nährt sich die Funktion mit genaueren Nullstellen an die Funktion $y=z_k$ an. Das hat zur Folge, dass die einzelnen Schritte der Weierstraß-Iteration schneller genau werden. Dabei dient die Annährung an $y=z_k$, da die Gleichung, statt der Nullstelle, genauer wird, mehr als Beschleunigung der Methode, während das Annähren an die Nullstelle mithilfe der Gleichung die eigendliche Annährung bringt.
+Wie in der Abbildung zuvor zu sehen, nährt sich die Funktion mit genaueren Nullstellen an die Funktion $y=z_k$ an. Das hat zur Folge, dass die einzelnen Schritte der Weierstraß-Iteration schneller genau werden.
+Dabei dient die Annäherung an $y=z_k$, da die Gleichung statt der Nullstelle genauer wird, mehr als Beschleunigung der Methode, während das Annähern an die Nullstelle mithilfe der Gleichung die eigentliche Annäherung bringt.
 
 \paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
 Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
@@ -208,19 +215,21 @@ angucken. Da die Polynome im Zähler normiert und vom gleichen Grad sind, besitz
 \begin{equation*}
     g(x) = y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
 \end{equation*}
-Da der Nenner und Zähler den gleichen Grad haben hat $g(x)$ eine waagrechte Asymptote\footnote{
+Da der Nenner und Zähler den gleichen Grad haben, hat $g(x)$ eine waagrechte Asymptote.\footnote{
     vgl. studimup.de: Asymptoten berechnen und erkennen, URL: \url{https://www.studimup.de/abitur/analysis/asymptoten/#waagerecht} (Zuletzt aufgerufen: 04.11.2023) \label{ftn:studimup.de}
-}.\\\\
+}\\\\
 %-------------------------------------------------------------------------------------------------------------------
-Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem ist $|g(x)|>|g(z_k)| \land (g(x) \text{ hat das gleiche Vorzeichen wie } z_k)$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor wahr.
+Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem gilt $|g(x)|>|g(z_k)|$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor und $g(x)$ hat das gleiche Vorzeichen wie $z_k$ mit ausreichend Abstand zu den Definitionslücken.
 Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrechnen, indem man die Faktoren vor der höchsten Potenz im Zähler durch den Faktor der höchsten Potenz im Nenner teilt\footref{ftn:studimup.de}. Da das Nennerpolynom normiert ist, ist die waagrechte Asymptote gleich des Faktors vor der höchsten Potenz im Zähler. Der Betrag dieser ist größer als $|z_k|$ und hat das gleiche Vorzeichen wie $z_k$.
 Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert zurückgibt, welcher näher an $z_k$ als $z_k^{(i)}$ ist.
 
 \paragraph{Schluss}
-Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird, konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
+Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
 
 \subsubsection{Wählen der Startpunkte}
-Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome (6.3. Erster Satz von Cauchy), URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt aufgerufen: 30.10.2023)}  Um möglichst genaue Startpunkte zu bekommen kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
+Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{
+    vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome (6.3. Erster Satz von Cauchy), URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt aufgerufen: 30.10.2023)
+} Um möglichst genaue Startpunkte zu bekommen, kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
 Dabei gibt es keinen \glqq besten\grqq\space Standard für das Wählen des Radius. Jeder Radius ist für manche Funktionen näher und andere weiter von den Nullstellen entfernt. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
 Dieser Radius ist relativ ressourcensparend und einfach zu implementieren.
 
@@ -233,7 +242,7 @@ Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funk
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
 \subsubsection{Keine generelle Konvergenz}
-Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode bei Iterationen gegen Unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{d. h. die Weierstraß-Iteration wiederholt sich immer wieder in dem gleichen Abstand.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert.\footref{ftn:Wikipedia-Weierstraß-Methode} Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist, kann es meist vernachlässigt werden. 
+Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für bestimmte Startpunkte mancher Polynomfunktionen die Methode bei Iterationen gegen unendlich keinen festen Wert anstrebt. Dabei verfängt sich die Weierstraß-Iteration in periodischen Zyklen\footnote{d. h. die Weierstraß-Iteration wiederholt sich immer wieder in dem gleichen Abstand.}. Es ist nicht generell bestimmt, bei welchen Startpunkten und Polynomen die Weierstraß-Iteration nicht konvergiert. Beispielsweise hat das Polynom $x^3+x+177$ eine offene Menge an Startpunkten, bei denen die Weierstraß-Iteration nicht konvergiert.\footref{ftn:Wikipedia-Weierstraß-Methode} Da dies allerdings, besonders wenn man vernünftige Startpunkte wählt, sehr selten ist, kann es meist vernachlässigt werden. 
 
 
 
@@ -260,7 +269,7 @@ Die statischen Methoden führen die grundlegenden Rechenoperationen Addition, Su
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion (Poly)}
-Um Polynomfunktionen darzustellen wird die Klasse \glqq Poly\grqq\space beutzt. In dieser werden die Koeffizienten und der Grad des Polynoms gespeichert und für die Weierstraß-Iteration wichtige Methoden implementiert.
+Um Polynomfunktionen darzustellen, wird die Klasse \glqq Poly\grqq\space benutzt. In dieser werden die Koeffizienten und der Grad des Polynoms gespeichert und für die Weierstraß-Iteration wichtige Methoden implementiert.
 
 \subsubsection*{Attribute}
 In dem Array \glqq coefficients\grqq\space von Gleitkommazahlen (double) sind die Koeffizienten des Polynoms enthalten. Der Index repräsentiert den Exponenten des zugehörigen Terms.
@@ -274,16 +283,16 @@ Der Konstruktor \glqq Poly(double... coefficients)\grqq, erstellt ein Polynom mi
 \textit{public Complex solve(Complex val)} berechnet den Funktionswert des Polynoms für einen gegebenen komplexen Wert \glqq val\grqq. Dabei wird das einfache Horner-Schema\footnote{
     k-achilles.de: Das HORNER-Schema, URL: \url{https://www.k-achilles.de/algorithmen/HORNER-Schema.pdf} (Zuletzt aufgerufen: 18.11.2023)
 } verwendet, um die Auswertung effizient durchzuführen. \\
-\textit{@Override public String toString()} überschreibt die \glqq toString()\grqq -Methode, um eine lesbare Darstellung des Polynoms auszugeben. Die Methode berücksichtigt verschiedene Fälle, einschließlich der Anzeige von Termen mit positiven oder negativen Koeffizienten und der Auslassung von Termen mit Koeffizienten gleich null.
+\textit{@Override public String toString()} überschreibt die \glqq toString()\grqq -Methode, um eine lesbare Darstellung des Polynoms auszugeben. Die Methode berücksichtigt verschiedene Fälle einschließlich der Anzeige von Termen mit positiven oder negativen Koeffizienten und der Auslassung von Termen mit Koeffizienten gleich null.
 
 %----------------------------------------------------------------------------------------------------------
 \subsection{Weierstraß-Iteration (Weierstrass)}
-In der Klasse \glqq Weierstrass\grqq\space befindet sich der Hauptteil der Weierstraß-Iteration und \glqq Entry-Point\grqq\space des Programms. Alle Funktionen in der Klasse sind statisch. Die Funktion \glqq weierstrass(Poly p)\grqq\space enthält das Framework der Weierstraß-Iteration, während spezifische Aufgaben in die anderen Funktionen ausgelagert sind. %TODO angucken
+In der Klasse \glqq Weierstrass\grqq\space befindet sich der Hauptteil der Weierstraß-Iteration und \glqq Entry-Point\grqq\space des Programms. Alle Funktionen in der Klasse sind statisch. Die Funktion \glqq weierstrass(Poly p)\grqq\space enthält das Framework der Weierstraß-Iteration, während spezifische Aufgaben in den anderen Funktionen ausgelagert sind.
 
 \subsubsection*{calc(Poly p, Complex[] roots, int index)}
 Die \glqq calc-Methode\grqq\space berechnet den nächsten Wert für eine Nullstelle des Polynoms unter Verwendung der Weierstraß-Iterationsformel\footnote{
     vgl. Abschnitt 3.1.2
-}. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
+}. Dabei werden drei Parameter entgegengenommen: das Polynom \glqq p\grqq, für das die Nullstellen berechnet werden, ein Array von komplexen Zahlen \glqq roots\grqq, das die aktuellen Näherungen der Nullstellen enthält, und der Index der Nullstelle, die in dieser Iteration aktualisiert wird.\\
 Zunächst werden der Zähler (\glqq numerator\grqq) und der Nenner (\glqq denominator\grqq) des Weierstrass-Korrekturterms berechnet. Dann wird dieser Korrekturterm von der aktuellen Nullstelle subtrahiert, um die nächste Näherung zu erhalten.
 
 \subsubsection*{startingPoints(Poly p, int accuracyDecimalPlaces)}
@@ -292,10 +301,10 @@ Die Methode verwendet die zuvor beschriebenen Berechnungen, um den Radius und de
 
 \subsubsection*{isAccurateEnough(Complex[] newRoots, Complex[] oldRoots, double accuracy)}
 Die \glqq isAccurateEnough\grqq-Methode überprüft, ob die Nullstellen ausreichend genau konvergiert sind. Sie vergleicht den Unterschied zwischen den neuen Nullstellen und den alten Nullstellen mit einer vorgegebenen Genauigkeitsgrenze (\glqq accuracy\grqq).\\
-Die Methode gibt Wahr zurück, wenn alle Nullstellen innerhalb der Genauigkeitsgrenze konvergiert sind, andernfalls gibt sie Falsch zurück.
+Die Methode gibt wahr zurück, wenn alle Nullstellen innerhalb der Genauigkeitsgrenze konvergiert sind, andernfalls gibt sie falsch zurück.
 
 \subsubsection*{weierstrass(Poly p)}
-Die \glqq Weierstrass\grqq-Methode ist die Hauptmethode der Weierstraß-Iteration. Sie nimmt ein Polynom entgegen und gibt ein Array von komplexen Zahlen mit Nährungen der Nullstellen des Polynoms zurück. Die Methode kann in sechs Schritte unterteilt werden.
+Die \glqq Weierstrass\grqq-Methode ist die Hauptmethode der Weierstraß-Iteration. Sie nimmt ein Polynom entgegen und gibt ein Array von komplexen Zahlen mit Näherungen der Nullstellen des Polynoms zurück. Die Methode kann in sechs Schritte unterteilt werden.
 
 \paragraph{a) Polynom normieren:}
 Zuerst wird das Polynom normiert, um die Weierstraß-Iteration möglich zu machen. Dafür wird die Methode \glqq normalise()\grqq\space der Polynomfunktion aufgerufen.
@@ -304,7 +313,7 @@ Zuerst wird das Polynom normiert, um die Weierstraß-Iteration möglich zu mache
 Darauffolgend wird die Genauigkeit mit $10^{-4}$ und maximale Anzahl an Iterationen mit $1000$ festgelegt.
 
 \paragraph{c) Initialisierung der Nullstellen:}
-Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Nullstellen in einem Array Initialisiert.
+Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Nullstellen in einem Array initialisiert.
 
 \paragraph{d) Durchführen der Weierstraß-Iteration:}
 Jetzt kann eine Schleife gestartet werden, die solange läuft, bis die Konvergenz erreicht ist oder die maximale Anzahl von Iterationen. In dieser wird die Funktion \glqq calc(Poly p, Complex[] roots, int index)\grqq\space für alle Nullstellen bei jeder Iteration ausgeführt.
@@ -318,18 +327,17 @@ Zuletzt wird das endgültige Array der berechneten Wurzeln zurückgegeben.
 \subsection{Input/Output}
 Der Input erfolgt mithilfe der Bibliothek \glqq java.util.Scanner\grqq\space in der \glqq main\grqq-Methode. Dabei wird für jeden Term des Polynoms nach dem Koeffizienten gefragt. Es wird bei dem $0$-ten Term begonnen und in aufsteigender Reihenfolge weitergefragt. Wenn der gewünschte Grad erreicht ist, kann der Nutzer \glqq done\grqq\space eingeben und die Weierstraß-Iteration wird mit dem gegebenen Polynom ausgeführt.\\
 \\
-Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während die Weierstraß-Iteration ausgeführt wird, werden alle Nährungen an die Nullstellen für diese Iteration angegeben. Zuletzt wird die Probe aller Nullstellen ausgegeben. Bei dieser sollte, falls die Weierstraß-Iteration funktiontiert hat, \glqq 0.0\grqq\space für jede Nullstelle herauskommen.\footnote{
+Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während die Weierstraß-Iteration ausgeführt wird, werden alle Näherungen an die Nullstellen für diese Iteration angegeben. Zuletzt wird die Probe aller Nullstellen ausgegeben. Bei dieser sollte, falls die Weierstraß-Iteration funktioniert hat, \glqq 0.0\grqq\space für jede Nullstelle herauskommen.\footnote{
     vgl. Abschnitt 6.1
 }
 
 \section{Fazit}
-Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annährungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Nährungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an maximalen Iteration angegeben sein. Bei der Implementierung müssen komplexe Zahlen und Polynomfunktionen dargestellt werden. %Weiter
+Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden, kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annäherungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Näherungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an Iteration angegeben sein. Bei der Implementierung müssen komplexe Zahlen und Polynomfunktionen dargestellt werden. %TODO Weiter
 \\
-Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglichkeit Nullstellen von Polynomen mithilfe des Computers zu approximieren entwickelt. Es gibt allerdings auch andere Verfahren, die andere Stärken und Schwächen haben. In meiner Implementierung wurde mehr Fokus auf die Lesbarkeit des Codes, statt der Performance gelegt. Letzendlich können jedoch die Nullstellen der meisten Polynomfunktionen mithilfe meiner Implementierung gefunden werden.
+Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglichkeit, Nullstellen von Polynomen mithilfe des Computers zu approximieren, entwickelt. Es gibt allerdings auch andere Verfahren, die andere Stärken und Schwächen haben. In meiner Implementierung wurde mehr Fokus auf die Lesbarkeit des Codes statt der Performance gelegt. Letztendlich können jedoch die Nullstellen der meisten Polynomfunktionen mithilfe meiner Implementierung gefunden werden.\\ %TODO bei weiterem Interesse
 \\
-%TODO
-- Manche dinge nicht vollkommen hergeleitet, weil diese einzelnen Dinge eine eigene Facharbeit bräuchten\\
-- Der richtige Beweis ist einfach zu komplex für ein Unterthema in einer Facharbeit.
+Die Erstellung dieser Facharbeit hat mir einen tiefen Einblick in die mathematische Arbeitsweise gegeben. Ich konnte meine Problemfrage beantworten und kenne mich nun besser mit der Numerik aus.\\
+Es gab jedoch während des Schreibens der Facharbeit auch Hindernisse. Einerseits kommt der erlaubte Umfang dem Thema nicht gerecht. Aus diesem Grund mussten manche Herleitungen und Ausführungen ausgelassen werden. Andererseits war es ein Fehler, die Programmiersprache in dem Titel direkt zu erwähnen. Im Nachhinein währe es ein Vorteil gewesen, Python statt Java zu benutzen, da in Python komplexe Zahlen direkt eingebaut sind. Desweiteren waren nur wenige Informationen zu der Weierstraß-Iteration zu finden. Die meisten Bücher über die Numerik behandeln andere Verfahren. Aus diesem Grund musste ich mich zu einem Teil auf eher unseriösere Quellen verlassen. Diese habe ich durch Vorwissen und den Vergleich mit anderen Websiten überprüft und Websiten, bei denen Fehler aufgefallen sind nicht benutzt. Insgesamt konnten alle Probleme die im Weg standen gelöst werden und haben keinen zu großen Einfluss auf das Ergebnis. %TODO geht das?
 
 \section{Anhang}
 \subsection{Input/Output Beispiel}
