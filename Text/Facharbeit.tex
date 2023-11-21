@@ -47,7 +47,7 @@ Mithilfe von Nullstellen kann viel über den Verlauf einer Polynomfunktion herau
 Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. Im letzten Teil der Facharbeit wird meine Implementierung beschrieben und erklärt.\\
 Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seid der Einführung von Polynomfunktionen für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere. %TODO weiterschreiben
 \\
-Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenige Informationen zu diesem spezifischen Thema zu finden sind. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen. %TODO ist das gut?
+Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlich Universitäten einen Teil der Informationen aus dem Internet ziehen, da nur wenig zu diesem spezifischen Thema zu finden ist. Dabei werde ich die Richtigkeit dieser Informationen möglichst genau überprüfen. %TODO ist das gut?
 
 \section{Auswahl des Verfahren}
 \subsection{Vorstellung der Verfahren}
@@ -241,10 +241,9 @@ Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für
 Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei wurden die Klassen \glqq Complex\grqq, \glqq Poly\grqq\space und \glqq Weierstrass\grqq\space implementiert, um komplexe Zahlen, Polynomfunktionen und den Hauptteil der Weierstraß-Iteration darzustellen.
 %TODO ausführlicher
 %TODO warum Java?
-%Grunddatentypen und erweiterten Typen
 
 \subsection{Komplexe Zahlen (Complex)}
-In Java gibt es keinen eingebauten Weg mit komplexen Zahlen zu rechnen. Deshalb habe ich mich dazu entschieden, eine eigene Klasse \glqq Complex\grqq\space zu schreiben.
+In Java sind komplexe Zahlen in keinem Grunddatentyp oder erweiterten Datentyp enthalten. Deshalb habe ich mich dazu entschieden, eine eigene Klasse \glqq Complex\grqq\space zu schreiben.
 
 \subsubsection*{Attribute}
 Die Attribute \glqq real\grqq\space und \glqq imaginary\grqq\space repräsentieren den reellen und imaginären Teil der komplexen Zahl.
@@ -262,7 +261,7 @@ Die statischen Methoden führen die grundlegenden Rechenoperationen Addition, Su
 
 %-----------------------------------------------------------------------------------------
 \subsection{Polynomfunktion (Poly)}
-%TODO kurze beschreibung
+Mit der Klasse \glqq Poly\grqq\space werden Polynomfunktionen dargestellt. Die Methoden dieser Klasse %TODO kein Plan was da abgeht
 
 \subsubsection*{Attribute}
 In dem Array \glqq coefficients\grqq\space von Gleitkommazahlen (double) sind die Koeffizienten des Polynoms enthalten. Der Index repräsentiert den Exponenten des zugehörigen Terms.
