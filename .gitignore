@@ -2,7 +2,7 @@
 *.class
 
 # TeX
-*.pdf
+Facharbeit.pdf
 *.xml
 *.gz
 *.fls
