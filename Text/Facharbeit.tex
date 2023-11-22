@@ -109,15 +109,15 @@ wird, wenn $z_{k}^{(i)}$ gleich einem anderen $z^{(i)}$ ist, durch Null dividier
 Die Startpunkte können allerdings auch die Anzahl der Iterationen beeinflussen. Deswegen macht es Sinn, möglichst nahe an den wahrscheinlichen Nullstellen anzufangen.\\
 Eine der gängigsten Methoden ist, die Startpunkte in einem Kreis auf der komplexen Ebene zu verteilen. Dabei ist der Radius $r = \sqrt[n]{|a_0|}$ relativ genau. Jedoch ist es sehr ressourcenintensiv, Wurzeln zu berechnen. Deshalb kann auch ein ungenauerer Radius genommen werden: $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$.
 Auf dem Kreis werden alle Startpunkte gleichmäßig verteilt, indem der Kreis in $n$ Abschnitte geteilt wird, an dessen Anfängen die Startpunkte liegen. Dafür wird das Inkrement $\theta = \frac{2\pi}{n} \text{ bzw. } \frac{360^\circ}{n}$ benötigt. Zuletzt wird noch eine Verschiebung $c$ durchgeführt, um keine reellen Startpunkte zu erhalten. Diese kann beliebig gewählt werden, solange keine reellen Zahlen nach der Verschiebung unter den Startpunkten sind. Bei der folgenden Implementierung wurde $c = \frac{\pi}{2n}$ gewählt.
-Um die Startpunkte zu bestimmen, wird 
-\[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1;2;\dots;n\]
+Um die Startpunkte $z_n^{(0)},z_{n-1}^{(0)},\dots,z_1^{(0)}$ zu bestimmen, wird 
+\[z_{k}^{(0)} = r\cos((k-1)\theta+c)+r\sin((k-1)\theta+c)i \text{ für } k=1,2,\dots,n\]
 angewandt.\footnote{
     vgl. Oscar Veliz: Durand-Kerner Method: Minute 5:40 (Veröffentlicht am 29.05.2019), URL: \url{https://www.youtube.com/watch?v=5JcpOj2KtWc} (Zuletzt aufgerufen: 30.10.2023) \label{ftn:OscarVilez,5:40}
 }
 
 \subsubsection{Endkriterium}
 Um zu bestimmen, ob eine Nullstelle gefunden wurde, muss eine gewünschte Genauigkeit $g$ (z. B. $0,0001$) gewählt werden. Diese wird dann mit dem Betrag der Differenz der letzten beiden Schritte der Weierstraß-Iteration verglichen. Wenn $|z_k^{(i-1)}-z_k^{(i)}| < g$ gilt, dann ist die Nullstelle $z_k$ mit der Genauigkeit $g$ gefunden. Dies wird für alle Nullstellen wiederholt. Falls alle Nullstellen genau genug sind, ist die Weierstraß-Iteration abgeschlossen.\\
-Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert. Darauf wird in dem Abschnitt 3.4.2 noch eingegangen. Daher muss eine weitere Endbedingung gestellt sein: Eine maximale Anzahl an Iterationen. Dabei muss man wissen, mit welche Polynome vorliegen. Sind diese sehr komplex, kann es vorkommen, dass die Weierstraß-Iteration weit über tausend Iterationen benötigt, um eine vernünftige Genauigkeit zu erreichen. In solchen Fällen muss man das Limit sehr hoch setzen. In meiner Implementierung wurde ein Limit von 1000 gesetzt, um für die meisten Polynome zuverlässig zu funktionieren.
+Es kann jedoch auch vorkommen, dass die Weierstraß-Iteration nicht konvergiert. Darauf wird im Abschnitt 3.4.2 weiter eingegangen. Daher muss eine weitere Endbedingung gestellt sein: eine maximale Anzahl an Iterationen. Dabei muss man wissen, mit welche Polynome vorliegen. Sind diese sehr komplex, kann es vorkommen, dass die Weierstraß-Iteration weit über tausend Iterationen benötigt, um eine vernünftige Genauigkeit zu erreichen. In solchen Fällen muss man das Limit sehr hoch setzen. In meiner Implementierung wurde ein Limit von 1000 gesetzt, um für die meisten Polynome zuverlässig zu funktionieren.
 
 %-----------------------------------------------------------------------------------------------------------
 \subsection{Beispiel}
@@ -169,11 +169,11 @@ Die Nullstellen der Polynomfunktion $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ sind bei
 \paragraph{Probe}
 Zur Überprüfung kann jeder der Werte in $p(x)$ eingesetzt werden.
 \begin{displaymath}
-    f(0,8421) \approx 0; p(-4,6149) \approx 0; f(-0,1136 - 1,0081i) \approx 0; p(-0,1136 + 1,0081i) \approx 0
+    p(0,8421) \approx 0, p(-4,6149) \approx 0, p(-0,1136 - 1,0081i) \approx 0, p(-0,1136 + 1,0081i) \approx 0
 \end{displaymath}
 Daraus kann geschlossen werden, dass alle vier Werte Annäherungen der Nullstellen der Polynomfunktion $p(x)$ sind. \\
 Weiterhin kann aus dem Fundamentalsatz der Algebra hergeleitet werden, dass alle Nullstellen von $p(x)$ gefunden wurden, da $n$ gleich der Anzahl der gefundenen Nullstellen ist. \\
-$\Rightarrow$ Die Weierstraß-Iteration war für $p(x)$ erfolgreich.
+$\Rightarrow$ Die Weierstraß-Iteration war für $p(x) = x^4 + 4x^3 - 2x^2 + 3x - 4$ erfolgreich.
 
 %--------------------------------------------------------------
 \subsection{Herleitung}
@@ -225,20 +225,20 @@ Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrech
 Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert zurückgibt, welcher näher an $z_k$ als $z_k^{(i)}$ ist.
 
 \paragraph{Schluss}
-Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da an für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
+Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
 
 \subsubsection{Wählen der Startpunkte}
 Alle Nullstellen einer Polynomfunktion befinden sich auf der abgeschlossen Kreisscheibe  $B(0,M) := \{x \in \mathbb{C} \bigr| |x| \le M\}$ mit $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.\footnote{
     vgl. \glqq\textit{Sei $P(z) = a_nz^n+a_{n-1}z^{n-1}+\dots+a_1z+a_0$ ein komplexes Polynom vom Grad $n \ge 1$. Dann liegen alle Nullstellen von $P(z)$ in der abgeschlossenen Kreisscheibe $B(0,M) := \{z \in \mathbb{C} \bigr| |z| \le M\}$, wobei $M := 1 + \max\{\frac{|a_j|}{|a_n|}\bigr|\text{\space}j=0,\dots,n-1\}$.}\grqq\space Humboldt-Universität zu Berlin: Helga Baum: Nullstellen komplexer Polynome (6.3. Erster Satz von Cauchy), URL: \url{https://didaktik.mathematik.hu-berlin.de/user/fehlingerl/Helga.pdf} (Zuletzt aufgerufen: 30.10.2023)
 } Um möglichst genaue Startpunkte zu bekommen, kann man diese auf einer Kreislinie innerhalb der Kreisscheibe anordnen. \\
-Dabei gibt es keinen \glqq besten\grqq\space Standard für das Wählen des Radius. Jeder Radius ist für manche Funktionen näher und andere weiter von den Nullstellen entfernt. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ entschieden.\footref{ftn:OscarVilez,5:40}
+Dabei gibt es keinen \glqq besten\grqq\space Standard für das Wählen des Radius. Jeder Radius ist für manche Funktionen näher und andere weiter von den Nullstellen entfernt. Je nach den Anforderungen kann man einen eigenen Radius für die Kreislinie nehmen. In meiner Implementierung habe ich mich deshalb für $r = |\frac{na_0}{2a_1}| + |\frac{a_{n-1}}{2n}|$ \footref{ftn:OscarVilez,5:40} entschieden.
 Dieser Radius ist relativ ressourcensparend und einfach zu implementieren.
 
 %------------------------------------------------------------------------------------
 \subsection{Probleme und Einschränkungen}
 \subsubsection{Normiertes Polynom}
 Für die Weierstraß-Iteration muss die gegebene Polynomfunktion $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ dargestellt werden können. Da $\prod_{i=1}^n (x-z_i)$ ausmultipliziert, in jedem Fall ein normiertes Polynom ergibt, muss $p(x)$ für die Weierstraß-Iteration ein normiertes Polynom sein.
-Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann. \\
+Ist dies nicht der Fall, wird es unmöglich, $p(x)$ in der Form $\prod_{i=1}^n (x-z_i)$ darzustellen. Daraus folgt, dass man die Methode ohne Umwege nicht ausführen kann.\\
 Allerdings gibt es eine einfache Lösung für dieses Problem. Wenn man eine Funktion gleich Null setzt, kann man beide Seiten mit einer beliebigen Zahl multiplizieren. Dabei verändert sich das Ergebnis nicht, da $0m = 0$ \space $\forall m \in \mathbb{C}$ ist. Daraus folgt, dass sich die Nullstellen eines Polynoms, wenn dieses mit einer beliebigen Zahl multipliziert wird, nicht verändern. \\
 Somit kann man das Polynom, dessen Nullstellen man finden möchte, durch $a_n$ teilen und bekommt ein normiertes Polynom mit den gleichen Nullstellen. Mit diesem kann man dann die Weierstraß-Iteration durchführen.
 
@@ -310,10 +310,10 @@ Die \glqq Weierstrass\grqq-Methode ist die Hauptmethode der Weierstraß-Iteratio
 Zuerst wird das Polynom normiert, um die Weierstraß-Iteration möglich zu machen. Dafür wird die Methode \glqq normalise()\grqq\space der Polynomfunktion aufgerufen.
 
 \paragraph{b) Genauigkeit und maximale Iterationen festlegen:}
-Darauffolgend wird die Genauigkeit mit $10^{-4}$ und maximale Anzahl an Iterationen mit $1000$ festgelegt.
+Darauffolgend wird die Genauigkeit mit $10^{-10}$ und maximale Anzahl an Iterationen mit $1000$ festgelegt.
 
 \paragraph{c) Initialisierung der Nullstellen:}
-Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Nullstellen in einem Array initialisiert.
+Als nächstes werden mithilfe der zuvor behandelten Funktion \glqq startingPoints(Poly p)\grqq\space die Annährungen der Nullstellen in einem Array initialisiert.
 
 \paragraph{d) Durchführen der Weierstraß-Iteration:}
 Jetzt kann eine Schleife gestartet werden, die solange läuft, bis die Konvergenz erreicht ist oder die maximale Anzahl von Iterationen. In dieser wird die Funktion \glqq calc(Poly p, Complex[] roots, int index)\grqq\space für alle Nullstellen bei jeder Iteration ausgeführt.
