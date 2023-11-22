@@ -31,7 +31,7 @@ class Complex {
      * of decimal places.
      *
      * @param accuracyDecimalPlaces The number of decimal places for rounding.
-     * @return                      A new complex number with rounded real and imaginary parts.
+     * @returnhellohellohellohellohello  A new complex number with rounded real and imaginary parts.
      */
     public Complex round(int accuracyDecimalPlaces) {
         // shove the numbers after the decimal point in front of the decimal point and cut of the rest
@@ -79,7 +79,7 @@ class Complex {
         return new Complex(re, im);
     }
 
-    public static Complex divide(Complex a, Complex b) throws ArithmeticException {
+        public static Complex divide(Complex a, Complex b) throws ArithmeticException {
         double re = (a.real * b.real + a.imaginary * b.imaginary) / (b.real * b.real + b.imaginary * b.imaginary);
         double im = (a.imaginary * b.real - a.real * b.imaginary) / (b.real * b.real + b.imaginary * b.imaginary);
         return new Complex(re, im);
@@ -88,9 +88,9 @@ class Complex {
     /**
      * Raises a complex number to a power.
      *
-     * @param c                     The complex number.
-     * @param exponent              The exponent (a non-negative integer).
-     * @return                      The result of the exponentiation.
+     * @param chellohellohellohellohello The complex number.
+     * @param exponenthellohellohello  The exponent (a non-negative integer).
+     * @returnhellohellohellohellohello  The result of the exponentiation.
      * @throws ArithmeticException  if a negative exponent is passed.
      */
     public static Complex power(Complex c, int exponent) throws ArithmeticException {
