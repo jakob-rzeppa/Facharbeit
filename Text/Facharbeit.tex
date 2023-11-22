@@ -49,10 +49,10 @@ Doch wie kann man Nullstellen von Polynomen mithilfe des Computers approximieren
 \\
 Ziel dieser Facharbeit ist es, eine Möglichkeit der Implementierung eines numerischen Verfahrens zu entwickeln und dieses darzustellen. Dafür wird zuerst ein Verfahren ausgesucht und ausführlich beschrieben. 
 Dabei werden weiterführend die Herleitung, Probleme und Einschränkungen behandelt und das Verfahren wird anhand eines Beispiels verdeutlicht. 
-Im letzten Teil der Facharbeit wird meine Implementierung eines Lösungsansatztes beschrieben und erklärt.\\
-Zu dem Thema der Facharbeit bin ich gekommen, da ich mich seit der Einführung von Polynomfunktionen im Matheunterricht für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere und ich mich mehr mit diesem Thema beschäftigen möchte.
+Im letzten Teil der Facharbeit wird meine Implementierung eines Lösungsansatzes beschrieben und erklärt.\\
+Dieses Thema habe ich gewählt, da ich mich seit der Einführung von Polynomfunktionen im Matheunterricht für das Bestimmen der Nullstellen von Polynomfunktionen höheren Grades interessiere.
 \\
-Für die Implementierung des Verfahrens wird die Programmiersprache Java gewählt, Java sehr gute Möglichkeiten für die objektorientierte Programmierweise bietet und die Syntax verständlich ist.\\%TODO ?
+Für die Implementierung des Verfahrens wird die Programmiersprache Java gewählt. Java bietet sehr gute Möglichkeiten für die objektorientierte Programmierweise und die Syntax ist leicht verständlich.\\
 Um ein Verfahren auszuwählen, dieses zu erklären und zu implementieren, werde ich neben Fachliteratur und Informationen von unterschiedlichen Universitäten Informationen aus dem Internet nutzen.
 
 \section{Auswahl des Verfahren}
@@ -247,8 +247,7 @@ Die Weierstraß-Iteration ist nicht generell konvergent. Das bedeutet, dass für
 
 
 \section{Implementierung}
-Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei wurden die Klassen \glqq Complex\grqq, \glqq Poly\grqq\space und \glqq Weierstrass\grqq\space implementiert, um komplexe Zahlen, Polynomfunktionen und den Hauptteil der Weierstraß-Iteration darzustellen.
-%TODO ausführlicher
+Im Folgenden wird auf die Implementierung der Weierstraß-Iteration in Java eingegangen. Dabei werden die Klassen \glqq Complex\grqq, \glqq Poly\grqq\space und \glqq Weierstrass\grqq\space implementiert, um komplexe Zahlen, Polynomfunktionen und den Hauptteil der Weierstraß-Iteration darzustellen.
 
 \subsection{Komplexe Zahlen (Complex)}
 In Java sind komplexe Zahlen in keinem Grunddatentyp oder erweiterten Datentyp enthalten. Deshalb habe ich mich dazu entschieden, eine eigene Klasse \glqq Complex\grqq\space zu schreiben.
@@ -332,12 +331,13 @@ Darauffolgend wird zuerst die Polynomfunktion zur Kontrolle ausgegeben. Während
 }
 
 \section{Fazit}
-Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden, kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annäherungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Näherungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an Iteration angegeben sein. Bei der Implementierung müssen komplexe Zahlen und Polynomfunktionen dargestellt werden. Mit diesen kann die Weierstraß-Iteration implementiert werden.\\
+Um die Nullstellen einer Polynomfunktion $n$-ten Grades mithilfe des Computers zu finden, kann die Weierstraß-Iteration genutzt werden. Dabei werden $n$ Gleichungen für $n$ Nullstellen gebildet. Diese nehmen die vorherigen Approximationen der Nullstellen und geben meist eine genauere Nullstelle zurück. Sobald die Annäherungen die gewünschte Genauigkeit haben, ist die Weierstraß-Iteration beendet. Um zu testen, ob die Methode erfolgreich war, können alle Näherungen in das Polynom eingesetzt werden. In manchen Fällen konvergiert die Weierstraß-Iteration nicht. Aus diesem Grund muss ein Limit an Iteration angegeben sein.\\
 \\
-Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglichkeit, Nullstellen von Polynomen mithilfe des Computers zu approximieren, entwickelt. Es gibt allerdings auch andere Verfahren, die andere Stärken und Schwächen haben. In meiner Implementierung habe ich den Fokus auf die Lesbarkeit des Codes statt auf die Performance gelegt. Trotz der Einschränkungen bei der Performance können die Nullstellen der meisten Polynome mithilfe meiner Implementierung in relativ wenig Iterationen gefunden werden. Falls dies nicht der Fall ist kann immernoch auf andere Verfahren wie das Aberth-Ehrlich-Verfahren zurückgegriffen werden und/oder die Implementierung auf die Performance optimiert werden.\\
+Mit der Implementierung der Weierstraß-Iteration in Java habe ich eine Möglichkeit, Nullstellen von Polynomen mithilfe des Computers zu approximieren, entwickelt. Es gibt allerdings auch andere Verfahren, die andere Stärken und Schwächen haben. In meiner Implementierung habe ich den Fokus auf die Lesbarkeit des Codes statt auf die Optimierung der Performance gelegt. Trotz diesen Einschränkungen können die Nullstellen der meisten Polynome mithilfe meiner Implementierung in relativ wenig Iterationen gefunden werden.\\
+Auf Basis meiner Ergebnisse währe es nun interessant, dieses Verfahren anderen gegenüberzustellen und zu vergleichen. Des Weiteren kann die Weierstraß-Iteration und meine Implementierung noch bezüglich der Geschwindigkeit optimiert werden.\\
 \\
-Im Rahmen meiner Facharbeit habe ich einen tiefen Einblick in die wissenschaftliche mathematische Arbeitsweise erlangt. Durch die Bearbeitung meiner Problemfrage kenne ich mich nun besser mit der Numerik aus.
-Im Nachhinein währe es ein Vorteil gewesen, Python statt Java zu benutzen, da in Python komplexe Zahlen direkt eingebaut sind. Das hätte Zeit gespart, hat jedoch keinen Einfluss auf die Qualität des Ergebnises.
+Im Rahmen meiner Facharbeit habe ich einen tiefen Einblick in die wissenschaftliche mathematische Arbeitsweise erlangt. Durch die Bearbeitung der gewählten Problemstellung kenne ich mich nun besser mit der Numerik aus.
+Im Nachhinein währe es ein Vorteil gewesen, Python statt Java zu benutzen, da in Python komplexe Zahlen direkt eingebaut sind. Das hätte Zeit gespart, hat jedoch keinen Einfluss auf die Qualität des Ergebnis.
 Des Weiteren habe ich nur wenige Informationen zu der Weierstraß-Iteration finden können. Die meisten Bücher über die Numerik behandeln andere Verfahren. Aus diesem Grund musste ich zu einem Teil auf eher unseriösere Quellen zurückgreifen. Diese habe ich durch Vorwissen und den Vergleich mit anderen Quellen überprüft und Websiten, bei denen Fehler aufgefallen sind nicht benutzt.
 Während dem Schreiben der Facharbeit ist mir klar geworden, wie komplex dieses Thema wirklich ist. Aus diesem Grund musste ich manche Herleitungen und Erklärungen kürzen. An diesen Stellen bietet es sich an sich weiter mit dem Thema zu beschäftigen.
 
