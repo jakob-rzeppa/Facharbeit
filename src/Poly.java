@@ -1,6 +1,6 @@
 /**
  * The "Poly" class represents a polynomial with real coefficients and provides methods
- * for normalization, solving for complex values, and generating a string representation.
+ * for normalization, solving for complex values and generating a string representation.
  */
 class Poly {
 	/**

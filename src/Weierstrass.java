@@ -6,9 +6,6 @@ import java.util.Scanner;
  * Weierstrass
  *
  * This class implements the Weierstrass-Iteration for finding roots of a polynomial.
- * The Weierstrass-Iteration is an iterative numerical algorithm that refines initial
- * guesses for the roots of a polynomial by repeatedly applying a correction term to
- * each guess until convergence is reached.
  */
 public class Weierstrass {
     /**
