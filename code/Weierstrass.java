@@ -92,12 +92,13 @@ public class Weierstrass {
      */
     public static Complex[] weierstrass(Poly p) {
 		// for the Weierstrass-Iteration a_n has to be equal to one -> devide every a by a_n (the polynomial won't be the same, but the roots stay the same)
+        Poly notNormalizedP = new Poly(0,1,0,-1d/4d,-1d/120d,1d/120d);
         p.normalise();
 
         // The accuracy of the Weierstrass-Iteration
         double accuracy = Math.pow(10, -10);
         int accuracyDecimalPlaces = 10;
-        double maxIterations = 1000;
+        double maxIterations = 100;
 
         System.out.println("polynom: " + p.toString());
         System.out.println();
@@ -132,7 +133,7 @@ public class Weierstrass {
         }
 
         // Probe
-        System.out.println("---- " + p + " ----");
+        System.out.println("---- " + notNormalizedP.toString() + " ----");
         for (Complex r : roots) {
             System.out.println("Probe: f(" + r.round(accuracyDecimalPlaces) + ") = " + p.solve(r).round(accuracyDecimalPlaces));
         }
@@ -141,7 +142,7 @@ public class Weierstrass {
     }
 
     public static void main(String[] args) {
-        List<Double> coefficientsList = new ArrayList<Double>();
+        /*List<Double> coefficientsList = new ArrayList<Double>();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -168,8 +169,9 @@ public class Weierstrass {
         double[] coefficients = new double[coefficientsList.size()];
         for (int j = 0; j < coefficientsList.size(); j++) {
             coefficients[j] = coefficientsList.get(j);
-        }
-        Poly polynom = new Poly(coefficients);
+        }*/
+
+        Poly polynom = new Poly(0,1,0,-1d/4d,-1d/120d,1d/120d);
         weierstrass(polynom);
     }
 }
