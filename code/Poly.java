@@ -23,6 +23,13 @@ class Poly {
 	}
 
 	/**
+	 * Returns a clone of the coefficients of the polynom
+	 */
+	public double[] getCoefficientsClone() {
+		return coefficients.clone();
+	}
+
+	/**
 	 * Normalizes the polynomial by dividing each coefficient by the leading coefficient.
 	 * The roots of the polynomial won't change.
 	 */
