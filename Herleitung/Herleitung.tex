@@ -2,6 +2,9 @@
 
 \usepackage{german}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
 
 \usepackage{geometry}
 \geometry{
@@ -43,57 +46,28 @@ bilden. Daraus können wir die drei Korrekturterme der ersten Iteration bilden.
   z_2^{(1)} = \frac{p(z_2^{(0)})}{(z_2^{(0)}-z_1^{(0)})(z_2^{(0)}-z_3^{(0)})}\\
   z_3^{(1)} = \frac{p(z_3^{(0)})}{(z_3^{(0)}-z_1^{(0)})(z_3^{(0)}-z_2^{(0)})}\\
 \end{align*}
-Zunächst werden wir aus diesen Weierstraß-Korrekturen Funktionen bilden, welche den Korrekturwert abhängig von $z_j^{(0)}$ darstellen. Deshalb wird im Folgenden $z_j^{(0)}$ durch $x$ ersetzt, um die Weierstraß-Korrekturen abhängig von $z_j^{(0)}$ darzustellen.
+Zunächst werden wir aus diesen Weierstraß-Korrekturen Funktionen bilden, welche den Korrekturwert abhängig von $z_{1,2,3}^{(0)}$ darstellen. Daraufhin werden wir die Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$ visualisieren.
 \begin{align*}
-  k_1^{(0)}(x) = \frac{p(x)}{(x-z_2^{(0)})(x-z_3^{(0)})}\\
-  k_2^{(0)}(x) = \frac{p(x)}{(x-z_1^{(0)})(x-z_3^{(0)})}\\
-  k_3^{(0)}(x) = \frac{p(x)}{(x-z_1^{(0)})(x-z_2^{(0)})}\\
+  k_1^{(0)}(z_1^{(0)}) = \frac{p(z_1^{(0)})}{(z_1^{(0)}-z_2^{(0)})(z_1^{(0)}-z_3^{(0)})}\\
+  k_2^{(0)}(z_2^{(0)}) = \frac{p(z_2^{(0)})}{(z_2^{(0)}-z_1^{(0)})(z_2^{(0)}-z_3^{(0)})}\\
+  k_3^{(0)}(z_3^{(0)}) = \frac{p(z_3^{(0)})}{(z_3^{(0)}-z_1^{(0)})(z_3^{(0)}-z_2^{(0)})}\\
 \end{align*}
-Diese Weierstraß-Korrekturen in Abhängigkeit von $z_j^{(0)}$ können jetzt visualisiert werden.
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./Weierstrass_Korrekturen_Far.png}
+    \caption{Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{./Weierstrass_Korrekturen_Close.png}
+    \caption{Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$}
+  \end{subfigure}
+\end{figure}
+Dabei sieht man, dass die Nullstellen der Funktionen $k_{1,2,3}^{(0)}(z_{1,2,3}^{(0)})$ die Nullstellen der Weierstraß-Korrekturen sind. Das lässt sich dadurch erklären, dass der Zähler des Bruches der Weierstraß-Korrektur die Funktion darstellt und auch die gleichen Nullstellen hat. Das bedeutet für die Weierstraß-Iteration, dass der Korrekturterm bei bei den Nullstellen null ist und somit die Iteration bei der Nullstelle bleibt.\\\\
+Das ist jedoch nicht der Fall, wenn eine der Nullstellen von $p(x)$ unter $z_j^{(i)}$ mit $j=1,2,3,...,n, j \neq k$ liegt, da in diesem Fall sich auf der Nullstelle eine Definitionslücke befindet.
 
-
-
-\paragraph{Bedingungen}
-Auf die Herleitung der Methode wird der Einfachheit halber nur mit reellen Zahlen eingegangen. Jedoch kann die Herleitung mit wenigen Veränderungen auch auf komplexe Zahlen übertragen werden.
-\paragraph{Visualisierung}
-Für die Herleitung der Methode macht es Sinn, den Graphen einer einzelnen Gleichung mit immer genaueren restlichen Nullstellen zu visualisieren. Dabei ist $z_k^{(i)} = x$ und $z_k^{(i+1)} = y$:
-\begin{equation}
-    g(x) = y = x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
-\end{equation}
-%-------------------------------------------------------------------------------------------------------------------
-Dabei sieht man, dass es sich, wenn die restlichen Nullstellen nicht genau sind, um eine gebrochen rationale Funktion handelt. Das kann auch an der Gleichung gesehen werden, da diese mit ein wenig umstellen aus einem Polynom geteilt durch ein anderes Polynom besteht:
-\begin{align*}
-    g(x) = y &= x - \frac{p(x)}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
-    &= \frac{x}{1} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
-    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} - \frac{\prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
-    &= \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})} \\
-\end{align*}
-Wenn die restlichen Nullstellen gefunden wurden, handelt es sich um eine waagrechte lineare Funktion. Das liegt daran, dass alle linearen Faktoren des Polynoms außer dem der gesuchten Nullstelle gefunden wurden und nun von dem Polynom dividiert werden. Dabei bleibt $x-(x+z_k^{(i)})$ über. Die beiden $x$ fallen weg und es bleibt der konstante Wert $z_k^{(i)}$ über. Daraus folgt, dass die Funktion waagrecht zu der $x$-Achse ist.
-%-------------------------------------------------------------------------------------------------------------------
-\paragraph{Bedeutung für die Weierstraß-Iteration}
-Das Annähern an eine Nullstelle mit jeder Iteration kann man sich mit zwei miteinander verknüpften Annäherungen vorstellen. Einerseits das Annähern an die Nullstelle mit der jeweiligen Gleichung für die Nullstelle und andererseits das Annähern der Funktion $g(x)$ an die Waagrechte $y=z_k$, mit immer genaueren restlichen Nullstellen.
-
-\paragraph{Annäherung an die Waagrechte $y=z_k$}
-Wie in der Abbildung zuvor zu sehen, nährt sich die Funktion mit genaueren Nullstellen an die Funktion $y=z_k$ an. Das hat zur Folge, dass die einzelnen Schritte der Weierstraß-Iteration schneller genau werden.
-Dabei dient die Annäherung an $y=z_k$, da die Gleichung statt der Nullstelle genauer wird, mehr als Beschleunigung der Methode, während das Annähern an die Nullstelle mithilfe der Gleichung die eigentliche Annäherung bringt.
-
-\paragraph{Annähern an die Nullstelle mithilfe der Gleichung}
-Für jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, gilt, dass $g(z_k^{(i)})$ näher an $z_k$ als $z_k^{(i)}$ ist.\\\\
-%-------------------------------------------------------------------------------------------------------------------
-Für die Herleitung diese Aussage muss zuerst gezeigt werden, dass $g(x)$ eine waagrechte Asymptote besitzt. Dafür kann man sich die zuvor hergeleitete Gleichung
-\begin{equation*}
-    g(x) = y = \frac{x \cdot \prod_{j=1;j\neq k}^{n} (x-z_j^{(i)}) - \prod_{j=1}^{n} (x-z_j^{(i)})}{\prod_{j=1;j\neq k}^{n} (x-z_j^{(i)})}
-\end{equation*}
-angucken. Da die Polynome im Zähler normiert und vom gleichen Grad sind, besitzen beide den Term $a_nx^n$ mit $a_n = 1$. Werden diese Polynome nun miteinander subtrahiert, fällt dieser $n$-te-Term weg, da er bei beiden Polynomen gleich ist. Somit ist der Grad des Differenzpolynoms $n-1$. \\
-\begin{equation*}
-    g(x) = y = \frac{\text{Polynom vom Grad }n-1}{\text{Polynom vom Grad }n-1}
-\end{equation*}
-Da der Nenner und Zähler den gleichen Grad haben, hat $g(x)$ eine waagrechte Asymptote.
-Wegen dieser waagrechten Asymptote ist $|g(x)|<|x|$ für jedes $x \in \mathbb{R}$ mit ausreichendem Abstand zu den Definitionslücken wahr. Außerdem gilt $|g(x)|>|g(z_k)|$ für jedes $x \in \mathbb{R}$ mit den gleichen Bedingungen wie zuvor und $g(x)$ hat das gleiche Vorzeichen wie $z_k$ mit ausreichend Abstand zu den Definitionslücken.
-Das kann man an der Lage der waagrechten Asymptote sehen. Diese kann man ausrechnen, indem man die Faktoren vor der höchsten Potenz im Zähler durch den Faktor der höchsten Potenz im Nenner teilt. Da das Nennerpolynom normiert ist, ist die waagrechte Asymptote gleich des Faktors vor der höchsten Potenz im Zähler. Der Betrag dieser ist größer als $|z_k|$ und hat das gleiche Vorzeichen wie $z_k$.
-Daraus folgt, dass jedes $z_k^{(i)}$, welches weit genug von den Definitionslücken entfernt ist, in $g(x)$ eingesetzt einen Wert zurückgibt, welcher näher an $z_k$ als $z_k^{(i)}$ ist.
-
-\paragraph{Schluss}
-Das bedeutet für die Weierstraß-Iteration, dass in den meisten Fällen mit jeder Iteration $z_k^{(i+1)}$ näher an $z_k$ als $z_k^{(i)}$ ist. Außerdem wird in den meisten Fällen mit jeder Iteration $g(x)$ genauer. Da für die Nullstelle $z_k$ die Gleichung $g(z_k) = z_k$ gilt und mit einem höheren $i$ der Wert $z_k^{(i)}$ meist genauer wird konvergiert die Weierstraß-Iteration meistens. In dem Abschnitt 3.4.2 wird mehr auf die Fälle eingegangen, bei denen die Weierstraß-Iteration nicht konvergiert.
 
 \end{document}
