@@ -29,51 +29,53 @@ betrachten. Dabei nutzen wir die Startpunkte
 \end{equation}
 . Daraufhin werden wir zu einer allgemeinen Herleitung der Weierstraß-Iteration kommen.
 
-\section*{Grundlagen}
-Wir haben die allgemeine Form der Weierstraß-Iteration
-\begin{equation}
-  z_k^{(i+1)} = \frac{p(z_{k}^{(i)})}{\prod_{j=1;j\neq k}^{n}(z_{k}^{(i)}-z_j^{(i)})}
-\end{equation}
-. Aus dieser können wir die drei Weierstraß-Korrekturterme
-\begin{align*}
-  z_1^{(i+1)} = \frac{p(z_1^{(i)})}{(z_1^{(i)}-z_2^{(i)})(z_1^{(i)}-z_3^{(i)})}\\
-  z_2^{(i+1)} = \frac{p(z_2^{(i)})}{(z_2^{(i)}-z_1^{(i)})(z_2^{(i)}-z_3^{(i)})}\\
-  z_3^{(i+1)} = \frac{p(z_3^{(i)})}{(z_3^{(i)}-z_1^{(i)})(z_3^{(i)}-z_2^{(i)})}\\
-\end{align*}
-bilden. Daraus können wir die drei Korrekturterme der ersten Iteration bilden.
-\begin{align*}
-  z_1^{(1)} = \frac{p(z_1^{(0)})}{(z_1^{(0)}-z_2^{(0)})(z_1^{(0)}-z_3^{(0)})}\\
-  z_2^{(1)} = \frac{p(z_2^{(0)})}{(z_2^{(0)}-z_1^{(0)})(z_2^{(0)}-z_3^{(0)})}\\
-  z_3^{(1)} = \frac{p(z_3^{(0)})}{(z_3^{(0)}-z_1^{(0)})(z_3^{(0)}-z_2^{(0)})}\\
-\end{align*}
-Zunächst werden wir aus diesen Weierstraß-Korrekturen Funktionen bilden, welche den Korrekturwert abhängig von $z_{1,2,3}^{(0)}$ darstellen. Daraufhin werden wir die Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$ visualisieren.
-\begin{align*}
-  k_1^{(0)}(z_1^{(0)}) = \frac{p(z_1^{(0)})}{(z_1^{(0)}-z_2^{(0)})(z_1^{(0)}-z_3^{(0)})}\\
-  k_2^{(0)}(z_2^{(0)}) = \frac{p(z_2^{(0)})}{(z_2^{(0)}-z_1^{(0)})(z_2^{(0)}-z_3^{(0)})}\\
-  k_3^{(0)}(z_3^{(0)}) = \frac{p(z_3^{(0)})}{(z_3^{(0)}-z_1^{(0)})(z_3^{(0)}-z_2^{(0)})}\\
-\end{align*}
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{./Weierstrass_Korrekturen_Far.png}
-    \caption{Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{./Weierstrass_Korrekturen_Close.png}
-    \caption{Weierstraß-Korrekturen in Abhängigkeit von $z_{1,2,3}^{(0)}$}
-  \end{subfigure}
-\end{figure}
-Dabei sieht man, dass die Nullstellen der Funktionen $k_{1,2,3}^{(0)}(z_{1,2,3}^{(0)})$ die Nullstellen der Weierstraß-Korrekturen sind. Das lässt sich dadurch erklären, dass der Zähler des Bruches der Weierstraß-Korrektur die Funktion darstellt und auch die gleichen Nullstellen hat. Das bedeutet für die Weierstraß-Iteration, dass der Korrekturterm bei bei den Nullstellen null ist und somit die Iteration bei der Nullstelle bleibt.\\\\
-Das ist jedoch nicht der Fall, wenn eine der Nullstellen von $p(x)$ unter $z_j^{(i)}$ mit $j=1,2,3,...,n, j \neq k$ liegt, da in diesem Fall sich auf der Nullstelle eine Definitionslücke befindet.
-
-\paragraph{Schräge Asymptote}
-Jede Weierstraß-Korrektur in Abhängigkeit von $z_{1,2,3}^{(0)}$ besitzt eine schräge Asymptote, da der Grad des  Zählerpolynoms eins größer als der Grad des Nennerpolynoms ist. Da das Zählerpolynom normiert ist - also einen Koeffizienten von 1 hat - gilt für die schräge Asymptote $\lim_{x\rightarrow +\infty} k_{1,2,3}^{(0)}(z_{1,2,3}^{(0)}) = +\infty$ und $\lim_{x\rightarrow -\infty} k_{1,2,3}^{(0)}(z_{1,2,3}^{(0)}) = -\infty$. Das heißt, dass sie von dem III. Quadrant in den I. Quadrant verläuft.
+\section*{Herleitung}
+Die Weierstraß-Iteration kann in zwei gleichzeitig agierende Annährungen unterteilt werden: die Annährung der einzelnen Nullstelle über den Korrekturterm (Newton-Annährung) und die Annährung über die Verbesserung des Korrekturterms (Korrektur-Annährung).
 \\\\
-Im Folgenden werden die Definitionslücken und dazugehörigen Abweichungen von der Asymptote, der einfachheit halbar, nicht berücksichtigt. Diese können den Prozess der Weierstraß-Iteration stören, ändern jedoch nichts an dem eigendlichen Mechanismus hinter der Weierstraß-Iteration. Auf die Definitionslücken und dazugehörigen Abweichungen von der Asymptote wird später eingegangen.
+1. Einzelne Nullstellen werden genauer
+2. Formel wird genauer durch die anderen genaueren Nullstellen
 \\\\
+Betrachten einzelnd mit Annahmen dass das andere stimmt
 
+\subsection*{Annährung über den Korrekturterm (Newton-Annährung)}
+
+Korrekturterm immer eine Nullstelle bei $z_j$ (weil $p(z)=0$)
+\\
+Schräge Asymptote
+\\
+In der Nähe der Nullstellen biegt die Funktion, so dass die Nullstelle getroffen wird
+\\
+\paragraph{Newton-Methode}
+Polynom durch Ableitung dividieren, um eine gebrochen Rationale Funktion zu erzeugen, die ihre Nullstellen an den Nullstellen der Funktion hat und ihre Definitionslücken an den Extempunkten. Dabei gibt es bestimmte Gebiete von welchen aus die Startpunkte gegen die zu dem Gebiet gehörende Nullstelle konvergiert.
+\\
+Newton-Korrektur: Funktion mit den drei Nullstellen der Funktion und schräger Asymptote
+\\
+Da schräge Asymptote und Nullstellen der Funktion gleich $p(x)$ gibt es Bereiche, für welche mit wiederholender Iteration eine spezifische Nullstelle getroffen wird
+\\
+Beispiel
+\\
+1. Annährung der Weierstraß-Iteration genau das gleiche, nur mit einer Anderen Funktion im Divisor, was allerdings keinen unterschied macht, da die Nullstellen der Funktionen gleich sind und eine schräge Asymptote gegeben ist. Nur die beiden Sachen müssen erfüllt sein.
+\\
+Daher 1. Annährung auch ohne 2. Annährung zur Nullstelle führend, da genau wie Newton-Methode ist.
+
+\subsection*{Annährung über die Verbesserung des Korrekturterms (Korrektur-Annährung)}
+
+Mit genaueren Annährungen der anderen Nullstellen wird die schräge Asymptote ähnlicher mit der Funktion $x-z_j$. Daher wird die Korrektur immer Effizienter (konvergiert schneller).
+\\
+Dabei bedingt die 1. Annährung die 2. Annährung, was bedeutet, dass die 2. Annährung nur als verschnellerung der 1. fungiert.
+\\
+Die zweite sorgt aber auch dafür, dass alle Nullstellen gefunden werden, da wenn zwei Annährungen zu der gleichen Nullstelle konvergieren greift die 2. Annährung ein, da eine der Annährungen näher an die Nullstelle kommte und somit diese Nullstelle mit einer Definitionslücke bei der Korrektur der anderen Annährung überlappt und somit die andere Annährung sich eine andere Nullstelle zum konvergieren sucht
+
+\section*{???}
+
+Zuerst Newton-Methode, dann Polynomdivision, dann Newton-Methode, usw.
+\\\\
+Jetzt aber ohne die anderen Nullstellen gefunden zu haben schon Dividieren, weil schneller (parallel)
+\\\\
+Wieso die Ableitung? Weil man lineare Funktion bzw. gebrochenrationale Funktion mit schräger Asymptote braucht also Funktion mit grad $n-1$ im Nenner, wo die Nullstellen aber noch da sind und man dass dadurch bekommen. Quasi belibige funktion mit grad $n-1$ nutzbar, ableitung aber besonders gut
+\\\\
+Jetzt einfach nicht Ableitung, sondern Funktion mit den sonstigen Nullstellen (Polynomdivision direkt dabei)
+\\\\
+Gleichzeitig beides machen
 
 \end{document}
